@@ -1,0 +1,102 @@
+/* About Section */
+.about-section {
+  padding: 4rem 1.5rem;
+}
+
+.about-title {
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/* Container for two columns */
+.about-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .about-container {
+    flex-direction: row;
+    gap: 4rem;
+  }
+}
+
+/* Education Column */
+.education-container {
+  background-color: #ffffff; /* container remains white */
+  padding: 1.5rem;
+  border-radius: 1rem;
+  flex: 1;
+}
+
+.section-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+
+.section-subtitle1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #822dad;
+}
+
+.about-paragraph-text{
+  color: white !important;
+}
+
+
+/* Education Cards with purple variation */
+.education-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.education-box {
+  background: linear-gradient(135deg, #6b21a8, #9333ea); /* darker purple gradient */
+  color: #ffffff; /* text stays white */
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.education-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(107, 33, 168, 0.4); /* darker purple shadow */
+}
+
+.edu-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.edu-institution {
+  margin: 0.25rem 0;
+  font-weight: 400;
+}
+
+.edu-score {
+  font-weight: 500;
+}
+
+
+/* About Me Column */
+.about-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-text p {
+  color: #374151; /* dark gray for readability */
+  line-height: 1.75;
+  text-align: left;
+}

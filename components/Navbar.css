@@ -1,0 +1,51 @@
+/* Floating navbar wrapper */
+.navbar {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background-color: #ffffff; /* white bar */
+  padding: 0.5rem 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Navbar list */
+.navbar-list {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar item links */
+.navbar-item a {
+  display: inline-block;
+  padding: 0.65rem 1.2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1b1b2f; /* default dark text */
+  background-color: #ffffff; /* default button background */
+  border: 2px solid transparent;
+  border-radius: 9999px; /* fully rounded pill */
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+/* Hover effect */
+.navbar-item a:hover {
+  border: 2px solid #a78bfa;
+  background: linear-gradient(135deg, #4b3380, #6c4bb3); /* dark → lighter purple */
+  color: #e0dff0;
+  transform: scale(1.1);
+}
+
+/* Active link - slightly brighter gradient than hover */
+.navbar-item.active a {
+  border: 2px solid #a78bfa;
+  background: linear-gradient(135deg, #5c3c99, #7b59c7); /* brighter purple gradient */
+  color: #e0dff0;
+  transform: scale(1.1);
+}

@@ -1,0 +1,85 @@
+/* Hero section wrapper */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #1b1b2f; /* Dark purple/blue base */
+}
+
+/* Vanta canvas placeholder */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Content on top of animation */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #e0dff0; /* Light text for dark background */
+  padding: 2rem;
+}
+
+/* Main heading */
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: #e0dff0;
+}
+
+/* Accent color on name */
+.hero h1 span {
+  color: #a78bfa; /* Purple accent */
+  text-shadow: 0 0 8px rgba(167, 139, 250, 0.6);
+}
+
+/* Subtitle / description */
+.hero p {
+  font-size: 1.25rem;
+  color: #c8c0e8; /* softer purple-gray text */
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+/* Additional description / secondary text */
+.hero h2 {
+  font-size: 1.05rem;
+  color: #bfb2f5;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 3rem;
+  max-width: 600px;
+}
+
+/* Optional subtle entrance animation */
+.hero-content {
+  animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons container */
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}

@@ -1,0 +1,48 @@
+.glare-button {
+  position: relative;
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: linear-gradient(to right, #4c1d95, #a78bfa); /* dark → lighter purple */
+  color: #f0eaff; /* light text */
+  font-weight: 600;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  overflow: hidden;
+
+  transform-origin: bottom right;
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease,
+    background 0.5s ease;
+}
+
+.glare-button:hover {
+  transform: rotate(-3deg) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to right, #5b21b6, #c4b5fd); /* hover gradient brighter */
+}
+
+/* Sliding glare */
+.glare-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 66%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15); /* slightly stronger for dark background */
+  filter: blur(14px);
+  transform: rotate(12deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.glare-button:hover .glare-effect {
+  left: 150%;
+}
+
+/* Content stays above glare */
+.glare-content {
+  position: relative;
+  z-index: 1;
+}

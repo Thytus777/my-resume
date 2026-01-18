@@ -1,0 +1,62 @@
+.outline-button {
+  display: inline-block;
+  padding: 0.95rem 2rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  border: 2px solid #a78bfa; /* purple border */
+  color: #a78bfa;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}.glare-outline-button {
+  position: relative;
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #ffffff; /* White background */
+  color: #4c1d95; /* Dark purple text */
+  font-weight: 600;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+  overflow: hidden;
+  transform-origin: bottom right;
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease,
+    background 0.3s ease;
+}
+
+.glare-outline-button:hover {
+  transform: rotate(-3deg) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Sliding glare with purple tint */
+.glare-outline-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 66%;
+  height: 100%;
+  background: rgba(120, 76, 253, 0.15); /* purple tint */
+  filter: blur(14px);
+  transform: rotate(12deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.glare-outline-button:hover .glare-outline-effect {
+  left: 150%;
+}
+
+/* Content stays above glare */
+.glare-outline-content {
+  position: relative;
+  z-index: 1;
+}
+
+
+.outline-button:hover {
+  background-color: rgba(167, 139, 250, 0.2); /* subtle hover background */
+  color: #e0dff0; /* lighter text on hover */
+  transform: scale(1.05);
+}
