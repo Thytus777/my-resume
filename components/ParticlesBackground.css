@@ -1,8 +1,15 @@
 #particles-js {
-  position: fixed; /* 🔑 stays behind all sections */
+  position: fixed; /* stays behind all sections */
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #1b1b2f;
-  z-index: -1; /* 🔑 behind content */
+
+  /* Gradient background */
+  background: linear-gradient(
+    135deg,
+    #201f1f,   /* dark grey */
+    #150637    /* dark purple */
+  );
+
+  z-index: -1; /* behind all content */
 }

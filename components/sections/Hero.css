@@ -1,19 +1,18 @@
 /* Hero section wrapper */
 .hero {
   position: relative;
-  min-height: 100vh;       /* full viewport height */
+  min-height: 100vh;
   overflow: hidden;
-  background-color: transparent;
+  background: transparent; /* dark grey base */
 
-  display: flex;            /* enable flex layout */
-  flex-direction: column;   /* stack content vertically */
-  justify-content: center;  /* center content vertically */
-  align-items: center;      /* center content horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  padding: 0 2rem;          /* optional horizontal padding */
-  scroll-margin-top: 0;     /* so hero isn’t pushed down by navbar offset */
+  padding: 0 2rem;
+  scroll-margin-top: 0;
 }
-
 
 /* Vanta canvas placeholder */
 .hero-bg {
@@ -27,13 +26,17 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   text-align: center;
-  color: #e0dff0; /* Light text for dark background */
+  color: #e6e6f0;
   padding: 2rem;
+
+  animation: fadeUp 1s ease forwards;
 }
 
 /* Main heading */
@@ -42,42 +45,49 @@
   font-weight: 700;
   margin-bottom: 1rem;
   line-height: 1.2;
-  color: #e0dff0;
+
+  color: #f0f0ff;
 }
 
-/* Accent color on name */
 .hero h1 span {
-  color: #a78bfa; /* Purple accent */
-  text-shadow: 0 0 8px rgba(167, 139, 250, 0.6);
+  background: linear-gradient(
+    135deg,
+    #5b3fd9,   /* visible purple (no black crush) */
+    #2b50ff    /* deep blue */
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 22px rgba(91, 63, 217, 0.45),
+    0 0 12px rgba(43, 80, 255, 0.35);
 }
+
+
 
 /* Subtitle / description */
 .hero p {
   font-size: 1.25rem;
-  color: #c8c0e8; /* softer purple-gray text */
+  color: #c7c7e2; /* cool grey-lavender */
   margin-bottom: 1rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 /* Additional description / secondary text */
 .hero h2 {
   font-size: 1.05rem;
-  color: #bfb2f5;
+  color: #b2b2d6;
   line-height: 1.6;
   font-weight: 400;
   margin-bottom: 3rem;
   max-width: 600px;
 }
 
-/* Optional subtle entrance animation */
-.hero-content {
-  animation: fadeUp 1s ease forwards;
-}
-
+/* Entrance animation */
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -88,7 +98,7 @@
 /* Buttons container */
 .hero-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
   flex-wrap: wrap;
   justify-content: center;
 }

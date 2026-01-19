@@ -5,7 +5,7 @@
   align-items: center;
   padding: 4rem 2rem;
   min-height: 100vh;
-  background-color: transparent;
+  background-color: transparent; /* keep transparent over particles */
 }
 
 /* Section heading */
@@ -23,15 +23,19 @@
   gap: 2rem;
   width: 100%;
   max-width: 1400px;
-  align-items: start; /* This prevents height matching */
+  align-items: start; /* prevents height matching */
 }
 
 /* Individual card */
 .experience-card {
-  background: #2c1f4c;
+  background: linear-gradient(
+    135deg,
+    #1d2250,   /* dark grey */
+    #150637    /* dark purple */
+  );
   padding: 1.5rem 2rem;
   border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -40,7 +44,7 @@
 /* Hover effect */
 .experience-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 15px 30px rgba(43, 80, 255, 0.35); /* glow effect matches buttons */
 }
 
 /* Job title */
@@ -76,17 +80,22 @@
 
 /* Individual skill pills */
 .experience-card .skill {
-  background: #4b3380;
-  color: #e0dff0;
+  background: linear-gradient(
+    135deg,
+    #5b3fd9, /* purple */
+    #2b50ff  /* blue */
+  );
+  color: #ffffff;
   font-size: 0.85rem;
   padding: 0.3rem 0.8rem;
   border-radius: 9999px;
   font-weight: 500;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .experience-card .skill:hover {
   transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(43, 80, 255, 0.4);
 }
 
 /* "+N more" indicator */
@@ -140,3 +149,4 @@
 .arrow.rotated {
   transform: rotate(180deg);
 }
+

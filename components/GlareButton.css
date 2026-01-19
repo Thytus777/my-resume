@@ -2,11 +2,21 @@
   position: relative;
   display: inline-block;
   padding: 1rem 2rem;
-  background: linear-gradient(to right, #4c1d95, #a78bfa); /* dark → lighter purple */
-  color: #f0eaff; /* light text */
+
+  background: linear-gradient(
+    135deg,
+    #5b3fd9,   /* visible purple */
+    #2b50ff    /* deep blue */
+  );
+
+  color: #f4f6ff;
   font-weight: 600;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+
+  box-shadow:
+    0 12px 25px rgba(43, 80, 255, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+
   text-decoration: none;
   overflow: hidden;
 
@@ -19,26 +29,40 @@
 
 .glare-button:hover {
   transform: rotate(-3deg) scale(1.05);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(to right, #5b21b6, #c4b5fd); /* hover gradient brighter */
+
+  background: linear-gradient(
+    135deg,
+    #6a55ff,   /* brighter purple */
+    #3b6cff    /* brighter blue */
+  );
+
+  box-shadow:
+    0 18px 40px rgba(59, 108, 255, 0.5);
 }
 
-/* Sliding glare */
+/* Sliding glare (cool-toned, not white) */
 .glare-effect {
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 66%;
+  left: -120%;
+  width: 70%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.15); /* slightly stronger for dark background */
-  filter: blur(14px);
+
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0),
+    rgba(160, 190, 255, 0.35),
+    rgba(255, 255, 255, 0)
+  );
+
+  filter: blur(16px);
   transform: rotate(12deg);
-  transition: left 0.7s ease;
+  transition: left 0.8s ease;
   pointer-events: none;
 }
 
 .glare-button:hover .glare-effect {
-  left: 150%;
+  left: 160%;
 }
 
 /* Content stays above glare */
@@ -46,3 +70,5 @@
   position: relative;
   z-index: 1;
 }
+
+

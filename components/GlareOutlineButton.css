@@ -1,23 +1,58 @@
+/* Simple outline button (no glare) */
 .outline-button {
   display: inline-block;
   padding: 0.95rem 2rem;
   font-weight: 600;
   border-radius: 0.75rem;
-  border: 2px solid #a78bfa; /* purple border */
-  color: #a78bfa;
+
+  border: 2px solid rgba(91, 63, 217, 0.8);
+  color: #cfd6ff;
+
+  background: transparent;
   text-decoration: none;
-  transition: all 0.3s ease;
-}.glare-outline-button {
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.outline-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(91, 63, 217, 0.15),
+    rgba(43, 80, 255, 0.15)
+  );
+
+  color: #ffffff;
+  transform: scale(1.05);
+
+  box-shadow:
+    0 8px 20px rgba(43, 80, 255, 0.25);
+}
+
+/* Glare outline button */
+.glare-outline-button {
   position: relative;
   display: inline-block;
   padding: 1rem 2rem;
-  background: #ffffff; /* White background */
-  color: #4c1d95; /* Dark purple text */
+
+  background: rgba(255, 255, 255, 0.03);
+  color: #e6e9ff;
+
   font-weight: 600;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+
+  border: 1px solid rgba(91, 63, 217, 0.6);
+
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
   text-decoration: none;
   overflow: hidden;
+
   transform-origin: bottom right;
   transition:
     transform 0.5s ease,
@@ -27,36 +62,44 @@
 
 .glare-outline-button:hover {
   transform: rotate(-3deg) scale(1.05);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+
+  background: linear-gradient(
+    135deg,
+    rgba(91, 63, 217, 0.15),
+    rgba(43, 80, 255, 0.15)
+  );
+
+  box-shadow:
+    0 15px 30px rgba(43, 80, 255, 0.4);
 }
 
-/* Sliding glare with purple tint */
+/* Sliding glare (cool purple → blue tint) */
 .glare-outline-effect {
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 66%;
+  left: -120%;
+  width: 70%;
   height: 100%;
-  background: rgba(120, 76, 253, 0.15); /* purple tint */
-  filter: blur(14px);
+
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0),
+    rgba(150, 170, 255, 0.35),
+    rgba(255, 255, 255, 0)
+  );
+
+  filter: blur(16px);
   transform: rotate(12deg);
-  transition: left 0.7s ease;
+  transition: left 0.8s ease;
   pointer-events: none;
 }
 
 .glare-outline-button:hover .glare-outline-effect {
-  left: 150%;
+  left: 160%;
 }
 
 /* Content stays above glare */
 .glare-outline-content {
   position: relative;
   z-index: 1;
-}
-
-
-.outline-button:hover {
-  background-color: rgba(167, 139, 250, 0.2); /* subtle hover background */
-  color: #e0dff0; /* lighter text on hover */
-  transform: scale(1.05);
 }

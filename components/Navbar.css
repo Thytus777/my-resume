@@ -4,11 +4,21 @@
   top: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
-  background-color: #ffffff; /* white bar */
-  padding: 0.5rem 1.5rem;
+  z-index: 2;
+
+  /* Dark grey → dark purple background */
+  background: linear-gradient(
+    135deg,
+    #1e1e2a,   /* dark grey */
+    #150637    /* dark purple */
+  );
+
+  padding: 0.6rem 1.6rem;
   border-radius: 1.5rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 /* Navbar list */
@@ -23,29 +33,50 @@
 /* Navbar item links */
 .navbar-item a {
   display: inline-block;
-  padding: 0.65rem 1.2rem;
-  font-size: 1.25rem;
+  padding: 0.65rem 1.3rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: #1b1b2f; /* default dark text */
-  background-color: #ffffff; /* default button background */
-  border: 2px solid transparent;
-  border-radius: 9999px; /* fully rounded pill */
-  transition: all 0.3s ease;
+
+  color: #e6e6f0;
+  background: rgba(255, 255, 255, 0.03);
+
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
   text-decoration: none;
+  transition: all 0.35s ease;
 }
 
-/* Hover effect */
+/* Hover effect (purple → blue gradient) */
 .navbar-item a:hover {
-  border: 2px solid #a78bfa;
-  background: linear-gradient(135deg, #4b3380, #6c4bb3); /* dark → lighter purple */
-  color: #e0dff0;
-  transform: scale(1.1);
+  background: linear-gradient(
+    135deg,
+    #5b3fd9,   /* purple */
+    #2b50ff    /* blue */
+  );
+
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+
+  box-shadow:
+    0 8px 25px rgba(43, 80, 255, 0.35);
+
+  transform: scale(1.08);
 }
 
-/* Active link - slightly brighter gradient than hover */
+/* Active link (slightly brighter purple → blue) */
 .navbar-item.active a {
-  border: 2px solid #a78bfa;
-  background: linear-gradient(135deg, #5c3c99, #7b59c7); /* brighter purple gradient */
-  color: #e0dff0;
+  background: linear-gradient(
+    135deg,
+    #6a55ff,   /* brighter purple */
+    #3b6cff    /* brighter blue */
+  );
+
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 10px 30px rgba(43, 80, 255, 0.45);
+
   transform: scale(1.1);
 }

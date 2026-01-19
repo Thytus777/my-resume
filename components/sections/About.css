@@ -1,6 +1,8 @@
 /* About Section */
 .about-section {
   padding: 4rem 1.5rem;
+  background:transparent;
+  color: #e6e6f0; /* default light text */
 }
 
 .about-title {
@@ -8,6 +10,7 @@
   font-size: 2.25rem;
   font-weight: bold;
   margin-bottom: 2rem;
+  color: #f0e6ff; /* bright heading */
 }
 
 /* Container for two columns */
@@ -26,32 +29,41 @@
 
 /* Education Column */
 .education-container {
-  background-color: #ffffff; /* container remains white */
+  background: linear-gradient(
+    135deg,
+    #1d2250,   /* dark grey base */
+    #150637    /* dark purple */
+  );
   padding: 1.5rem;
   border-radius: 1rem;
   flex: 1;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-.section-subtitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-
+/* Section subtitles */
+.section-subtitle,
 .section-subtitle1 {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #822dad;
+  color: #a78bfa; /* purple accent */
 }
 
-.about-paragraph-text{
-  color: white !important;
+/* About Me Column */
+.about-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+.about-text p {
+  color: #c8c0e8; /* soft light purple-gray for readability */
+  line-height: 1.75;
+  text-align: left;
+}
 
-/* Education Cards with purple variation */
+/* Education Cards */
 .education-items {
   display: flex;
   flex-direction: column;
@@ -59,7 +71,11 @@
 }
 
 .education-box {
-  background: linear-gradient(135deg, #6b21a8, #9333ea); /* darker purple gradient */
+  background: linear-gradient(
+    135deg,
+    #5b3fd9,  /* purple → blue, matches buttons */
+    #2b50ff
+  );
   color: #ffffff; /* text stays white */
   padding: 1rem;
   border-radius: 0.75rem;
@@ -69,7 +85,7 @@
 
 .education-box:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(107, 33, 168, 0.4); /* darker purple shadow */
+  box-shadow: 0 8px 20px rgba(43, 80, 255, 0.45); /* matching hover glow */
 }
 
 .edu-title {
@@ -84,19 +100,4 @@
 
 .edu-score {
   font-weight: 500;
-}
-
-
-/* About Me Column */
-.about-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.about-text p {
-  color: #374151; /* dark gray for readability */
-  line-height: 1.75;
-  text-align: left;
 }
