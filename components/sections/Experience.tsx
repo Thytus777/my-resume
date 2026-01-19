@@ -45,14 +45,14 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ title, company, descrip
 export default function Experience() {
   const experiences = [
     {
-      title: "Frontend Developer",
-      company: "TechCorp Inc.",
+      title: "Senkou Academy",
+      company: "Tutor",
       description: "Developed responsive web applications with React and TypeScript, collaborating with UX designers to implement modern UI/UX.",
       skills: ['React', 'TypeScript', 'CSS', 'Tailwind', 'Next.js'],
     },
     {
-      title: "Junior Software Engineer",
-      company: "Innovate Solutions",
+      title: "1Lynx Solutions",
+      company: "Full Stack Developer (Intern) ",
       description: "Assisted in building internal tools, optimized code performance, and participated in code reviews following best practices.",
       skills: ['JavaScript', 'HTML', 'CSS', 'Git', 'Agile'],
     },

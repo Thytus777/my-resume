@@ -1,10 +1,19 @@
 /* Hero section wrapper */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100vh;       /* full viewport height */
   overflow: hidden;
-  background-color: #1b1b2f; /* Dark purple/blue base */
+  background-color: transparent;
+
+  display: flex;            /* enable flex layout */
+  flex-direction: column;   /* stack content vertically */
+  justify-content: center;  /* center content vertically */
+  align-items: center;      /* center content horizontally */
+
+  padding: 0 2rem;          /* optional horizontal padding */
+  scroll-margin-top: 0;     /* so hero isn’t pushed down by navbar offset */
 }
+
 
 /* Vanta canvas placeholder */
 .hero-bg {

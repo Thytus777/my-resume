@@ -1,0 +1,146 @@
+.projects-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.projects-title {
+  text-align: center;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #f5f3ff;
+  margin-bottom: 3.5rem;
+}
+
+/* Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.2rem;
+  justify-content: center; /* 🔑 */
+}
+    
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Card */
+.project-card {
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 1.4rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.45s ease, border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  border-color: #c084fc;
+  box-shadow: 0 25px 50px rgba(168, 85, 247, 0.35);
+}
+
+/* Image */
+.project-image {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
+}
+
+.project-image .img {
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.project-card:hover .img {
+  transform: scale(1.06);
+}
+
+/* Header */
+.project-header {
+  padding: 1.6rem;
+}
+
+.project-header h3 {
+  color: #f5f3ff;
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.project-header p {
+  color: #c084fc;
+  font-size: 0.95rem;
+}
+
+/* Expandable Content */
+.project-content {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 1.6rem;
+  overflow: hidden;
+  transition: max-height 0.55s ease, opacity 0.4s ease;
+}
+
+.project-card.open .project-content {
+  max-height: 520px;
+  opacity: 1;
+  padding-bottom: 1.6rem;
+}
+
+/* Description */
+.project-description {
+  color: #e9d5ff;
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Skills */
+.project-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 1.2rem;
+}
+
+.project-skills span {
+  font-size: 0.75rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(192, 132, 252, 0.15);
+  color: #e9d5ff;
+  border: 1px solid rgba(192, 132, 252, 0.35);
+}
+
+/* Links */
+.project-links a {
+  margin-right: 1.2rem;
+  font-size: 0.9rem;
+  color: #c084fc;
+  text-decoration: none;
+}
+
+.project-links a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .project-image {
+    height: 190px;
+  }
+}

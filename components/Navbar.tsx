@@ -1,69 +1,52 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import './Navbar.css';
+import { useEffect, useState } from "react";
+import "./Navbar.css"; // make sure the path is correct
 
-const sections = ['hero', 'about', 'experience', 'projects', 'skills', 'certifications'];
+const sections = [
+  { id: "hero", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "skills", label: "Skills" },
+  { id: "certifications", label: "Certifications" },
+];
 
 export default function Navbar() {
-  const [active, setActive] = useState('hero');
+  const [active, setActive] = useState("hero");
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + 100; // offset from top
-      let currentSection = 'hero';
+    const observers: IntersectionObserver[] = [];
 
-      // Check sections in reverse order to prioritize later sections
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const sectionId = sections[i];
-        const section = document.getElementById(sectionId);
-        if (section) {
-          const offsetTop = section.offsetTop;
-          if (scrollPos >= offsetTop) {
-            currentSection = sectionId;
-            break;
+    sections.forEach(({ id }) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActive(id);
           }
-        }
-      }
+        },
+        { threshold: 0.6 }
+      );
 
-      setActive(currentSection);
-    };
+      observer.observe(section);
+      observers.push(observer);
+    });
 
-    // Throttle scroll events for better performance
-    let timeoutId: NodeJS.Timeout;
-    const throttledScroll = () => {
-      if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = setTimeout(handleScroll, 50);
-    };
-
-    window.addEventListener('scroll', throttledScroll);
-    handleScroll(); // initial check
-    
-    return () => {
-      window.removeEventListener('scroll', throttledScroll);
-      if (timeoutId) clearTimeout(timeoutId);
-    };
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault();
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   return (
     <nav className="navbar">
       <ul className="navbar-list">
-        {sections.map((section) => (
-          <li key={section} className={`navbar-item ${active === section ? 'active' : ''}`}>
-            <a 
-              href={`#${section}`}
-              onClick={(e) => handleClick(e, section)}
-            >
-              {section.charAt(0).toUpperCase() + section.slice(1)}
-            </a>
+        {sections.map(({ id, label }) => (
+          <li
+            key={id}
+            className={`navbar-item ${active === id ? "active" : ""}`}
+          >
+            <a href={`#${id}`}>{label}</a>
           </li>
         ))}
       </ul>

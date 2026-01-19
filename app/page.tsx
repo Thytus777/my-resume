@@ -1,20 +1,25 @@
-import About from '../components/sections/About';
-import Experience from '../components/sections/Experience';
-import Projects from '../components/sections/Projects';
-import Skills from '../components/sections/Skills';
-import Certifications from '../components/sections/Certifications';
-import Hero from '../components/sections/Hero';
-import Navbar from '@/components/Navbar';
+import ParticlesBackground from "@/components/ParticlesBackground";
+import About from "../components/sections/About";
+import Experience from "../components/sections/Experience";
+import Projects from "../components/sections/Projects";
+import Skills from "../components/sections/Skills";
+import Certifications from "../components/sections/Certifications";
+import Hero from "../components/sections/Hero";
+import Navbar from "@/components/Navbar";
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Skills />
-      <Certifications />
+      <ParticlesBackground />
+
+      <main className="relative z-10">
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Certifications />
+      </main>
     </>
   );
 }
