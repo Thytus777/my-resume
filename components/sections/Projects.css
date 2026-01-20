@@ -56,11 +56,12 @@
 .project-image {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 200px; /* keep your card height */
 }
 
 .project-image .img {
-  object-fit: cover;
+  object-fit: contain; /* <-- changed from cover to contain */
+  object-position: center; /* center the image */
 }
 
 /* ==================== HEADER ==================== */

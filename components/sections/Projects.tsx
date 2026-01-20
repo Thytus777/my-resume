@@ -62,34 +62,38 @@ export default function Projects() {
   const [modalProject, setModalProject] = useState<Project | null>(null);
 
   return (
-    <section className="projects-section reveal" id="projects">
-      <h1 className="projects-title">Projects</h1>
+    <>
+      {/* Projects Section */}
+      <section className="projects-section reveal" id="projects">
+        <h1 className="projects-title">Projects</h1>
 
-      <div className="projects-grid">
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="project-card"
-            onClick={() => setModalProject(project)}
-          >
-            <div className="project-image">
-              <Image src={project.image} alt={project.title} fill className="img" />
+        <div className="projects-grid">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="project-card"
+              onClick={() => setModalProject(project)}
+            >
+              <div className="project-image">
+                <Image src={project.image} alt={project.title} fill className="img" />
+              </div>
+
+              <div className="project-header">
+                <h3>{project.title}</h3>
+                <p>{project.subtitle}</p>
+              </div>
+
+              <div className="project-skills">
+                {project.skills.map((skill) => (
+                  <span key={skill}>{skill}</span>
+                ))}
+              </div>
             </div>
+          ))}
+        </div>
+      </section>
 
-            <div className="project-header">
-              <h3>{project.title}</h3>
-              <p>{project.subtitle}</p>
-            </div>
-
-            <div className="project-skills">
-              {project.skills.map((skill) => (
-                <span key={skill}>{skill}</span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
+      {/* Modal (outside the section) */}
       {modalProject && (
         <div className="modal-overlay" onClick={() => setModalProject(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -98,6 +102,7 @@ export default function Projects() {
             </button>
 
             <div className="modal-body">
+              {/* Skills Column */}
               <div className="modal-skills">
                 <h5>Tech Stack</h5>
                 {modalProject.skills.map((skill) => (
@@ -105,6 +110,7 @@ export default function Projects() {
                 ))}
               </div>
 
+              {/* Text Column */}
               <div className="modal-left">
                 <h2>{modalProject.title}</h2>
                 <h4>{modalProject.subtitle}</h4>
@@ -113,6 +119,7 @@ export default function Projects() {
                 ))}
               </div>
 
+              {/* Image Column */}
               <div className="modal-image-column">
                 <div className="modal-image">
                   <Image
@@ -137,10 +144,9 @@ export default function Projects() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 }
