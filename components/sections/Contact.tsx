@@ -7,19 +7,19 @@ import "./Contact.css";
 export default function Contact() {
   const contacts = [
     {
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/your-profile",
-      icon: <FaLinkedin />,
-      target: "_blank",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/thytus-benjamin",
+    icon: <FaLinkedin />,
+    target: "_blank",
     },
     {
       label: "Phone",
-      href: "tel:+60123456789",
+      href: "tel:+61421223317",
       icon: <FaPhoneAlt />,
     },
     {
       label: "Email",
-      href: "mailto:youremail@example.com",
+      href: "mailto:thytusben.7@gmail.com",
       icon: <FaEnvelope />,
     },
   ];
