@@ -4,7 +4,7 @@ import './Hero.css';
 
 export default function Hero() {
   return (
-    <section id="hero" className="hero">
+    <section id="hero" className="hero reveal">
       <div className="hero-content">
         <h1>
           Hi, I’m <span>Thytus Benjamin</span>

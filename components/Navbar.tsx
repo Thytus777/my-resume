@@ -9,7 +9,6 @@ const sections = [
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
-  { id: "certifications", label: "Certifications" },
 ];
 
 export default function Navbar() {

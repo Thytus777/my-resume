@@ -16,7 +16,7 @@ const education: EducationItem[] = [
 
 export default function About() {
   return (
-    <section id="about" className="about-section">
+    <section id="about" className="about-section reveal">
       <h1 className="about-title">About Me</h1>
 
       <div className="about-container">

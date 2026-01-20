@@ -52,14 +52,14 @@ export default function Experience() {
     },
     {
       title: "1Lynx Solutions",
-      company: "Full Stack Developer (Intern) ",
+      company: "Full Stack Developer (Intern)",
       description: "Assisted in building internal tools, optimized code performance, and participated in code reviews following best practices.",
       skills: ['JavaScript', 'HTML', 'CSS', 'Git', 'Agile'],
     },
   ];
 
   return (
-    <section id="experience">
+    <section id="experience" className="reveal">
       <h1>Experience</h1>
       <div className="experience-container">
         {experiences.map((exp, idx) => (
