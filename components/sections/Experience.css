@@ -10,10 +10,10 @@
 
 /* Section heading */
 #experience h1 {
-  font-size: 2.5rem;
-  color: #a78bfa;
-  margin-bottom: 3rem;
-  text-shadow: 0 0 6px rgba(167, 139, 250, 0.5);
+  font-size: 2.8rem;
+  color: #5b80ff;
+  margin-bottom: 60px;
+  text-shadow: 0 0 8px rgba(91, 128, 255, 0.5);
 }
 
 /* Container for vertical cards */

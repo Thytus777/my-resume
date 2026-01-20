@@ -27,6 +27,7 @@ const Skills: React.FC = () => {
 
   return (
   <section id="skills" className="reveal">
+    <h1 className="skills-title">Skills</h1>
     <div className="skills-section">
       {skillsData.map((category, index) => (
         <div key={index} className="skill-container">
