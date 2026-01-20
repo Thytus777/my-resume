@@ -24,7 +24,7 @@ export default function Skills() {
     <section className="skills-section reveal" id="skills">
       <h1 className="skills-title">Skills</h1>
 
-      <div className="skills-container">
+      {/* <div className="skills-container">
         {rows.map((row, rowIndex) => (
           <div className={`skills-row row-${rowIndex}`} key={rowIndex}>
             <div className="skills-track">
@@ -36,7 +36,7 @@ export default function Skills() {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </section>
   );
 }
