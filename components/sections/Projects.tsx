@@ -55,6 +55,7 @@ const projects: Project[] = [
     ],
     skills: ["React", "Node.js", "MongoDB", "Meteor", "Tailwind CSS"],
     github: "https://github.com/Monash-FIT3170/2025W1-All-In-One",
+    
   }
 ];
 
