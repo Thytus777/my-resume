@@ -148,28 +148,105 @@
   }
 }
 
+
+/* ==================== MODAL RESPONSIVE FIX ==================== */
 @media (max-width: 900px) {
   .modal-body {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    display: flex;
+    flex-direction: column; /* stack all columns vertically */
+    gap: 20px;             /* spacing between sections */
+    align-items: center;
   }
 
+  /* Left text section */
+  .modal-left {
+    text-align: center;    /* center text */
+    width: 100%;
+  }
+
+  .modal-left h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .modal-left h4 {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .modal-left p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  /* Skills/buttons section */
   .modal-skills {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: row;       /* horizontal row on mobile */
+    flex-wrap: wrap;           /* wrap if too many buttons */
+    justify-content: center;   /* center buttons */
+    gap: 10px;                 /* spacing between buttons */
+    width: 100%;
+    padding: 0;
+  }
+
+  .modal-skills h5 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
   }
 
   .modal-skills span {
     border-left: none;
     border-bottom: 2px solid #5b80ff;
-    padding: 4px 10px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    transform: none;
+  }
+
+  /* Image column */
+  .modal-image-column {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .modal-image {
-    height: 220px;
+    width: 100%;
+    min-height: 200px;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .modal-image .img {
+    object-fit: contain;
+  }
+
+  /* Links/buttons under image */
+  .modal-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+  }
+
+  /* Reduce modal padding */
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+    max-width: 600px;
+  }
+
+  /* Close button adjustment */
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    font-size: 1.8rem;
   }
 }
+
+
+
 
 /* ==================== MODAL LAYOUT ==================== */
 .modal-body {

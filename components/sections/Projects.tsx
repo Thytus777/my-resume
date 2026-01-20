@@ -35,7 +35,7 @@ const projects: Project[] = [
     id: 2,
     title: "MHSB Insurance",
     subtitle: "Insurance Website (In Progress)",
-    image: "/projects/mhsb.jpg",
+    image: "/projects/mhsb.png",
     description: [
       "This insurance platform allows users to buy and renew insurance policies online.",
       "Focused primarily on backend functionality, secure authentication, and handling sensitive data.",

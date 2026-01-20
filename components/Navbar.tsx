@@ -17,8 +17,8 @@ export default function Navbar() {
   const [active, setActive] = useState("hero");
   const listRef = useRef<HTMLUListElement>(null);
   const [highlightProps, setHighlightProps] = useState({ left: 0, width: 0 });
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Update highlight position
   const updateHighlight = (id: string) => {
     const list = listRef.current;
     if (!list) return;
@@ -39,7 +39,6 @@ export default function Navbar() {
     updateHighlight(active);
   }, [active]);
 
-  // IntersectionObserver for scrolling
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
@@ -65,32 +64,48 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <ul className="navbar-list" ref={listRef}>
-        {/* Animated highlight */}
+      {/* Hamburger for mobile */}
+      <div
+        className={`hamburger ${mobileOpen ? "open" : ""}`}
+        onClick={() => setMobileOpen(!mobileOpen)}
+      >
+        <div />
+        <div />
+        <div />
+      </div>
+
+      <ul
+        className={`navbar-list ${mobileOpen ? "open" : ""}`}
+        ref={listRef}
+        onClick={() => setMobileOpen(false)} // close on link click
+      >
+        {/* Highlight only on desktop */}
         <AnimatePresence>
-          <motion.div
-            key={active}
-            className="navbar-highlight"
-            initial={false}
-            animate={{
-              left: highlightProps.left,
-              width: highlightProps.width,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            }}
-            style={{
-              position: "absolute",
-              top: "50%",
-              transform: "translateY(-50%)",
-              height: "40px",
-              borderRadius: "9999px",
-              background: "linear-gradient(135deg, #6a55ff, #3b6cff)",
-              zIndex: 0,
-            }}
-          />
+          {!mobileOpen && (
+            <motion.div
+              key={active}
+              className="navbar-highlight"
+              initial={false}
+              animate={{
+                left: highlightProps.left,
+                width: highlightProps.width,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+              style={{
+                position: "absolute",
+                top: "50%",
+                transform: "translateY(-50%)",
+                height: "40px",
+                borderRadius: "9999px",
+                background: "linear-gradient(135deg, #6a55ff, #3b6cff)",
+                zIndex: 0,
+              }}
+            />
+          )}
         </AnimatePresence>
 
         {sections.map(({ id, label }) => (
