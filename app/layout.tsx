@@ -1,9 +1,10 @@
 import './globals.css';
 import Navbar from '../components/Navbar';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Thytus Ben Resume',
-  description: 'My professional resume website',
+export const metadata: Metadata = {
+  title: 'Thytus Ben | Portfolio',
+  description: 'My professional portfolio website',
 };
 
 export default function RootLayout({
