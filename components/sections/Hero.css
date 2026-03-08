@@ -1,86 +1,137 @@
-/* Hero section wrapper */
 .hero {
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
-  background: transparent; /* dark grey base */
-
+  overflow: visible;
+  background: transparent;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-
-  padding: 0 2rem;
+  justify-content: center;
+  padding: 6rem 2rem 2rem;
   scroll-margin-top: 0;
 }
 
-/* Vanta canvas placeholder */
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+/* Main two-column layout */
+.hero-layout {
+  display: flex;
+  align-items: stretch;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  animation: fadeUp 1s ease forwards;
+  position: relative;
+  z-index: 3;
 }
 
-/* Content on top of animation */
-.hero-content {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-
+/* Left column: intro + grid */
+.hero-left {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+}
+
+/* Right column: Lanyard */
+.hero-right {
+  flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-
-  text-align: center;
-  color: #e6e6f0;
-  padding: 2rem;
-
-  animation: fadeUp 1s ease forwards;
+  position: relative;
 }
 
-/* Main heading */
-.hero h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+/* Lanyard: fills the right column */
+.hero-lanyard {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  z-index: 2;
+  pointer-events: auto;
+  overflow: visible;
+}
+
+.hero-intro h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 700;
-  margin-bottom: 1rem;
   line-height: 1.2;
-
-  color: #f0f0ff;
+  color: #f0f0f0;
+  margin-bottom: 0.5rem;
 }
 
-.hero h1 span {
-  background: linear-gradient(
-    135deg,
-    #5b3fd9,   /* visible purple (no black crush) */
-    #2b50ff    /* deep blue */
-  );
+.hero-name {
+  background: linear-gradient(135deg, #ff6a00, #ff8c00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 0 22px rgba(91, 63, 217, 0.45),
-    0 0 12px rgba(43, 80, 255, 0.35);
 }
 
-
-
-/* Subtitle / description */
-.hero p {
+.hero-role {
   font-size: 1.25rem;
-  color: #c7c7e2; /* cool grey-lavender */
-  margin-bottom: 1rem;
-  letter-spacing: 0.04em;
+  color: #999;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
-/* Additional description / secondary text */
-.hero h2 {
-  font-size: 1.05rem;
-  color: #b2b2d6;
-  line-height: 1.6;
-  font-weight: 400;
-  margin-bottom: 3rem;
-  max-width: 600px;
+/* Grid: About Me full width on top, 3 smaller cards below */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 106, 0, 0.15);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* About Me card spans full width */
+.hero-card--large {
+  grid-column: 1 / -1;
+  padding: 2rem;
+}
+
+.hero-card--large .hero-card-icon {
+  font-size: 1.75rem;
+}
+
+.hero-card--large .hero-card-title {
+  font-size: 1.15rem;
+}
+
+.hero-card--large .hero-card-text {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.hero-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 106, 0, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 106, 0, 0.1);
+}
+
+.hero-card-icon {
+  font-size: 1.5rem;
+  color: #ff6a00;
+  margin-bottom: 0.75rem;
+}
+
+.hero-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-bottom: 0.5rem;
+}
+
+.hero-card-text {
+  font-size: 0.9rem;
+  color: #999;
+  line-height: 1.5;
+  margin-bottom: 0;
 }
 
 /* Entrance animation */
@@ -95,10 +146,29 @@
   }
 }
 
-/* Buttons container */
-.hero-buttons {
-  display: flex;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-  justify-content: center;
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+  .hero {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .hero-layout {
+    flex-direction: column;
+  }
+
+  .hero-lanyard {
+    height: 400px;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card--large {
+    grid-column: auto;
+  }
+
+  .hero-intro h1 {
+    font-size: 2rem;
+  }
 }
