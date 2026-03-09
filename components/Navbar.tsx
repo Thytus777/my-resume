@@ -101,7 +101,7 @@ export default function Navbar() {
                 transform: "translateY(-50%)",
                 height: "40px",
                 borderRadius: "9999px",
-                background: "linear-gradient(135deg, #6a55ff, #3b6cff)",
+                background: "linear-gradient(135deg, #ff6a00, #ff8c00)",
                 zIndex: 0,
               }}
             />

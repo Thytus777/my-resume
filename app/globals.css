@@ -13,14 +13,14 @@ html, body {
   height: 100%;
   scroll-behavior: smooth;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: transparent; /* Dark purple/blue */
-  color: #e0dff0; /* Light text */
+  background-color: #141414;
+  color: #f0f0f0;
   overflow-x: hidden;
 }
 
 /* Optional: scroll snapping for full-page sections */
 body {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   overflow-y: scroll;
 }
 
@@ -35,26 +35,24 @@ section {
   flex-direction: column;
   align-items: center;
 
-  border-bottom: 1px solid rgba(167, 139, 250, 0.2);
+  border-bottom: 1px solid rgba(255, 106, 0, 0.12);
   background-color: transparent;
   text-align: center;
 
-  scroll-margin-top: 80px; /* navbar offset */
+  scroll-margin-top: 80px;
 }
-
 
 /* Section headings */
 section h1 {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1rem;
-  color: #a78bfa; /* purple accent */
-  text-shadow: 0 0 4px rgba(167, 139, 250, 0.4); /* subtle glow */
+  color: #ff6a00;
 }
 
 /* Section paragraphs */
 section p {
   font-size: clamp(1rem, 2vw, 1.25rem);
-  color: #c8c0e8; /* lighter purple-gray text */
+  color: #b0b0b0;
   line-height: 1.6;
   margin-bottom: 1.5rem;
   max-width: 800px;
@@ -63,35 +61,22 @@ section p {
 /* Section subheadings / secondary text */
 section h2 {
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-  color: #bfb2f5;
+  color: #d4d4d4;
   line-height: 1.6;
   font-weight: 400;
   margin-bottom: 2.5rem;
   max-width: 600px;
 }
 
-/* Main content wrapper (optional) */
+/* Main content wrapper */
 main {
   width: 100%;
   padding: 2rem;
-}
-
-/* Hero-specific content centering */
-.hero-content {
   position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
+  z-index: 2;
 }
 
-/* Hero heading and paragraph animations */
-.hero-content {
-  animation: fadeUp 1s ease forwards;
-}
-
+/* Entrance animation */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -103,32 +88,10 @@ main {
   }
 }
 
-/* Scroll reveal animation */
-@keyframes appear {
-  from {
-    opacity: 0;
-    /* transform: translateX(-100px); */
-    scale: 0.5;
-  }
-  to {
-    opacity: 1;
-    /* transform: translateX(0); */
-    scale: 1;
-  }
-}
-
-/* Reusable reveal utility */
-.reveal {
-  animation: appear linear;
-  animation-timeline: view();
-  animation-range: entry 0% cover 40%;
-}
-
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  * {
+    animation: none !important;
+    transition: none !important;
   }
 }

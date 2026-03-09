@@ -1,152 +1,558 @@
-/* Section setup */
-#experience {
+/* ── VARIABLES ── */
+:root {
+  --exp-accent: #ff6a00;
+  --exp-accent-light: #ff8c00;
+  --exp-bg: #0a0a0a;
+  --exp-road: #1c1c1e;
+  --exp-road-line: #ff6a00;
+  --exp-text: #e2ddd4;
+  --exp-muted: #888;
+  --exp-card-bg: rgba(20, 20, 20, 0.95);
+  --exp-card-border: rgba(255, 106, 0, 0.2);
+}
+
+/* ── SECTION ── */
+.exp-section {
+  background: transparent;
+  padding: 5rem 0 2rem;
+  overflow: clip;
+  color: var(--exp-text);
+  position: relative;
+  max-width: 100%;
+  scroll-margin-top: 80px;
+}
+
+.exp-sec-label {
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  color: var(--exp-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.exp-sec-title {
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 30%, var(--exp-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+}
+
+/* ── MODAL ── */
+.exp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 4rem 2rem;
-  background-color: transparent;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-
-/* Section heading */
-#experience h1 {
-  font-size: 2.8rem;
-  color: #5b80ff;
-  margin-bottom: 60px;
-  text-shadow: 0 0 8px rgba(91, 128, 255, 0.5);
+.exp-modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
 }
 
-/* Container for vertical cards */
-.experience-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+.exp-modal-box {
+  background: #141414;
+  border: 1px solid rgba(255, 106, 0, 0.22);
+  border-radius: 16px;
+  padding: 2.4rem;
+  max-width: 580px;
   width: 100%;
-  max-width: 1400px;
-  align-items: start; /* prevents height matching */
+  position: relative;
+  transform: translateY(24px) scale(0.96);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-/* Individual card */
-.experience-card {
-  background: linear-gradient(
-    135deg,
-    #1d2250,   /* dark grey */
-    #150637    /* dark purple */
-  );
-  padding: 1.5rem 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+.exp-modal-overlay.open .exp-modal-box {
+  transform: translateY(0) scale(1);
+}
+
+.exp-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #666;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
-  overflow: hidden;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
-/* Hover effect */
-.experience-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(43, 80, 255, 0.35); /* glow effect matches buttons */
+.exp-modal-close:hover {
+  color: #fff;
+  border-color: var(--exp-accent);
 }
 
-/* Job title */
-.experience-card .job-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #e0dff0;
+.exp-m-year {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--exp-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.exp-m-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #fff;
   margin-bottom: 0.25rem;
 }
 
-/* Company */
-.experience-card .company {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #c8c0e8;
-  margin-bottom: 1rem;
+.exp-m-company {
+  font-size: 0.78rem;
+  color: var(--exp-accent-light);
+  opacity: 0.8;
+  margin-bottom: 1.2rem;
 }
 
-/* Description */
-.experience-card .description {
-  font-size: 1rem;
-  color: #d3cae5;
-  margin-bottom: 1rem;
-  line-height: 1.5;
+.exp-m-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--exp-accent), transparent);
+  opacity: 0.2;
+  margin-bottom: 1.2rem;
 }
 
-/* Skills list */
-.experience-card .skills {
+.exp-m-desc {
+  font-size: 0.8rem;
+  line-height: 1.85;
+  color: var(--exp-muted);
+  margin-bottom: 1.2rem;
+}
+
+.exp-m-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+  padding: 0;
+}
+
+.exp-m-highlights li {
+  font-size: 0.76rem;
+  color: #ccc;
+  padding-left: 1.1rem;
+  position: relative;
+  line-height: 1.6;
+}
+
+.exp-m-highlights li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--exp-accent);
+}
+
+.exp-m-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
-/* Individual skill pills */
-.experience-card .skill {
-  background: linear-gradient(
-    135deg,
-    #5b3fd9, /* purple */
-    #2b50ff  /* blue */
+.exp-m-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+  background: rgba(255, 106, 0, 0.08);
+  border: 1px solid rgba(255, 106, 0, 0.2);
+  color: var(--exp-accent);
+  text-transform: uppercase;
+}
+
+/* ── ROAD CONTAINER ── */
+.exp-road-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── STICKY TRAVELER ── */
+.exp-traveler-sticky {
+  position: sticky;
+  top: 45vh;
+  height: 0;
+  z-index: 50;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.exp-traveler {
+  position: relative;
+  top: -24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.8));
+  transition: transform 0.15s ease;
+}
+
+.exp-traveler-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  animation: expTravelerBob 2s ease-in-out infinite;
+}
+
+.exp-traveler::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  filter: blur(4px);
+  animation: expShadowPulse 2s ease-in-out infinite;
+}
+
+/* ── JOBS CONTAINER ── */
+.exp-jobs-container {
+  position: relative;
+}
+
+/* Road background strip */
+.exp-road-strip {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-110px);
+  width: 220px;
+  background: var(--exp-road);
+  z-index: 0;
+}
+
+.exp-road-strip::before,
+.exp-road-strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.exp-road-strip::before { left: 0; }
+.exp-road-strip::after  { right: 0; }
+
+/* Center dashes */
+.exp-road-dashes {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-1px);
+  width: 3px;
+  z-index: 1;
+  opacity: 0.6;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--exp-road-line) 0px,
+    var(--exp-road-line) 28px,
+    transparent 28px,
+    transparent 80px
   );
-  color: #ffffff;
-  font-size: 0.85rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  background-size: 100% 80px;
+  animation: expDashScroll 1.2s linear infinite;
 }
 
-.experience-card .skill:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(43, 80, 255, 0.4);
+/* Road edge lines */
+.exp-road-edge-l,
+.exp-road-edge-r {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.03);
+  z-index: 1;
 }
 
-/* "+N more" indicator */
-.experience-card .more-skills {
-  color: #a78bfa;
-  font-size: 0.85rem;
-  font-weight: 600;
-  align-self: center;
+.exp-road-edge-l { left: calc(50% - 55px); }
+.exp-road-edge-r { left: calc(50% + 55px); }
+
+/* ── JOB STOP ── */
+.exp-job-stop {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 0;
+  min-height: 280px;
 }
 
-/* Expanded content - smoother animation using grid */
-.expanded-content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s ease;
+.exp-job-stop.left  { flex-direction: row; }
+.exp-job-stop.right { flex-direction: row-reverse; }
+
+/* Road column (center) */
+.exp-road-col {
+  flex: 0 0 220px;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.expanded-content > div {
-  overflow: hidden;
+/* Card column */
+.exp-card-col {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: flex-start;
 }
 
-.expanded-content.show {
-  grid-template-rows: 1fr;
+/* Left card aligns to the right (toward road), right card aligns to the left (toward road) */
+.exp-job-stop.left > .exp-card-col:first-child {
+  justify-content: flex-end;
 }
 
-/* Alternative if you need to keep the old structure */
-.experience-card .expanded-content {
-  max-height: 0;
+.exp-job-stop.right > .exp-card-col:first-child {
+  justify-content: flex-end;
+}
+
+/* Milestone dot */
+.exp-milestone-dot {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--exp-accent);
+  border: 3px solid var(--exp-bg);
+  box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.25), 0 0 16px rgba(255, 106, 0, 0.5);
+  z-index: 5;
+}
+
+/* Connector line from card to road dot */
+.exp-connector {
+  position: absolute;
+  top: 2.4rem;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--exp-accent), transparent);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.exp-job-stop.left .exp-connector {
+  right: 0;
+  left: 0;
+  width: auto;
+}
+
+.exp-job-stop.right .exp-connector {
+  left: 0;
+  right: 0;
+  width: auto;
+}
+
+/* ── JOB CARD ── */
+.exp-job-card {
+  background: var(--exp-card-bg);
+  border: 1px solid var(--exp-card-border);
+  border-radius: 12px;
+  padding: 1.6rem 1.8rem;
+  max-width: 420px;
+  width: 100%;
+  backdrop-filter: blur(12px);
+  position: relative;
+  cursor: pointer;
+  transform: translateX(40px);
   opacity: 0;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  margin-top: 0;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.7s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
 }
 
-.experience-card.expanded .expanded-content,
-.expanded-content.show {
-  max-height: 1000px;
+.exp-job-stop.right .exp-job-card {
+  transform: translateX(-40px);
+}
+
+.exp-job-card.visible {
+  transform: translateX(0);
   opacity: 1;
+}
+
+.exp-job-card:hover {
+  box-shadow: 0 8px 48px rgba(255, 106, 0, 0.12), 0 4px 32px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 106, 0, 0.45);
+}
+
+/* Job card content */
+.exp-jc-year {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--exp-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.exp-jc-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.exp-jc-company {
+  font-size: 0.8rem;
+  color: var(--exp-accent-light);
+  margin-bottom: 0.9rem;
+  opacity: 0.85;
+}
+
+.exp-jc-desc {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--exp-muted);
+}
+
+.exp-jc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
   margin-top: 1rem;
 }
 
-/* Arrow rotation */
-.arrow {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  justify-self: right;
-  font-size: 2rem;
+.exp-jc-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+  background: rgba(255, 106, 0, 0.08);
+  border: 1px solid rgba(255, 106, 0, 0.18);
+  color: var(--exp-accent);
+  text-transform: uppercase;
 }
 
-.arrow.rotated {
-  transform: rotate(180deg);
+.exp-jc-cta {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--exp-accent);
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-top: 0.8rem;
+  transition: opacity 0.2s, letter-spacing 0.2s;
 }
 
+.exp-job-card:hover .exp-jc-cta {
+  opacity: 1;
+  letter-spacing: 0.18em;
+}
+
+/* ── ROAD END ── */
+.exp-road-end {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 4rem 1rem 0;
+}
+
+.exp-road-end-sign {
+  display: inline-block;
+  background: var(--exp-accent);
+  color: #0a0a0a;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  box-shadow: 0 0 30px rgba(255, 106, 0, 0.25);
+  position: relative;
+}
+
+.exp-road-end-sign::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 22px;
+  background: #5a3a00;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes expTravelerBob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%       { transform: translateY(-5px) rotate(3deg); }
+}
+
+@keyframes expShadowPulse {
+  0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 0.5; }
+  50%       { transform: translateX(-50%) scaleX(0.7); opacity: 0.3; }
+}
+
+@keyframes expDashScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 80px; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .exp-job-stop.left,
+  .exp-job-stop.right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .exp-card-col {
+    padding: 1rem 1.2rem;
+    justify-content: center;
+  }
+
+  .exp-road-col {
+    flex: 0 0 60px;
+    width: 60px;
+  }
+
+  .exp-road-strip {
+    width: 60px;
+    transform: translateX(-30px);
+  }
+
+  .exp-road-edge-l { left: calc(50% - 15px); }
+  .exp-road-edge-r { left: calc(50% + 15px); }
+
+  .exp-connector { display: none; }
+
+  .exp-job-card {
+    transform: translateY(30px) !important;
+    max-width: 100%;
+  }
+
+  .exp-job-card.visible {
+    transform: translateY(0) !important;
+  }
+}

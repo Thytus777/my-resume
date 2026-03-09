@@ -15,18 +15,18 @@ export default function ParticlesBackground() {
       window.particlesJS("particles-js", {
         particles: {
           number: { value: 60, density: { enable: true, value_area: 800 } },
-          color: { value: "#ffffff" },
+          color: { value: "#ff6a00" },
           shape: { type: "circle" },
-          opacity: { value: 0.5 },
+          opacity: { value: 0.4 },
           size: { value: 3, random: true },
           line_linked: {
             enable: true,
             distance: 150,
-            color: "#ffffff",
-            opacity: 0.4,
+            color: "#ff6a00",
+            opacity: 0.15,
             width: 1
           },
-          move: { enable: true, speed: 3 }
+          move: { enable: true, speed: 2 }
         },
         interactivity: {
           events: {
