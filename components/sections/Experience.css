@@ -261,8 +261,9 @@
 .exp-jobs-container::after {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
+  /* Center the fade over the road strip (220px wide, offset -110px from 50%) */
+  left: calc(50% - 110px);
+  width: 220px;
   height: 160px;
   z-index: 20;
   pointer-events: none;
@@ -371,10 +372,10 @@
 }
 
 /* Right row: the card col visually sits to the right of the road.
-   Give it a matching pad-left to mirror the left side's pad-right */
+   More padding on the left (road-facing) side pushes card away from road */
 .exp-job-stop.right .exp-card-col:first-child {
   justify-content: flex-start;
-  padding: 2rem 1.5rem 2rem 3rem;
+  padding: 2rem 1.5rem 2rem 3.5rem;
 }
 
 /* Spacer col on the empty side */
@@ -576,7 +577,6 @@
 .exp-road-end-sign-star {
   color: #ff6a00;
   margin-left: 0.4em;
-  margin-right: 0.4em;
 }
 
 .exp-road-end-sign-bottom {
