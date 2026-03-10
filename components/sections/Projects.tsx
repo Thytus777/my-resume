@@ -93,9 +93,9 @@ export default function Projects() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isFading, setIsFading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const ringRef = useRef<HTMLDivElement>(null);
   const scrollAccRef = useRef(0);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cardWrapRef = useRef<HTMLDivElement>(null);
   const total = PROJECTS.length;
 
   const goTo = useCallback((idx: number) => {
@@ -110,10 +110,10 @@ export default function Projects() {
     setTimeout(() => setIsTransitioning(false), 600);
   }, [isTransitioning, total]);
 
-  // Wheel handler on ring
+  // Wheel handler on card
   useEffect(() => {
-    const ring = ringRef.current;
-    if (!ring) return;
+    const el = cardWrapRef.current;
+    if (!el) return;
 
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
@@ -128,8 +128,8 @@ export default function Projects() {
       }, 60);
     };
 
-    ring.addEventListener('wheel', onWheel, { passive: false });
-    return () => ring.removeEventListener('wheel', onWheel);
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
   }, [goTo, current]);
 
   // Keyboard nav
@@ -148,6 +148,7 @@ export default function Projects() {
   }, [goTo, current, modalOpen]);
 
   const p = PROJECTS[current];
+  const projectNumber = String(current + 1).padStart(2, '0');
 
   return (
     <section id="projects" className="prj-circular-section">
@@ -155,21 +156,21 @@ export default function Projects() {
       <h2 className="prj-section-title">Projects</h2>
 
       <div className="prj-showcase">
-        {/* LEFT: Card Carousel */}
-        <div className="prj-carousel-wrap">
-          <div className="prj-carousel-ring" ref={ringRef}>
-            <div className="prj-ring-inner">
-              <div className="prj-slides-track">
-                {PROJECTS.map((proj, i) => (
-                  <div key={i} className={`prj-slide ${i === current ? 'active' : ''}`}>
-                    <img src={proj.cover} alt={proj.title} loading="lazy" />
-                    <span className="prj-slide-badge">{proj.title.toUpperCase()}</span>
-                  </div>
-                ))}
+        {/* LEFT: Fixed image card */}
+        <div className="prj-carousel-wrap" ref={cardWrapRef}>
+          <div className="prj-notch-card">
+            {PROJECTS.map((proj, i) => (
+              <div key={i} className={`prj-card-slide ${i === current ? 'active' : ''}`}>
+                <img src={proj.cover} alt={proj.title} loading="lazy" />
               </div>
+            ))}
+            <div className={`prj-notch prj-notch--${p.status}`}>
+              <span className="prj-notch-pulse" />
+              {p.statusLabel}
             </div>
           </div>
 
+          {/* Controls */}
           <div className="prj-carousel-controls">
             <button className="prj-ctrl-btn" onClick={() => goTo(current - 1)} aria-label="Previous">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -189,53 +190,65 @@ export default function Projects() {
           </div>
 
           <p className="prj-slide-counter">
-            <span>{String(current + 1).padStart(2, '0')}</span> / {String(total).padStart(2, '0')}
+            <span>{projectNumber}</span> / {String(total).padStart(2, '0')}
           </p>
         </div>
 
         {/* RIGHT: Project Info */}
-        <div className={`prj-project-info ${isFading ? 'fading' : ''}`}>
-          <p className="prj-project-number">Project {String(current + 1).padStart(2, '0')}</p>
-          <h3 className="prj-project-title">{p.title}</h3>
-          <p className="prj-project-desc">{p.desc}</p>
-          <ul className="prj-project-bullets">
-            {p.bullets.map((b, i) => (
-              <li key={i}>{b}</li>
+        <div className="prj-project-info">
+
+          {/* Stable: stacked titles — all rendered, only active one visible */}
+          <p className="prj-project-number">Project {projectNumber}</p>
+          <div className="prj-title-stack">
+            {PROJECTS.map((proj, i) => (
+              <h3 key={i} className={`prj-project-title ${i === current ? 'active' : ''}`}>
+                {proj.title}
+              </h3>
             ))}
-          </ul>
-          <div className="prj-info-divider" />
-          <div>
-            <p className="prj-tech-label">Tech Stack</p>
-            <div className="prj-tech-tags">
-              {p.tech.map((t, i) => (
-                <span key={i} className="prj-tech-tag">{t}</span>
+          </div>
+
+          {/* Fading: desc, bullets, tech, links */}
+          <div className={`prj-project-details ${isFading ? 'fading' : ''}`}>
+            <p className="prj-project-desc">{p.desc}</p>
+            <ul className="prj-project-bullets">
+              {p.bullets.map((b, i) => (
+                <li key={i}>{b}</li>
               ))}
+            </ul>
+            <div className="prj-info-divider" />
+            <div>
+              <p className="prj-tech-label">Tech Stack</p>
+              <div className="prj-tech-tags">
+                {p.tech.map((t, i) => (
+                  <span key={i} className="prj-tech-tag">{t}</span>
+                ))}
+              </div>
             </div>
+            <div className="prj-project-links">
+              {p.live && (
+                <a href={p.live} target="_blank" rel="noopener noreferrer" className="prj-view-btn">
+                  Live Demo
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              )}
+              {p.github && (
+                <a href={p.github} target="_blank" rel="noopener noreferrer" className="prj-view-btn ghost">
+                  GitHub
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              )}
+            </div>
+            <button className="prj-view-btn" onClick={() => setModalOpen(true)}>
+              View Gallery
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
           </div>
-          <div className="prj-project-links">
-            {p.live && (
-              <a href={p.live} target="_blank" rel="noopener noreferrer" className="prj-view-btn">
-                Live Demo
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-            )}
-            {p.github && (
-              <a href={p.github} target="_blank" rel="noopener noreferrer" className="prj-view-btn ghost">
-                GitHub
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-            )}
-          </div>
-          <button className="prj-view-btn" onClick={() => setModalOpen(true)}>
-            View Gallery
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
         </div>
       </div>
 
@@ -255,4 +268,4 @@ export default function Projects() {
       </div>
     </section>
   );
-}
+} 

@@ -1,4 +1,4 @@
-/* ═══ CIRCULAR CAROUSEL PROJECTS SECTION ═══ */
+/* ═══ PROJECTS SECTION ═══ */
 
 .prj-circular-section {
   position: relative;
@@ -17,7 +17,7 @@
   color: #ff6a00;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
-  text-align: left;
+  text-align: center;
   width: 100%;
 }
 
@@ -31,20 +31,20 @@
   background: linear-gradient(135deg, #f0f0f0 40%, #6c6c6c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-align: left;
+  text-align: center;
   width: 100%;
 }
 
 /* Layout */
 .prj-showcase {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: 640px 1fr;
   gap: 3rem;
-  align-items: center;
-  min-height: 520px;
+  align-items: start;
+  min-height: 660px;
 }
 
-/* ── Circular Carousel ── */
+/* ── Notch Card Carousel ── */
 .prj-carousel-wrap {
   position: relative;
   display: flex;
@@ -53,95 +53,120 @@
   gap: 1.2rem;
 }
 
-.prj-carousel-ring {
+/* The card itself */
+.prj-notch-card {
   position: relative;
-  width: 380px;
-  height: 380px;
-  border-radius: 50%;
-  cursor: default;
+  width: 100%;
+  height: 620px;
+  border-radius: 20px;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
-/* Decorative spinning ring */
-.prj-carousel-ring::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #ff6a00 0%, transparent 30%, #ff8c00 60%, transparent 80%, #ff6a00 100%);
-  animation: prj-spinRing 8s linear infinite;
-  z-index: 0;
-}
-.prj-carousel-ring::after {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border-radius: 50%;
-  background: #141414;
-  z-index: 1;
-}
-
-@keyframes prj-spinRing {
-  to { transform: rotate(360deg); }
-}
-
-.prj-ring-inner {
-  position: absolute;
-  inset: 10px;
-  border-radius: 50%;
-  overflow: hidden;
-  z-index: 2;
-  background: #1a1a1a;
-}
-
-.prj-slides-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.prj-slide {
+/* Slides inside the card */
+.prj-card-slide {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: 20px;
   opacity: 0;
-  transform: scale(1.06);
+  transform: scale(1.04);
   transition: opacity 0.55s ease, transform 0.55s ease;
   pointer-events: none;
 }
-
-.prj-slide.active {
+.prj-card-slide.active {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
 }
-
-.prj-slide img {
+.prj-card-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  filter: brightness(0.85);
+  border-radius: 20px;
+  display: block;
+  filter: brightness(0.88);
 }
 
-/* Centre overlay badge */
-.prj-slide-badge {
+/* ── Notch label ── */
+.prj-notch {
   position: absolute;
-  bottom: 18%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 106, 0, 0.3);
-  border-radius: 100px;
-  padding: 4px 14px;
+  bottom: 0;
+  right: 0;
+  background: #141414;
+  padding: 7px 14px;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  color: #ff6a00;
-  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.9);
+  border-top-left-radius: 14px;
+  border-bottom-right-radius: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Inverted quarter-circle corners — matching site bg */
+.prj-notch::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: transparent;
+  box-shadow: 4px 4px 0 4px #141414;
+  border-bottom-right-radius: 14px;
+}
+.prj-notch::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -14px;
+  width: 14px;
+  height: 14px;
+  background: transparent;
+  box-shadow: 4px 4px 0 4px #141414;
+  border-bottom-right-radius: 14px;
+}
+
+/* Pulse dot */
+.prj-notch-pulse {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.prj-notch-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: prj-pulse 1.8s ease-out infinite;
+}
+
+/* Live = green */
+.prj-notch--live .prj-notch-pulse {
+  background: #4ade80;
+}
+.prj-notch--live .prj-notch-pulse::after {
+  background: #4ade80;
+}
+
+/* WIP = amber */
+.prj-notch--wip .prj-notch-pulse {
+  background: #fbbf24;
+}
+.prj-notch--wip .prj-notch-pulse::after {
+  background: #fbbf24;
+}
+
+@keyframes prj-pulse {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  70%  { transform: scale(2.4); opacity: 0;   }
+  100% { transform: scale(2.4); opacity: 0;   }
 }
 
 /* Controls */
@@ -209,27 +234,54 @@
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-  transition: opacity 0.35s;
-}
-.prj-project-info.fading {
-  opacity: 0 !important;
-  pointer-events: none;
 }
 
+/* Title block — stable, never fades, fixed height to prevent layout shift */
 .prj-project-number {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.7rem;
   color: #6c6c6c;
   letter-spacing: 0.2em;
+  min-height: 1.2em;
+}
+
+/* All titles stacked in a fixed-height container — no layout shift */
+.prj-title-stack {
+  position: relative;
+  height: 7rem;
 }
 
 .prj-project-title {
+  position: absolute;
+  inset: 0;
   font-family: 'Oxanium', cursive;
   font-size: clamp(2rem, 3.5vw, 3.2rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.05;
   color: #f0f0f0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
+}
+.prj-project-title.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Fading details block — everything below the title */
+.prj-project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.prj-project-details.fading {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
 }
 
 .prj-project-desc {
@@ -443,9 +495,10 @@
     gap: 2rem;
   }
 
-  .prj-carousel-ring {
-    width: 280px;
-    height: 280px;
+  .prj-notch-card {
+    width: 100%;
+    max-width: 100%;
+    height: 320px;
   }
 
   .prj-project-title {
