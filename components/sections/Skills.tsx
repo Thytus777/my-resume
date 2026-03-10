@@ -213,12 +213,12 @@ export default function Skills() {
               className="skills-filter-btn"
               style={{
                 background: filterCat === key ? cat.bg : "transparent",
-                borderColor: filterCat === key ? cat.color : "#252525",
+                borderColor: filterCat === key ? cat.color : "#333",
               }}
             >
               <div className="skills-filter-dot" style={{ background: cat.color }} />
               <span style={{
-                color: filterCat === key ? cat.color : "#555",
+                color: filterCat === key ? cat.color : "#888",
               }}>{cat.label}</span>
             </button>
           ))}
