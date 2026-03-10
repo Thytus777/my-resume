@@ -14,12 +14,12 @@ export default function HomePage() {
 
   return (
     <>
-      {!loaded && <LoadingScreen onDone={() => setLoaded(true)} />}
+      <LoadingScreen onDone={() => setLoaded(true)} />
 
       {loaded && <Navbar />}
 
       <main className={`relative z-10 ${loaded ? 'main-visible' : 'main-hidden'}`}>
-        <Hero />
+        <Hero ready={loaded} />
         <Experience />
         <Projects />
         <Skills />

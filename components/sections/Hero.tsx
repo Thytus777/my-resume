@@ -34,7 +34,17 @@ const infoCards = [
   },
 ];
 
-export default function Hero() {
+const CARD_BASE_DELAY = 0.3;
+const CARD_STEP = 0.15;
+
+interface HeroProps {
+  ready?: boolean;
+}
+
+export default function Hero({ ready = false }: HeroProps) {
+  // Only apply the animation class once the loader is done
+  const anim = ready ? 'seq-fade' : 'seq-hidden';
+
   return (
     <section id="hero" className="hero">
       <div className="hero-layout">
@@ -42,17 +52,26 @@ export default function Hero() {
         {/* LEFT: intro + grid */}
         <div className="hero-left">
           <div className="hero-intro">
-            <h1>
+            <h1
+              className={anim}
+              style={{ animationDelay: '0.05s' }}
+            >
               Hi, I&apos;m <span className="hero-name">Thytus Benjamin</span>
             </h1>
-            <p className="hero-role">Software Developer</p>
+            <p
+              className={`hero-role ${anim}`}
+              style={{ animationDelay: '0.25s' }}
+            >
+              Software Developer
+            </p>
           </div>
 
           <div className="hero-grid">
             {infoCards.map((card, idx) => (
               <div
                 key={idx}
-                className={`hero-card${card.large ? ' hero-card--large' : ''}`}
+                className={`hero-card ${anim}${card.large ? ' hero-card--large' : ''}`}
+                style={{ animationDelay: `${CARD_BASE_DELAY + idx * CARD_STEP}s` }}
               >
                 <div className="hero-card-icon">{card.icon}</div>
                 {card.large ? (
@@ -71,10 +90,12 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* RIGHT: lanyard container — same height as left column */}
-        <div className="hero-right">
+        {/* RIGHT: lanyard panel */}
+        <div
+          className={`hero-right ${anim}`}
+          style={{ animationDelay: '0.9s' }}
+        >
           <Suspense fallback={null}>
-            {/* Higher fov + further camera Z = lanyard appears smaller/fitted */}
             <Lanyard position={[0, 0, 20]} fov={30} gravity={[0, -60, 0]} />
           </Suspense>
         </div>
