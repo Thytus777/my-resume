@@ -116,7 +116,7 @@
 
 .element-num {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 11px;
+  font-size: 15px;
   position: absolute;
   top: 6px;
   left: 7px;
@@ -125,7 +125,7 @@
 
 .element-pro {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 10px;
+  font-size: 15px;
   position: absolute;
   top: 6px;
   right: 6px;
@@ -190,7 +190,7 @@
 }
 
 .skills-detail-num {
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.15em;
   margin-top: 4px;
 }
@@ -204,7 +204,7 @@
 }
 
 .skills-detail-cat {
-  font-size: 12px;
+  font-size: 15px;
   color: #555;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -223,7 +223,6 @@
   background: #1e1e1e;
   border-radius: 2px;
   overflow: hidden;
-  max-width: 280px;
 }
 
 .skills-detail-bar-fill {
@@ -233,8 +232,9 @@
 }
 
 .skills-detail-bar-pct {
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 0.1em;
+  flex-shrink: 0;
 }
 
 .skills-detail-badge {
