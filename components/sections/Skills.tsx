@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Skills.css";
 
 const CATEGORIES: Record<string, { label: string; color: string; bg: string }> = {
-  lang:   { label: "Languages",     color: "#ff6a00", bg: "#2a1a0f" },
-  frame:  { label: "Frameworks",    color: "#ff8c00", bg: "#2a1e0f" },
-  infra:  { label: "Infrastructure",color: "#cc5500", bg: "#261a0f" },
-  data:   { label: "Data & AI",     color: "#e07020", bg: "#261808" },
-  tools:  { label: "Tools",         color: "#ffad33", bg: "#2a200a" },
-  db:     { label: "Databases",     color: "#d4750a", bg: "#261a08" },
+  lang:   { label: "Languages",      color: "#ff6a00", bg: "#2a1a0f" },
+  frame:  { label: "Frameworks",     color: "#ff8c00", bg: "#2a1e0f" },
+  infra:  { label: "Infrastructure", color: "#cc5500", bg: "#261a0f" },
+  data:   { label: "Data & AI",      color: "#e07020", bg: "#261808" },
+  tools:  { label: "Tools",          color: "#ffad33", bg: "#2a200a" },
+  db:     { label: "Databases",      color: "#d4750a", bg: "#261a08" },
 };
 
 const SKILLS = [
@@ -91,19 +91,25 @@ function proficiencyLabel(pro: number) {
   return "Familiar";
 }
 
-function Element({ skill, isActive, isFiltered, onClick }: {
+// ── Element tile ──────────────────────────────────────────────
+// `sectionInView` is passed down so the existing mount stagger
+// only starts once the section has entered the viewport.
+function Element({ skill, isActive, isFiltered, onClick, sectionInView }: {
   skill: Skill;
   isActive: boolean;
   isFiltered: boolean;
   onClick: (skill: Skill) => void;
+  sectionInView: boolean;
 }) {
   const cat = CATEGORIES[skill.cat];
   const [mounted, setMounted] = useState(false);
 
+  // Original stagger — now gated on sectionInView instead of firing immediately
   useEffect(() => {
+    if (!sectionInView) return;
     const t = setTimeout(() => setMounted(true), skill.num * 25);
     return () => clearTimeout(t);
-  }, [skill.num]);
+  }, [sectionInView, skill.num]);
 
   const dimmed = isFiltered && !isActive;
 
@@ -148,9 +154,32 @@ function Element({ skill, isActive, isFiltered, onClick }: {
   );
 }
 
+// ── Main component ────────────────────────────────────────────
 export default function Skills() {
-  const [selected, setSelected] = useState<Skill | null>(null);
+  const [selected, setSelected]   = useState<Skill | null>(null);
   const [filterCat, setFilterCat] = useState<string | null>(null);
+
+  // Scroll-reveal: true once section hits 10% in viewport (fires once)
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleClick = (skill: Skill) => {
     setSelected(prev => prev?.num === skill.num ? null : skill);
@@ -159,7 +188,7 @@ export default function Skills() {
   const selectedCat = selected ? CATEGORIES[selected.cat] : null;
 
   return (
-    <section id="skills" className="skills-section">
+    <section id="skills" className="skills-section" ref={sectionRef}>
       <div className="skills-inner">
 
         {/* Header */}
@@ -201,7 +230,7 @@ export default function Skills() {
           )}
         </div>
 
-        {/* Grid */}
+        {/* Grid — pass sectionInView down to each element */}
         <div className="skills-grid">
           {SKILLS.map(skill => (
             <Element
@@ -210,14 +239,13 @@ export default function Skills() {
               isActive={selected?.num === skill.num || filterCat === skill.cat}
               isFiltered={filterCat !== null && filterCat !== skill.cat}
               onClick={handleClick}
+              sectionInView={inView}
             />
           ))}
         </div>
 
-        {/* Detail Panel */}
-        <div className="skills-detail" style={{
-          height: selected ? "auto" : "0",
-        }}>
+        {/* Detail Panel — unchanged */}
+        <div className="skills-detail" style={{ height: selected ? "auto" : "0" }}>
           {selected && selectedCat && (
             <div className="skills-detail-panel" style={{
               borderColor: selectedCat.color + "44",
