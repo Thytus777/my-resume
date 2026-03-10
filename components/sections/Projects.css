@@ -92,10 +92,10 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  background: #141414;
+  background: #212121;
   padding: 7px 14px;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.9);
@@ -116,7 +116,7 @@
   width: 14px;
   height: 14px;
   background: transparent;
-  box-shadow: 4px 4px 0 4px #141414;
+  box-shadow: 4px 4px 0 4px #212121;
   border-bottom-right-radius: 14px;
 }
 .prj-notch::after {
@@ -127,7 +127,7 @@
   width: 14px;
   height: 14px;
   background: transparent;
-  box-shadow: 4px 4px 0 4px #141414;
+  box-shadow: 4px 4px 0 4px #212121;
   border-bottom-right-radius: 14px;
 }
 
