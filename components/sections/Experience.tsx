@@ -84,21 +84,41 @@ function Modal({ job, onClose }: { job: Job | null; onClose: () => void }) {
 export default function Experience() {
   const [modalJob, setModalJob] = useState<Job | null>(null);
   const closeModal = useCallback(() => setModalJob(null), []);
-  const travelerRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const jobsContainerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const dotsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Scroll-based traveler animation + card reveal when traveler passes dots
+  const travelerRef      = useRef<HTMLDivElement>(null);
+  const sectionRef       = useRef<HTMLElement>(null);
+  const jobsContainerRef = useRef<HTMLDivElement>(null);
+  const cardsRef         = useRef<(HTMLDivElement | null)[]>([]);
+  const dotsRef          = useRef<(HTMLDivElement | null)[]>([]);
+
+  // ── Title scroll-reveal ──────────────────────────────────────
+  const [titleInView, setTitleInView] = useState(false);
+
   useEffect(() => {
-    const traveler = travelerRef.current;
-    const section = sectionRef.current;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTitleInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // ── Scroll-based traveler + card reveal (unchanged) ──────────
+  useEffect(() => {
+    const traveler      = travelerRef.current;
+    const section       = sectionRef.current;
     const jobsContainer = jobsContainerRef.current;
     if (!traveler || !section || !jobsContainer) return;
 
     let currentRotation = 0;
-    let lastScrollY = window.scrollY;
+    let lastScrollY     = window.scrollY;
     const revealedCards = new Set<number>();
 
     function lerp(a: number, b: number, t: number) {
@@ -109,28 +129,25 @@ export default function Experience() {
 
     const onScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
-      const delta = scrollY - lastScrollY;
-      lastScrollY = scrollY;
+      const delta   = scrollY - lastScrollY;
+      lastScrollY   = scrollY;
 
       const targetRot = Math.max(-15, Math.min(15, delta * 1.5));
       currentRotation = lerp(currentRotation, targetRot, 0.2);
       traveler.style.transform = `rotate(${currentRotation}deg)`;
 
-      // Use jobsContainer bounds so the traveler stops at end of road
       const containerRect = jobsContainer.getBoundingClientRect();
-      const containerTop = containerRect.top + scrollY;
-      const containerH = jobsContainer.offsetHeight;
-      const progress = Math.max(0, Math.min(1, (scrollY - containerTop) / containerH));
-      const sway = Math.sin(progress * Math.PI * 6) * 18;
+      const containerTop  = containerRect.top + scrollY;
+      const containerH    = jobsContainer.offsetHeight;
+      const progress      = Math.max(0, Math.min(1, (scrollY - containerTop) / containerH));
+      const sway          = Math.sin(progress * Math.PI * 6) * 18;
       traveler.style.marginLeft = sway + 'px';
     };
 
-    // Check dot positions every frame so it works regardless of scroll container
     const animFrame = () => {
       currentRotation = lerp(currentRotation, 0, 0.08);
       traveler.style.transform = `rotate(${currentRotation}deg)`;
 
-      // Reveal cards when the traveler (sticky at 45vh) reaches each milestone dot
       const travelerScreenY = window.innerHeight * 0.45;
       dotsRef.current.forEach((dot, i) => {
         if (!dot || revealedCards.has(i)) return;
@@ -159,19 +176,24 @@ export default function Experience() {
 
   return (
     <section id="experience" className="exp-section" ref={sectionRef}>
-      <p className="exp-sec-label">// Career</p>
-      <h2 className="exp-sec-title">The Road So Far</h2>
+
+      {/* Title — animates in on scroll */}
+      <p className={`exp-sec-label exp-reveal${titleInView ? ' exp-reveal--visible' : ''}`}
+         style={{ animationDelay: '0s' }}>
+        // Career
+      </p>
+      <h2 className={`exp-sec-title exp-reveal${titleInView ? ' exp-reveal--visible' : ''}`}
+          style={{ animationDelay: '0.15s' }}>
+        The Road So Far
+      </h2>
 
       <div className="exp-road-wrap">
-        {/* Jobs container — traveler sticky is INSIDE so it stops at end of road */}
         <div className="exp-jobs-container" ref={jobsContainerRef}>
-          {/* Road background */}
           <div className="exp-road-strip" />
           <div className="exp-road-dashes" />
           <div className="exp-road-edge-l" />
           <div className="exp-road-edge-r" />
 
-          {/* Sticky traveler */}
           <div className="exp-traveler-sticky">
             <div className="exp-traveler" ref={travelerRef}>
               <div className="exp-traveler-icon">🧑‍💻</div>
@@ -206,7 +228,8 @@ export default function Experience() {
                     ref={(el) => { dotsRef.current[i] = el; }}
                   />
                 </div>
-                <div className="exp-card-col" />
+                {/* Empty spacer col to balance layout on both sides */}
+                <div className="exp-card-col exp-card-col--spacer" />
               </div>
             );
           })}
@@ -214,9 +237,18 @@ export default function Experience() {
           <div style={{ height: '120px', position: 'relative', zIndex: 1 }} />
         </div>
 
-        {/* Road end sign — OUTSIDE jobs container so traveler stops before it */}
         <div className="exp-road-end">
-          <div className="exp-road-end-sign">Still Travelling ✦</div>
+          <div className="exp-road-end-sign">
+            <div className="exp-road-end-sign-board">
+              <span className="exp-road-end-sign-top">Route 2026</span>
+              <span className="exp-road-end-sign-main">
+                <span className="exp-road-end-sign-star">✦</span>
+                Still Travelling
+                <span className="exp-road-end-sign-star">✦</span>
+              </span>
+              <span className="exp-road-end-sign-bottom">More stops ahead</span>
+            </div>
+          </div>
         </div>
       </div>
 

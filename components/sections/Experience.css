@@ -42,6 +42,20 @@
   margin-bottom: 2rem;
 }
 
+/* ── TITLE SCROLL-REVEAL ── */
+.exp-reveal {
+  opacity: 0;
+}
+
+.exp-reveal--visible {
+  animation: expFadeUp 0.7s ease forwards;
+}
+
+@keyframes expFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── MODAL ── */
 .exp-modal-overlay {
   position: fixed;
@@ -182,13 +196,15 @@
   text-transform: uppercase;
 }
 
-/* ── ROAD CONTAINER ── */
+/* ── ROAD WRAP ── */
 .exp-road-wrap {
   position: relative;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
 }
+
+/* no fades on the outer wrap */
 
 /* ── STICKY TRAVELER ── */
 .exp-traveler-sticky {
@@ -236,9 +252,32 @@
 /* ── JOBS CONTAINER ── */
 .exp-jobs-container {
   position: relative;
+  /* Extra road space before the first card so the top fade doesn't clip it */
+  padding-top: 160px;
 }
 
-/* Road background strip */
+/* Road fades — scoped to jobs-container so the end sign is unaffected */
+.exp-jobs-container::before,
+.exp-jobs-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 160px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.exp-jobs-container::before {
+  top: 0;
+  background: linear-gradient(to bottom, #0a0a0a 0%, transparent 100%);
+}
+
+.exp-jobs-container::after {
+  bottom: 0;
+  background: linear-gradient(to top, #0a0a0a 0%, transparent 100%);
+}
+
 .exp-road-strip {
   position: absolute;
   left: 50%;
@@ -263,7 +302,6 @@
 .exp-road-strip::before { left: 0; }
 .exp-road-strip::after  { right: 0; }
 
-/* Center dashes */
 .exp-road-dashes {
   position: absolute;
   left: 50%;
@@ -284,7 +322,6 @@
   animation: expDashScroll 1.2s linear infinite;
 }
 
-/* Road edge lines */
 .exp-road-edge-l,
 .exp-road-edge-r {
   position: absolute;
@@ -319,21 +356,30 @@
   justify-content: center;
 }
 
-/* Card column */
+/*
+  Card column — symmetrical on both sides.
+  The inner padding on the road-facing side controls distance from road.
+  Left card: pad-right pushes it away from road edge
+  Right card: pad-left pushes it away from road edge
+*/
 .exp-card-col {
   flex: 1;
-  padding: 2rem 2.5rem;
+  padding: 2rem 1.5rem 2rem 2.5rem;
   display: flex;
   align-items: flex-start;
-}
-
-/* Left card aligns to the right (toward road), right card aligns to the left (toward road) */
-.exp-job-stop.left > .exp-card-col:first-child {
   justify-content: flex-end;
 }
 
-.exp-job-stop.right > .exp-card-col:first-child {
-  justify-content: flex-end;
+/* Right row: the card col visually sits to the right of the road.
+   Give it a matching pad-left to mirror the left side's pad-right */
+.exp-job-stop.right .exp-card-col:first-child {
+  justify-content: flex-start;
+  padding: 2rem 1.5rem 2rem 3rem;
+}
+
+/* Spacer col on the empty side */
+.exp-card-col--spacer {
+  justify-content: flex-start;
 }
 
 /* Milestone dot */
@@ -349,28 +395,6 @@
   border: 3px solid var(--exp-bg);
   box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.25), 0 0 16px rgba(255, 106, 0, 0.5);
   z-index: 5;
-}
-
-/* Connector line from card to road dot */
-.exp-connector {
-  position: absolute;
-  top: 2.4rem;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--exp-accent), transparent);
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-.exp-job-stop.left .exp-connector {
-  right: 0;
-  left: 0;
-  width: auto;
-}
-
-.exp-job-stop.right .exp-connector {
-  left: 0;
-  right: 0;
-  width: auto;
 }
 
 /* ── JOB CARD ── */
@@ -407,7 +431,6 @@
   border-color: rgba(255, 106, 0, 0.45);
 }
 
-/* Job card content */
 .exp-jc-year {
   font-size: 0.68rem;
   letter-spacing: 0.2em;
@@ -470,37 +493,113 @@
   letter-spacing: 0.18em;
 }
 
-/* ── ROAD END ── */
+/* ── ROAD END SIGN ── */
 .exp-road-end {
   position: relative;
   z-index: 10;
   text-align: center;
-  padding: 4rem 1rem 0;
+  padding: 3rem 1rem 4rem;
+}
+
+/* Post */
+.exp-road-end::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(to bottom, #3a3a3a, #1a1a1a);
+  border-radius: 2px;
+  z-index: 0;
 }
 
 .exp-road-end-sign {
-  display: inline-block;
-  background: var(--exp-accent);
-  color: #0a0a0a;
-  font-weight: 800;
-  font-size: 0.9rem;
-  letter-spacing: 0.15em;
-  padding: 0.75rem 2rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-  box-shadow: 0 0 30px rgba(255, 106, 0, 0.25);
   position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }
 
-.exp-road-end-sign::before {
+/* Main sign board */
+.exp-road-end-sign-board {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1a1a1a;
+  border: 2px solid #ff6a00;
+  border-radius: 6px;
+  padding: 1rem 2.2rem 0.9rem;
+  position: relative;
+  box-shadow:
+    0 0 0 4px #0a0a0a,
+    0 0 0 6px rgba(255, 106, 0, 0.25),
+    0 8px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* Reflective top stripe like a real road sign */
+.exp-road-end-sign-board::before {
   content: '';
   position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 22px;
-  background: #5a3a00;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255,106,0,0.6), rgba(255,140,0,0.8), rgba(255,106,0,0.6), transparent);
+  border-radius: 6px 6px 0 0;
+}
+
+.exp-road-end-sign-top {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: #ff6a00;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  opacity: 0.7;
+}
+
+.exp-road-end-sign-main {
+  font-family: 'Oxanium', cursive;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #f0f0f0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.exp-road-end-sign-star {
+  color: #ff6a00;
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
+
+.exp-road-end-sign-bottom {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: #444;
+  text-transform: uppercase;
+  margin-top: 0.35rem;
+}
+
+/* Bolt details on corners */
+.exp-road-end-sign-board::after {
+  content: '• •';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.4rem;
+  color: rgba(255,106,0,0.3);
+  letter-spacing: 2.8em;
+  padding-left: 2.8em;
 }
 
 /* ── ANIMATIONS ── */
@@ -510,7 +609,7 @@
 }
 
 @keyframes expShadowPulse {
-  0%, 100% { transform: translateX(-50%) scaleX(1); opacity: 0.5; }
+  0%, 100% { transform: translateX(-50%) scaleX(1);   opacity: 0.5; }
   50%       { transform: translateX(-50%) scaleX(0.7); opacity: 0.3; }
 }
 
@@ -532,6 +631,10 @@
     justify-content: center;
   }
 
+  .exp-card-col--spacer {
+    display: none;
+  }
+
   .exp-road-col {
     flex: 0 0 60px;
     width: 60px;
@@ -544,8 +647,6 @@
 
   .exp-road-edge-l { left: calc(50% - 15px); }
   .exp-road-edge-r { left: calc(50% + 15px); }
-
-  .exp-connector { display: none; }
 
   .exp-job-card {
     transform: translateY(30px) !important;
