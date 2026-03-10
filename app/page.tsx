@@ -17,10 +17,10 @@ export default function HomePage() {
     <>
       {/* Letter glitch sits at z-index 0, fixed, behind everything */}
       <LetterGlitch
-        colors={['#3a220b', '#ff6a00', '#ef9920']}
-        glitchSpeed={50}
+        colors={['#8b3a00', '#6b2f00', '#a04a10', '#7a3800', '#5a2800']}
+        glitchSpeed={40}
         glitchChance={0.05}
-        cellSize={16}
+        cellSize={18}
       />
 
       <LoadingScreen onDone={() => setLoaded(true)} />

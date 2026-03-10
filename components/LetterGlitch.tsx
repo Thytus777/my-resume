@@ -21,7 +21,7 @@ function randomColor(colors: string[]) {
 }
 
 export default function LetterGlitch({
-  colors = ['#ff6a00', '#ef9920', '#cc4400'],
+  colors = ['#8b3a00', '#6b2f00', '#a04a10', '#7a3800', '#5a2800'],
   glitchSpeed = 50,
   glitchChance = 0.05,
   cellSize = 16,
