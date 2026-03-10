@@ -93,10 +93,34 @@ export default function Projects() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isFading, setIsFading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+
+  // ── Scroll-reveal state ──
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
   const scrollAccRef = useRef(0);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cardWrapRef = useRef<HTMLDivElement>(null);
   const total = PROJECTS.length;
+
+  // ── IntersectionObserver: fires once when section enters viewport ──
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect(); // only trigger once
+        }
+      },
+      { threshold: 0.15 } // 15% of section visible before firing
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const goTo = useCallback((idx: number) => {
     if (isTransitioning) return;
@@ -150,14 +174,34 @@ export default function Projects() {
   const p = PROJECTS[current];
   const projectNumber = String(current + 1).padStart(2, '0');
 
+  // Helper: build class string, adding prj-reveal only once inView is true
+  const reveal = (base: string, delay: string) =>
+    `${base} prj-reveal${inView ? ' prj-reveal--visible' : ''}`;
+
   return (
-    <section id="projects" className="prj-circular-section">
-      <p className="prj-section-label">// selected work</p>
-      <h2 className="prj-section-title">Projects</h2>
+    <section id="projects" className="prj-circular-section" ref={sectionRef}>
+
+      {/* Header — animates in first */}
+      <p
+        className={reveal('prj-section-label', '0s')}
+        style={{ animationDelay: '0s' }}
+      >
+        // selected work
+      </p>
+      <h2
+        className={reveal('prj-section-title', '0.15s')}
+        style={{ animationDelay: '0.15s' }}
+      >
+        Projects
+      </h2>
 
       <div className="prj-showcase">
-        {/* LEFT: Fixed image card */}
-        <div className="prj-carousel-wrap" ref={cardWrapRef}>
+        {/* LEFT: image card — slides up slightly later */}
+        <div
+          className={reveal('prj-carousel-wrap', '0.3s')}
+          style={{ animationDelay: '0.3s' }}
+          ref={cardWrapRef}
+        >
           <div className="prj-notch-card">
             {PROJECTS.map((proj, i) => (
               <div key={i} className={`prj-card-slide ${i === current ? 'active' : ''}`}>
@@ -194,10 +238,11 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* RIGHT: Project Info */}
-        <div className="prj-project-info">
-
-          {/* Stable: stacked titles — all rendered, only active one visible */}
+        {/* RIGHT: project info — staggered after card */}
+        <div
+          className={reveal('prj-project-info', '0.5s')}
+          style={{ animationDelay: '0.5s' }}
+        >
           <p className="prj-project-number">Project {projectNumber}</p>
           <div className="prj-title-stack">
             {PROJECTS.map((proj, i) => (
@@ -207,7 +252,6 @@ export default function Projects() {
             ))}
           </div>
 
-          {/* Fading: desc, bullets, tech, links */}
           <div className={`prj-project-details ${isFading ? 'fading' : ''}`}>
             <p className="prj-project-desc">{p.desc}</p>
             <ul className="prj-project-bullets">
@@ -253,7 +297,10 @@ export default function Projects() {
       </div>
 
       {/* Gallery Modal */}
-      <div className={`prj-modal-overlay ${modalOpen ? 'open' : ''}`} onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}>
+      <div
+        className={`prj-modal-overlay ${modalOpen ? 'open' : ''}`}
+        onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}
+      >
         <div className="prj-modal-box">
           <div className="prj-modal-header">
             <h3>{p.title} — Gallery</h3>
@@ -268,4 +315,4 @@ export default function Projects() {
       </div>
     </section>
   );
-} 
+}

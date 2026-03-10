@@ -107,7 +107,6 @@
   gap: 7px;
 }
 
-/* Inverted quarter-circle corners — matching site bg */
 .prj-notch::before {
   content: "";
   position: absolute;
@@ -147,21 +146,10 @@
   animation: prj-pulse 1.8s ease-out infinite;
 }
 
-/* Live = green */
-.prj-notch--live .prj-notch-pulse {
-  background: #4ade80;
-}
-.prj-notch--live .prj-notch-pulse::after {
-  background: #4ade80;
-}
-
-/* WIP = amber */
-.prj-notch--wip .prj-notch-pulse {
-  background: #fbbf24;
-}
-.prj-notch--wip .prj-notch-pulse::after {
-  background: #fbbf24;
-}
+.prj-notch--live .prj-notch-pulse        { background: #4ade80; }
+.prj-notch--live .prj-notch-pulse::after  { background: #4ade80; }
+.prj-notch--wip .prj-notch-pulse         { background: #fbbf24; }
+.prj-notch--wip .prj-notch-pulse::after   { background: #fbbf24; }
 
 @keyframes prj-pulse {
   0%   { transform: scale(1);   opacity: 0.8; }
@@ -205,9 +193,7 @@
   min-width: 50px;
   text-align: center;
 }
-.prj-slide-counter span {
-  color: #ff6a00;
-}
+.prj-slide-counter span { color: #ff6a00; }
 
 /* Dot indicators */
 .prj-dot-track {
@@ -236,7 +222,6 @@
   gap: 1.4rem;
 }
 
-/* Title block — stable, never fades, fixed height to prevent layout shift */
 .prj-project-number {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.7rem;
@@ -245,7 +230,6 @@
   min-height: 1.2em;
 }
 
-/* All titles stacked in a fixed-height container — no layout shift */
 .prj-title-stack {
   position: relative;
   height: 7rem;
@@ -271,7 +255,6 @@
   pointer-events: auto;
 }
 
-/* Fading details block — everything below the title */
 .prj-project-details {
   display: flex;
   flex-direction: column;
@@ -292,7 +275,6 @@
   max-width: 48ch;
 }
 
-/* Bullets */
 .prj-project-bullets {
   list-style: none;
   display: flex;
@@ -316,7 +298,6 @@
   flex-shrink: 0;
 }
 
-/* Tech stack */
 .prj-tech-label {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.65rem;
@@ -345,21 +326,18 @@
   color: #ff6a00;
 }
 
-/* Divider */
 .prj-info-divider {
   width: 40px;
   height: 1px;
   background: #282828;
 }
 
-/* Project links row */
 .prj-project-links {
   display: flex;
   gap: 0.6rem;
   flex-wrap: wrap;
 }
 
-/* View button */
 .prj-view-btn {
   display: inline-flex;
   align-items: center;
@@ -384,12 +362,8 @@
   color: #ff6a00;
   transform: translateY(-1px);
 }
-.prj-view-btn svg {
-  transition: transform 0.2s;
-}
-.prj-view-btn:hover svg {
-  transform: translateX(3px);
-}
+.prj-view-btn svg { transition: transform 0.2s; }
+.prj-view-btn:hover svg { transform: translateX(3px); }
 .prj-view-btn.ghost {
   color: #6c6c6c;
   border-color: rgba(255, 255, 255, 0.08);
@@ -488,6 +462,32 @@
   border-color: #ff6a00;
 }
 
+/* ═══════════════════════════════════════
+   SCROLL-REVEAL UTILITY
+   Elements start invisible. When the
+   section enters the viewport, JS adds
+   .prj-reveal--visible which plays fadeUp.
+═══════════════════════════════════════ */
+.prj-reveal {
+  opacity: 0;
+  /* animation-delay is set inline per element */
+}
+
+.prj-reveal--visible {
+  animation: prj-fadeUp 0.7s ease forwards;
+}
+
+@keyframes prj-fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ── Mobile ── */
 @media (max-width: 768px) {
   .prj-showcase {
@@ -501,24 +501,14 @@
     height: 320px;
   }
 
-  .prj-project-title {
-    font-size: 1.8rem;
-  }
+  .prj-project-title { font-size: 1.8rem; }
 
   .prj-project-info {
     align-items: center;
     text-align: center;
   }
 
-  .prj-project-bullets li {
-    justify-content: center;
-  }
-
-  .prj-tech-tags {
-    justify-content: center;
-  }
-
-  .prj-project-links {
-    justify-content: center;
-  }
+  .prj-project-bullets li  { justify-content: center; }
+  .prj-tech-tags            { justify-content: center; }
+  .prj-project-links        { justify-content: center; }
 }
