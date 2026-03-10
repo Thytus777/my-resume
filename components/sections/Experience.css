@@ -23,6 +23,7 @@
 }
 
 .exp-sec-label {
+  font-family: 'Share Tech Mono', monospace;
   text-align: center;
   font-size: 0.68rem;
   letter-spacing: 0.35em;
@@ -32,6 +33,7 @@
 }
 
 .exp-sec-title {
+  font-family: 'Oxanium', cursive;
   text-align: center;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
@@ -106,6 +108,7 @@
 }
 
 .exp-m-year {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.22em;
   color: var(--exp-accent);
@@ -114,6 +117,7 @@
 }
 
 .exp-m-title {
+  font-family: 'Oxanium', cursive;
   font-size: 1.65rem;
   font-weight: 800;
   color: #fff;
@@ -121,6 +125,7 @@
 }
 
 .exp-m-company {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.78rem;
   color: var(--exp-accent-light);
   opacity: 0.8;
@@ -135,6 +140,7 @@
 }
 
 .exp-m-desc {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.8rem;
   line-height: 1.85;
   color: var(--exp-muted);
@@ -151,6 +157,7 @@
 }
 
 .exp-m-highlights li {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.76rem;
   color: #ccc;
   padding-left: 1.1rem;
@@ -172,6 +179,7 @@
 }
 
 .exp-m-tag {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.08em;
   padding: 0.25rem 0.65rem;
@@ -409,6 +417,7 @@
 
 /* Job card content */
 .exp-jc-year {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.68rem;
   letter-spacing: 0.2em;
   color: var(--exp-accent);
@@ -417,6 +426,7 @@
 }
 
 .exp-jc-title {
+  font-family: 'Oxanium', cursive;
   font-size: 1.25rem;
   font-weight: 700;
   color: #fff;
@@ -425,6 +435,7 @@
 }
 
 .exp-jc-company {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.8rem;
   color: var(--exp-accent-light);
   margin-bottom: 0.9rem;
@@ -432,6 +443,7 @@
 }
 
 .exp-jc-desc {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.8rem;
   line-height: 1.7;
   color: var(--exp-muted);
@@ -445,6 +457,7 @@
 }
 
 .exp-jc-tag {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.08em;
   padding: 0.25rem 0.65rem;
@@ -456,6 +469,7 @@
 }
 
 .exp-jc-cta {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.62rem;
   letter-spacing: 0.1em;
   color: var(--exp-accent);
@@ -479,6 +493,7 @@
 }
 
 .exp-road-end-sign {
+  font-family: 'Oxanium', cursive;
   display: inline-block;
   background: var(--exp-accent);
   color: #0a0a0a;

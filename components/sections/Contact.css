@@ -18,13 +18,14 @@
   /* New styles for better appearance */
   background: linear-gradient(
     145deg,
-    rgba(30, 30, 42, 0.9),
-    rgba(21, 6, 55, 0.9)
+    rgba(30, 22, 14, 0.9),
+    rgba(20, 14, 8, 0.9)
   );
   border-radius: 2rem;
   padding: 3rem 4rem;
+  border: 1px solid rgba(255, 106, 0, 0.15);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6),
-              0 0 60px rgba(43, 80, 255, 0.1);
+              0 0 60px rgba(255, 106, 0, 0.08);
   position: relative;
 }
 
@@ -45,12 +46,14 @@
 }
 
 .contact-right h2 {
+  font-family: 'Oxanium', cursive;
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
   text-align: left;
 }
 
 .contact-right p {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 1.2rem;
   line-height: 1.8;
   text-align: left;
@@ -61,21 +64,21 @@
   position: relative;
   display: inline-block;
   padding: 1.2rem 2.5rem;
-  background: linear-gradient(135deg, #5b3fd9, #2b50ff);
+  background: linear-gradient(135deg, #ff6a00, #ff8c00);
   border-radius: 1rem;
-  color: #f4f6ff;
+  color: #0a0a0a;
   font-weight: 600;
   text-decoration: none;
   overflow: hidden;
-  box-shadow: 0 12px 25px rgba(43, 80, 255, 0.35),
+  box-shadow: 0 12px 25px rgba(255, 106, 0, 0.25),
               inset 0 0 0 1px rgba(255, 255, 255, 0.08);
   transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
 }
 
 .contact-card:hover {
   transform: rotate(-2deg) scale(1.05);
-  background: linear-gradient(135deg, #6a55ff, #3b6cff);
-  box-shadow: 0 18px 40px rgba(59, 108, 255, 0.5);
+  background: linear-gradient(135deg, #ff8c00, #ffad33);
+  box-shadow: 0 18px 40px rgba(255, 106, 0, 0.4);
 }
 
 .contact-card .glare-effect {
@@ -87,7 +90,7 @@
   background: linear-gradient(
     120deg,
     rgba(255, 255, 255, 0),
-    rgba(160, 190, 255, 0.35),
+    rgba(255, 200, 100, 0.35),
     rgba(255, 255, 255, 0)
   );
   filter: blur(16px);
@@ -101,6 +104,7 @@
 }
 
 .contact-card .glare-content {
+  font-family: 'Share Tech Mono', monospace;
   position: relative;
   z-index: 1;
   display: flex;

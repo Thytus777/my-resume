@@ -23,6 +23,7 @@
 }
 
 .navbar-item a {
+  font-family: 'Share Tech Mono', monospace;
   display: inline-block;
   padding: 0.65rem 1.3rem;
   font-size: 1.15rem;

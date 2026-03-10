@@ -48,6 +48,7 @@
 
 /* ─── Intro text ──────────────────────────────────────────── */
 .hero-intro h1 {
+  font-family: 'Oxanium', cursive;
   font-size: clamp(2rem, 3.5vw, 3.2rem);
   font-weight: 700;
   line-height: 1.2;
@@ -62,6 +63,7 @@
 }
 
 .hero-role {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 1.1rem;
   color: #999;
   letter-spacing: 0.1em;
@@ -123,6 +125,7 @@
 }
 
 .hero-card-title {
+  font-family: 'Oxanium', cursive;
   font-size: 0.875rem;
   font-weight: 600;
   color: #f0f0f0;
@@ -131,6 +134,7 @@
 }
 
 .hero-card-text {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.85rem;
   color: #999;
   line-height: 1.5;

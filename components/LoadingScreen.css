@@ -1,0 +1,294 @@
+/* ─────────────────────────────────────────
+   LoadingScreen.css
+───────────────────────────────────────── */
+
+/* ── Scene ── */
+.ls-scene {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  z-index: 9999;
+  will-change: transform;
+  transition: opacity 0.5s ease;
+}
+.ls-scene--fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Laptop ── */
+.ls-laptop {
+  position: relative;
+  width: 640px;
+  animation: ls-levitate 5s ease-in-out infinite;
+}
+.ls-laptop--still {
+  animation: none;
+}
+
+@keyframes ls-levitate {
+  0%, 100% { transform: translateY(0);     }
+  50%       { transform: translateY(-13px); }
+}
+
+/* ── Lid ── */
+.ls-lid {
+  width: 100%;
+  background: linear-gradient(170deg, #242424 0%, #161616 55%, #0d0d0d 100%);
+  border-radius: 16px 16px 4px 4px;
+  padding: 12px 12px 8px;
+  box-shadow:
+    0 0 0 1.5px #000,
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    0 40px 80px rgba(0, 0, 0, 0.92),
+    0 0 70px rgba(255, 106, 0, 0.07);
+}
+
+/* ── Bezel ── */
+.ls-bezel {
+  width: 100%;
+  padding-top: 62.5%;
+  position: relative;
+  background: #050505;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 106, 0, 0.08);
+}
+.ls-bezel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  border-radius: 8px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(0, 0, 0, 0.05) 3px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+}
+.ls-bezel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 59;
+  pointer-events: none;
+  border-radius: 8px;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+/* ── Screen ── */
+.ls-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+/* ── Base ── */
+.ls-base {
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(180deg, #1e1e1e 0%, #111 100%);
+  border-radius: 2px 2px 16px 16px;
+  margin-top: -1px;
+  position: relative;
+  box-shadow: 0 8px 0 #060606, 0 16px 60px rgba(0, 0, 0, 0.85);
+}
+.ls-base::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 5px;
+  background: #0e0e0e;
+  border-radius: 3px;
+}
+
+/* ─────────────────────────────────────────
+   BOOT TERMINAL
+───────────────────────────────────────── */
+.ls-boot {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: #060606;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: opacity 0.5s ease;
+}
+.ls-boot--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ls-boot-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.ls-line {
+  font-family: 'Space Mono', monospace;
+  font-size: 7.5px;
+  line-height: 1.8;
+  color: #4a4a4a;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.1s, transform 0.1s;
+  white-space: nowrap;
+}
+.ls-line--visible {
+  opacity: 1;
+  transform: none;
+}
+.ls-line .ls-orange { color: #ff6a00; }
+.ls-line .ls-grey   { color: #555; }
+.ls-line .ls-green  { color: #5a9e5a; }
+.ls-line .ls-bright { color: #888; }
+
+/* Progress bar */
+.ls-prog {
+  margin-top: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.ls-prog--visible {
+  opacity: 1;
+}
+.ls-prog-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  color: #383838;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.ls-prog-label span {
+  color: #ff6a00;
+}
+.ls-prog-track {
+  height: 1.5px;
+  background: #1a1a1a;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ls-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #cc4a0a, #ff6a00);
+  box-shadow: 0 0 8px rgba(255, 106, 0, 0.3);
+  transition: width 0.04s linear;
+}
+
+/* ─────────────────────────────────────────
+   MINI SCREEN — name centred
+───────────────────────────────────────── */
+.ls-mini {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #0a0a0a;
+  opacity: 0;
+  transform: scale(1.015);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ls-mini--visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ls-mini-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 106, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 106, 0, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.ls-mini-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(255, 106, 0, 0.07) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ls-mini-center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.ls-mini-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+}
+.ls-mini-thytus {
+  font-family: 'Oxanium', cursive;
+  font-size: 32px;
+  font-weight: 800;
+  color: #f0f0f0;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.ls-mini-benjamin {
+  font-family: 'Oxanium', cursive;
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ff6a00, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.ls-mini-rule {
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 106, 0, 0.4), transparent);
+  margin: 8px auto;
+}
+.ls-mini-role-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+.ls-mini-software {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: #999;
+  text-transform: uppercase;
+}
+.ls-mini-engineer {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: #ff6a00;
+  text-transform: uppercase;
+}

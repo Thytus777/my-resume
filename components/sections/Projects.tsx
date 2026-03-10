@@ -94,7 +94,6 @@ export default function Projects() {
   const [isFading, setIsFading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const ringRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
   const scrollAccRef = useRef(0);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const total = PROJECTS.length;
@@ -133,30 +132,6 @@ export default function Projects() {
     return () => ring.removeEventListener('wheel', onWheel);
   }, [goTo, current]);
 
-  // Custom cursor on ring
-  useEffect(() => {
-    const ring = ringRef.current;
-    const cursor = cursorRef.current;
-    if (!ring || !cursor) return;
-
-    const onEnter = () => { cursor.style.opacity = '1'; };
-    const onLeave = () => { cursor.style.opacity = '0'; };
-    const onMove = (e: MouseEvent) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    };
-
-    ring.addEventListener('mouseenter', onEnter);
-    ring.addEventListener('mouseleave', onLeave);
-    document.addEventListener('mousemove', onMove);
-
-    return () => {
-      ring.removeEventListener('mouseenter', onEnter);
-      ring.removeEventListener('mouseleave', onLeave);
-      document.removeEventListener('mousemove', onMove);
-    };
-  }, []);
-
   // Keyboard nav
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -176,13 +151,11 @@ export default function Projects() {
 
   return (
     <section id="projects" className="prj-circular-section">
-      <div className="prj-custom-cursor" ref={cursorRef}>scroll</div>
-
       <p className="prj-section-label">// selected work</p>
       <h2 className="prj-section-title">Projects</h2>
 
       <div className="prj-showcase">
-        {/* LEFT: Circular Carousel */}
+        {/* LEFT: Card Carousel */}
         <div className="prj-carousel-wrap">
           <div className="prj-carousel-ring" ref={ringRef}>
             <div className="prj-ring-inner">

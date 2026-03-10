@@ -22,6 +22,7 @@
 }
 
 .prj-section-title {
+  font-family: 'Oxanium', cursive;
   font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -57,7 +58,7 @@
   width: 380px;
   height: 380px;
   border-radius: 50%;
-  cursor: none;
+  cursor: default;
   flex-shrink: 0;
 }
 
@@ -143,26 +144,6 @@
   white-space: nowrap;
 }
 
-/* Custom cursor */
-.prj-custom-cursor {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid #ff6a00;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.2s;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.6rem;
-  color: #ff6a00;
-  font-family: 'Share Tech Mono', monospace;
-}
-
 /* Controls */
 .prj-carousel-controls {
   display: flex;
@@ -243,6 +224,7 @@
 }
 
 .prj-project-title {
+  font-family: 'Oxanium', cursive;
   font-size: clamp(2rem, 3.5vw, 3.2rem);
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -251,10 +233,11 @@
 }
 
 .prj-project-desc {
-  font-size: 0.9rem;
-  line-height: 1.7;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.05rem;
+  line-height: 1.8;
   color: #afafaf;
-  max-width: 42ch;
+  max-width: 48ch;
 }
 
 /* Bullets */
@@ -265,6 +248,7 @@
   gap: 0.5rem;
 }
 .prj-project-bullets li {
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.82rem;
   color: #8e8e8e;
   display: flex;
@@ -333,7 +317,7 @@
   border: 1px solid #282828;
   background: transparent;
   color: #f0f0f0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Share Tech Mono', monospace;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -406,6 +390,7 @@
   border-bottom: 1px solid #282828;
 }
 .prj-modal-header h3 {
+  font-family: 'Oxanium', cursive;
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.05em;

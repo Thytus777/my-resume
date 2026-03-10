@@ -6,7 +6,7 @@
 }
 
 .skills-inner {
-  max-width: 780px;
+  max-width: 1020px;
   margin: 0 auto;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .skills-subtitle {
-  font-size: 10px;
+  font-size: 12px;
   color: #555;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -66,14 +66,14 @@
 .skills-filter-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
+  gap: 8px;
+  padding: 7px 16px;
   border: 1px solid #252525;
   border-radius: 2px;
   cursor: pointer;
   transition: all 0.2s;
   font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #555;
@@ -84,8 +84,8 @@
 }
 
 .skills-filter-dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -93,17 +93,17 @@
 /* Grid */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(9, 72px);
-  grid-template-rows: repeat(6, 76px);
-  gap: 3px;
+  grid-template-columns: repeat(9, 96px);
+  grid-template-rows: repeat(6, 100px);
+  gap: 4px;
   overflow-x: auto;
 }
 
 /* Element tile */
 .periodic-element {
   position: relative;
-  width: 72px;
-  height: 76px;
+  width: 96px;
+  height: 100px;
   border-style: solid;
   cursor: pointer;
   display: flex;
@@ -116,37 +116,37 @@
 
 .element-num {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   position: absolute;
-  top: 4px;
-  left: 5px;
+  top: 6px;
+  left: 7px;
   letter-spacing: 0.05em;
 }
 
 .element-pro {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 8px;
+  font-size: 10px;
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 6px;
+  right: 6px;
 }
 
 .element-sym {
   font-family: 'Oxanium', cursive;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
   transition: color 0.2s;
 }
 
 .element-name {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 8px;
+  font-size: 10px;
   text-align: center;
   letter-spacing: 0.02em;
   line-height: 1.2;
-  max-width: 60px;
+  max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -171,10 +171,10 @@
 .skills-detail-panel {
   border: 1px solid;
   border-left-width: 3px;
-  padding: 20px 24px;
+  padding: 24px 32px;
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 24px;
+  gap: 32px;
   align-items: center;
 }
 
@@ -184,27 +184,27 @@
 
 .skills-detail-sym {
   font-family: 'Oxanium', cursive;
-  font-size: 52px;
+  font-size: 60px;
   font-weight: 800;
   line-height: 1;
 }
 
 .skills-detail-num {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   margin-top: 4px;
 }
 
 .skills-detail-name {
   font-family: 'Oxanium', cursive;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   color: #f0f0f0;
   margin-bottom: 6px;
 }
 
 .skills-detail-cat {
-  font-size: 10px;
+  font-size: 12px;
   color: #555;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -219,11 +219,11 @@
 
 .skills-detail-bar-bg {
   flex: 1;
-  height: 4px;
+  height: 5px;
   background: #1e1e1e;
   border-radius: 2px;
   overflow: hidden;
-  max-width: 200px;
+  max-width: 280px;
 }
 
 .skills-detail-bar-fill {
@@ -277,19 +277,19 @@
 }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .skills-grid {
-    grid-template-columns: repeat(9, 60px);
-    grid-template-rows: repeat(6, 64px);
+    grid-template-columns: repeat(9, 72px);
+    grid-template-rows: repeat(6, 76px);
   }
 
   .periodic-element {
-    width: 60px;
-    height: 64px;
+    width: 72px;
+    height: 76px;
   }
 
   .element-sym {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .skills-detail-panel {
