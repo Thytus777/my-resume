@@ -56,6 +56,7 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
   const [showMini, setShowMini]         = useState(false);
   const [bootHidden, setBootHidden]     = useState(false);
   const [laptopStill, setLaptopStill]   = useState(false);
+  const [bgFading, setBgFading]          = useState(false);
   const [sceneFading, setSceneFading]   = useState(false);
   const [done, setDone]                 = useState(false);
 
@@ -126,13 +127,16 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
     setTimeout(fadeOut, 1260);
   }
 
-  /* ── 5. Fade scene out, signal done ── */
+  /* ── 5. Fade bg to site color, then fade scene out ── */
   function fadeOut() {
-    setSceneFading(true);
+    setBgFading(true);
     setTimeout(() => {
-      setDone(true);
-      onDone?.();
-    }, 520);
+      setSceneFading(true);
+      setTimeout(() => {
+        setDone(true);
+        onDone?.();
+      }, 600);
+    }, 500);
   }
 
   if (done) return null;
@@ -140,7 +144,7 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
   return (
     <div
       ref={sceneRef}
-      className={`ls-scene${sceneFading ? ' ls-scene--fading' : ''}`}
+      className={`ls-scene${bgFading ? ' ls-scene--bg-fade' : ''}${sceneFading ? ' ls-scene--fading' : ''}`}
     >
       <div
         ref={laptopRef}
@@ -191,8 +195,8 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
                   </div>
                   <div className="ls-mini-rule" />
                   <div className="ls-mini-role-row">
-                    <span className="ls-mini-software">SOFTWARE</span>
-                    <span className="ls-mini-engineer">ENGINEER</span>
+                    <span className="ls-mini-software">DIGITAL</span>
+                    <span className="ls-mini-engineer">PORTFOLIO</span>
                   </div>
                 </div>
               </div>

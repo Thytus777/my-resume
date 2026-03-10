@@ -1,93 +1,164 @@
+/* ===== Navbar — Frosted Glass + Neon Outline + Scramble ===== */
+
 .navbar {
   position: fixed;
   top: 2rem;
   left: 50%;
-  transform: translateX(-50%);
   z-index: 100;
 
-  background: linear-gradient(135deg, #1a1a1a, #222222);
-  padding: 0.6rem 1.6rem;
-  border-radius: 1.5rem;
+  /* Frosted glass */
+  background: rgba(18, 18, 20, 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6),
-              inset 0 0 0 1px rgba(255, 106, 0, 0.15);
+  padding: 0.55rem 1.4rem;
+  border-radius: 1.6rem;
+
+  /* Subtle outer orange glow + glass border */
+  border: 1px solid rgba(255, 106, 0, 0.18);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 0.5px rgba(255, 255, 255, 0.05) inset,
+    0 0 20px rgba(255, 106, 0, 0.06);
 }
 
+/* Ambient pulse on the container when active */
+.navbar::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 106, 0, 0.12) 0%,
+    transparent 50%,
+    rgba(255, 140, 0, 0.08) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== List ===== */
 .navbar-list {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
   position: relative;
+  z-index: 1;
+}
+
+/* ===== Sliding highlight — neon outline box ===== */
+.navbar-highlight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 38px;
+  border-radius: 0.9rem;
+  pointer-events: none;
+  z-index: 0;
+
+  /* Neon outline instead of filled pill */
+  background: transparent;
+  border: 1.5px solid rgba(255, 106, 0, 0.75);
+  box-shadow:
+    0 0 8px rgba(255, 106, 0, 0.5),
+    0 0 20px rgba(255, 106, 0, 0.2),
+    inset 0 0 8px rgba(255, 106, 0, 0.06);
+}
+
+/* ===== Nav items ===== */
+.navbar-item {
+  position: relative;
+  z-index: 1;
 }
 
 .navbar-item a {
   font-family: 'Share Tech Mono', monospace;
-  display: inline-block;
-  padding: 0.65rem 1.3rem;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #e6e6e6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: rgba(210, 210, 215, 0.75);
   text-decoration: none;
   position: relative;
-  z-index: 1;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  min-width: 4ch; /* prevent layout shift during scramble */
 }
 
 .navbar-item a:hover {
   color: #ffffff;
 }
 
-/* ===== Mobile Styles ===== */
+.navbar-item.active a {
+  color: #ff8c00;
+  text-shadow:
+    0 0 8px rgba(255, 140, 0, 0.6),
+    0 0 20px rgba(255, 106, 0, 0.3);
+}
+
+/* ===== Scramble label — monospace fixed width ===== */
+.nav-label {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Mobile ===== */
+.hamburger {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .navbar {
     left: 1rem;
     transform: none;
     top: 1rem;
     padding: 0.5rem;
+    border-radius: 1rem;
   }
 
   .hamburger {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 28px;
-    height: 22px;
+    width: 26px;
+    height: 20px;
     cursor: pointer;
     z-index: 3;
   }
 
   .hamburger div {
     width: 100%;
-    height: 3px;
-    background: #e6e6e6;
+    height: 2.5px;
+    background: rgba(230, 230, 230, 0.85);
     border-radius: 2px;
     transition: all 0.3s ease;
   }
 
-  .hamburger.open div:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-  .hamburger.open div:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.open div:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-  }
+  .hamburger.open div:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open div:nth-child(2) { opacity: 0; }
+  .hamburger.open div:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   .navbar-list {
     display: none;
     flex-direction: column;
     gap: 0;
-    background: linear-gradient(135deg, #1a1a1a, #222222);
+    background: rgba(18, 18, 20, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 106, 0, 0.15);
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.5rem);
     left: 0;
-    min-width: 180px;
-    max-width: 90vw;
+    min-width: 170px;
     border-radius: 1rem;
     overflow: hidden;
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
   }
 
   .navbar-list.open {
@@ -95,11 +166,18 @@
   }
 
   .navbar-item a {
-    padding: 0.75rem 1rem;
-    font-size: 1.2rem;
-    white-space: nowrap;
+    padding: 0.7rem 1rem;
+    font-size: 1.1rem;
+    color: rgba(210, 210, 215, 0.85);
+    justify-content: flex-start;
   }
 
+  .navbar-item.active a {
+    color: #ff8c00;
+    background: rgba(255, 106, 0, 0.08);
+  }
+
+  /* No sliding highlight on mobile */
   .navbar-highlight {
     display: none;
   }

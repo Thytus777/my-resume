@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import ParticlesBackground from '@/components/ParticlesBackground';
 import Experience from '../components/sections/Experience';
 import Projects from '../components/sections/Projects';
 import Skills from '../components/sections/Skills';
@@ -17,12 +16,9 @@ export default function HomePage() {
     <>
       {!loaded && <LoadingScreen onDone={() => setLoaded(true)} />}
 
-      {/* Navbar only appears once loading is done */}
       {loaded && <Navbar />}
 
-      <ParticlesBackground />
-
-      <main className="relative z-10">
+      <main className={`relative z-10 ${loaded ? 'main-visible' : 'main-hidden'}`}>
         <Hero />
         <Experience />
         <Projects />
