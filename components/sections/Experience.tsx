@@ -58,7 +58,7 @@ function Modal({ job, onClose }: { job: Job | null; onClose: () => void }) {
 
   return (
     <div
-      className={`exp-modal-overlay ${job ? 'open' : ''}`}
+      className={`exp-modal-overlay${job ? ' open' : ''}`}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       {job && (
@@ -85,99 +85,70 @@ export default function Experience() {
   const [modalJob, setModalJob] = useState<Job | null>(null);
   const closeModal = useCallback(() => setModalJob(null), []);
 
-  const travelerRef      = useRef<HTMLDivElement>(null);
   const sectionRef       = useRef<HTMLElement>(null);
-  const jobsContainerRef = useRef<HTMLDivElement>(null);
+  const travelerRef      = useRef<HTMLDivElement>(null);
+  const jobsRef          = useRef<HTMLDivElement>(null);
   const cardsRef         = useRef<(HTMLDivElement | null)[]>([]);
   const dotsRef          = useRef<(HTMLDivElement | null)[]>([]);
-
-  // ── Title scroll-reveal ──────────────────────────────────────
   const [titleInView, setTitleInView] = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTitleInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setTitleInView(true); obs.disconnect(); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
-  // ── Scroll-based traveler + card reveal (unchanged) ──────────
   useEffect(() => {
-    const traveler      = travelerRef.current;
-    const section       = sectionRef.current;
-    const jobsContainer = jobsContainerRef.current;
-    if (!traveler || !section || !jobsContainer) return;
+    const traveler = travelerRef.current;
+    const jobs = jobsRef.current;
+    if (!traveler || !jobs) return;
 
     let currentRotation = 0;
-    let lastScrollY     = window.scrollY;
+    let lastScrollY = window.scrollY;
     const revealedCards = new Set<number>();
-
-    function lerp(a: number, b: number, t: number) {
-      return a + (b - a) * t;
-    }
-
     let rafId: number;
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const onScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
-      const delta   = scrollY - lastScrollY;
-      lastScrollY   = scrollY;
-
-      const targetRot = Math.max(-15, Math.min(15, delta * 1.5));
-      currentRotation = lerp(currentRotation, targetRot, 0.2);
+      const scrollY = window.scrollY;
+      const delta = scrollY - lastScrollY;
+      lastScrollY = scrollY;
+      currentRotation = lerp(currentRotation, Math.max(-15, Math.min(15, delta * 1.5)), 0.2);
       traveler.style.transform = `rotate(${currentRotation}deg)`;
-
-      const containerRect = jobsContainer.getBoundingClientRect();
-      const containerTop  = containerRect.top + scrollY;
-      const containerH    = jobsContainer.offsetHeight;
-      const progress      = Math.max(0, Math.min(1, (scrollY - containerTop) / containerH));
-      const sway          = Math.sin(progress * Math.PI * 6) * 18;
-      traveler.style.marginLeft = sway + 'px';
+      const rect = jobs.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (scrollY - (rect.top + scrollY)) / jobs.offsetHeight));
+      traveler.style.marginLeft = `${Math.sin(progress * Math.PI * 6) * 18}px`;
     };
 
     const animFrame = () => {
       currentRotation = lerp(currentRotation, 0, 0.08);
       traveler.style.transform = `rotate(${currentRotation}deg)`;
-
-      const travelerScreenY = window.innerHeight * 0.45;
+      const threshold = window.innerHeight * 0.45 + 60;
       dotsRef.current.forEach((dot, i) => {
         if (!dot || revealedCards.has(i)) return;
-        const dotRect = dot.getBoundingClientRect();
-        if (dotRect.top <= travelerScreenY + 60) {
+        if (dot.getBoundingClientRect().top <= threshold) {
           revealedCards.add(i);
-          const card = cardsRef.current[i];
-          if (card) card.classList.add('visible');
+          cardsRef.current[i]?.classList.add('visible');
         }
       });
-
       rafId = requestAnimationFrame(animFrame);
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    document.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     rafId = requestAnimationFrame(animFrame);
-
     return () => {
       window.removeEventListener('scroll', onScroll);
-      document.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(rafId);
     };
   }, []);
 
   return (
     <section id="experience" className="exp-section" ref={sectionRef}>
-
-      {/* Title — animates in on scroll */}
       <p className={`exp-sec-label exp-reveal${titleInView ? ' exp-reveal--visible' : ''}`}
          style={{ animationDelay: '0s' }}>
         // Career
@@ -187,69 +158,66 @@ export default function Experience() {
         The Road So Far
       </h2>
 
-      <div className="exp-road-wrap">
-        <div className="exp-jobs-container" ref={jobsContainerRef}>
-          <div className="exp-road-strip" />
-          <div className="exp-road-dashes" />
-          <div className="exp-road-edge-l" />
-          <div className="exp-road-edge-r" />
+      <div className="exp-wrap">
 
-          <div className="exp-traveler-sticky">
-            <div className="exp-traveler" ref={travelerRef}>
-              <div className="exp-traveler-icon">🧑‍💻</div>
-            </div>
+        {/* Visual road — purely decorative, centered with CSS */}
+        <div className="exp-road" aria-hidden="true">
+          <div className="exp-road__dashes" />
+        </div>
+
+        {/* Traveler sticks to viewport center as you scroll */}
+        <div className="exp-traveler-rail">
+          <div className="exp-traveler" ref={travelerRef}>
+            <span>🧑‍💻</span>
           </div>
+        </div>
 
+        {/* All job stops */}
+        <div className="exp-stops" ref={jobsRef}>
           {JOBS.map((job, i) => {
             const side = i % 2 === 0 ? 'left' : 'right';
             return (
-              <div key={i} className={`exp-job-stop ${side}`}>
-                <div className="exp-card-col">
-                  <div
-                    className="exp-job-card"
-                    ref={(el) => { cardsRef.current[i] = el; }}
-                    onClick={() => setModalJob(job)}
-                  >
-                    <p className="exp-jc-year">{job.year}</p>
-                    <h3 className="exp-jc-title">{job.title}</h3>
-                    <p className="exp-jc-company">{job.company}</p>
-                    <p className="exp-jc-desc">{job.snippet}</p>
-                    <div className="exp-jc-tags">
-                      {job.tags.map((t, ti) => (
-                        <span key={ti} className="exp-jc-tag">{t}</span>
-                      ))}
-                    </div>
-                    <p className="exp-jc-cta">Read more →</p>
+              <div key={i} className={`exp-stop exp-stop--${side}`}>
+
+                {/* The dot sits at position: absolute, left: 50% of exp-stops */}
+                <div
+                  className="exp-dot"
+                  ref={(el) => { dotsRef.current[i] = el; }}
+                />
+
+                {/* Card floats to left or right of center */}
+                <div
+                  className="exp-card"
+                  ref={(el) => { cardsRef.current[i] = el; }}
+                  onClick={() => setModalJob(job)}
+                >
+                  <p className="exp-card__year">{job.year}</p>
+                  <h3 className="exp-card__title">{job.title}</h3>
+                  <p className="exp-card__company">{job.company}</p>
+                  <p className="exp-card__snippet">{job.snippet}</p>
+                  <div className="exp-card__tags">
+                    {job.tags.map((t, ti) => (
+                      <span key={ti} className="exp-card__tag">{t}</span>
+                    ))}
                   </div>
+                  <p className="exp-card__cta">Read more →</p>
                 </div>
-                <div className="exp-road-col">
-                  <div
-                    className="exp-milestone-dot"
-                    ref={(el) => { dotsRef.current[i] = el; }}
-                  />
-                </div>
-                {/* Empty spacer col to balance layout on both sides */}
-                <div className="exp-card-col exp-card-col--spacer" />
+
               </div>
             );
           })}
-
-          <div style={{ height: '120px', position: 'relative', zIndex: 1 }} />
+          <div className="exp-stops__spacer" />
         </div>
 
-        <div className="exp-road-end">
-          <div className="exp-road-end-sign">
-            <div className="exp-road-end-sign-board">
-              <span className="exp-road-end-sign-top">Route 2026</span>
-              <span className="exp-road-end-sign-main">
-                <span className="exp-road-end-sign-star">✦</span>
-                Still Travelling
-                <span className="exp-road-end-sign-star">✦</span>
-              </span>
-              <span className="exp-road-end-sign-bottom">More stops ahead</span>
-            </div>
+        {/* End sign */}
+        <div className="exp-end">
+          <div className="exp-end__board">
+            <span className="exp-end__top">Route 2026</span>
+            <span className="exp-end__main">✦ Still Travelling ✦</span>
+            <span className="exp-end__sub">More stops ahead</span>
           </div>
         </div>
+
       </div>
 
       <Modal job={modalJob} onClose={closeModal} />

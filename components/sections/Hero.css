@@ -18,17 +18,13 @@
 }
 
 /* ─── Animation utilities ─────────────────────────────────── */
-
-/* Hidden until ready — stays invisible, no animation */
 .seq-hidden {
   opacity: 0;
 }
 
-/* Fired once ready=true — plays fadeUp then stays visible */
 .seq-fade {
   opacity: 0;
   animation: fadeUp 0.65s ease forwards;
-  /* animation-delay set inline per element */
 }
 
 /* ─── Left column ─────────────────────────────────────────── */
@@ -59,7 +55,6 @@
   box-shadow: 0 8px 32px rgba(255, 106, 0, 0.12);
 }
 
-/* Lanyard canvas must fill the container */
 .hero-right > div,
 .hero-right canvas {
   width: 100% !important;
@@ -168,6 +163,113 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   MAP CARD
+   ═══════════════════════════════════════════════════════════ */
+
+/* Strip padding so the map fills the card edge-to-edge */
+.hero-card--map {
+  padding: 0;
+  overflow: hidden;
+  cursor: default;
+  /* keep the card hover but don't shift the map */
+}
+
+/* Wrapper is the positioning context */
+.melb-map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 140px;
+  border-radius: 0.875rem;
+  overflow: hidden;
+}
+
+/* Leaflet container fills the wrapper */
+.melb-leaflet-map {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 140px;
+  border-radius: 0.875rem;
+  z-index: 0;
+}
+
+/* Orange tint overlay — tints the dark tiles to match theme */
+.melb-map-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 106, 0, 0.07);
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 0.875rem;
+}
+
+/* ─── Pulse marker (injected via DivIcon HTML) ────────────── */
+.melb-marker {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Solid core dot */
+.melb-pin-core {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff6a00;
+  box-shadow: 0 0 8px rgba(255, 106, 0, 0.9), 0 0 20px rgba(255, 106, 0, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+/* Shared ring styles */
+.melb-pulse-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 106, 0, 0.7);
+  animation: melbRingPulse 2.4s ease-out infinite;
+  width: 10px;
+  height: 10px;
+}
+
+.melb-pulse-ring--1 { animation-delay: 0s; }
+.melb-pulse-ring--2 { animation-delay: 0.7s; }
+.melb-pulse-ring--3 { animation-delay: 1.4s; }
+
+@keyframes melbRingPulse {
+  0%   { width: 10px;  height: 10px;  opacity: 0.9; border-color: rgba(255,106,0,0.8); }
+  100% { width: 52px;  height: 52px;  opacity: 0;   border-color: rgba(255,106,0,0); }
+}
+
+/* ─── Location label ──────────────────────────────────────── */
+.melb-map-label {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(14, 14, 14, 0.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 106, 0, 0.25);
+  border-radius: 2rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  color: #ff6a00;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 20;
+  white-space: nowrap;
+}
+
 /* ─── Mobile ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero {
@@ -192,5 +294,10 @@
 
   .hero-intro h1 {
     font-size: 2rem;
+  }
+
+  .melb-map-wrapper,
+  .melb-leaflet-map {
+    min-height: 160px;
   }
 }

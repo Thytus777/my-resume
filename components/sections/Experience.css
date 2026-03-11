@@ -1,14 +1,17 @@
 /* ── VARIABLES ── */
 :root {
-  --exp-accent: #ff6a00;
-  --exp-accent-light: #ff8c00;
-  --exp-bg: #0a0a0a;
-  --exp-road: #1c1c1e;
-  --exp-road-line: #ff6a00;
-  --exp-text: #e2ddd4;
-  --exp-muted: #888;
-  --exp-card-bg: rgba(20, 20, 20, 0.95);
+  --exp-accent:      #ff6a00;
+  --exp-accent-lite: #ff8c00;
+  --exp-bg:          #0a0a0a;
+  --exp-road-bg:     #1c1c1e;
+  --exp-text:        #e2ddd4;
+  --exp-muted:       #888;
+  --exp-card-bg:     rgba(20, 20, 20, 0.95);
   --exp-card-border: rgba(255, 106, 0, 0.2);
+
+  /* Road geometry — change these two values to move everything */
+  --road-width:  220px;
+  --road-center: 50%; /* center of the road relative to .exp-wrap */
 }
 
 /* ── SECTION ── */
@@ -18,7 +21,6 @@
   overflow: clip;
   color: var(--exp-text);
   position: relative;
-  max-width: 100%;
   scroll-margin-top: 80px;
 }
 
@@ -42,18 +44,361 @@
   margin-bottom: 2rem;
 }
 
-/* ── TITLE SCROLL-REVEAL ── */
-.exp-reveal {
-  opacity: 0;
-}
-
-.exp-reveal--visible {
-  animation: expFadeUp 0.7s ease forwards;
-}
-
+/* ── REVEAL ── */
+.exp-reveal { opacity: 0; }
+.exp-reveal--visible { animation: expFadeUp 0.7s ease forwards; }
 @keyframes expFadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── OUTER WRAP ── */
+.exp-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ─────────────────────────────────────────────
+   ROAD
+   Centered using left + translateX so the
+   visual road center is exactly at --road-center.
+   Everything else that must align with the road
+   uses the same anchor: left: var(--road-center).
+───────────────────────────────────────────── */
+.exp-road {
+  /* Stretch full height of the wrap */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Center the road strip */
+  left: var(--road-center);
+  transform: translateX(-50%);
+  width: var(--road-width);
+  background: var(--exp-road-bg);
+  z-index: 0;
+  /* top/bottom fade */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 80px,
+    black calc(100% - 80px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 80px,
+    black calc(100% - 80px),
+    transparent 100%
+  );
+}
+
+/* Side kerbs */
+.exp-road::before,
+.exp-road::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 3px;
+  background: rgba(255, 255, 255, 0.05);
+}
+.exp-road::before { left: 0; }
+.exp-road::after  { right: 0; }
+
+/* Scrolling dashes */
+.exp-road__dashes {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--exp-accent) 0px,
+    var(--exp-accent) 28px,
+    transparent 28px,
+    transparent 80px
+  );
+  background-size: 100% 80px;
+  animation: dashScroll 1.2s linear infinite;
+  opacity: 0.6;
+}
+@keyframes dashScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 80px; }
+}
+
+/* ─────────────────────────────────────────────
+   TRAVELER
+   Also anchored to road-center so it always
+   rides exactly over the road.
+───────────────────────────────────────────── */
+.exp-traveler-rail {
+  position: sticky;
+  top: 45vh;
+  height: 0;
+  z-index: 50;
+  pointer-events: none;
+  /* Use the same anchor as the road */
+  display: flex;
+  justify-content: center;
+}
+
+.exp-traveler {
+  position: relative;
+  top: -24px;
+  font-size: 2.2rem;
+  line-height: 1;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.8));
+  animation: travelerBob 2s ease-in-out infinite;
+}
+@keyframes travelerBob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%       { transform: translateY(-5px) rotate(3deg); }
+}
+
+/* ─────────────────────────────────────────────
+   STOPS CONTAINER
+   This is the positioning parent for .exp-dot.
+   It spans the full width of .exp-wrap so that
+   left: 50% inside it lands exactly on the road.
+───────────────────────────────────────────── */
+.exp-stops {
+  position: relative;
+  padding-top: 160px;
+  z-index: 1;
+}
+
+.exp-stops__spacer { height: 120px; }
+
+/* ─────────────────────────────────────────────
+   DOT
+   position: absolute on .exp-stops
+   left: var(--road-center) + translateX(-50%)
+   = exactly the road centerline, every time.
+   No flex, no columns, no ambiguity.
+───────────────────────────────────────────── */
+.exp-dot {
+  position: absolute;
+  /* Horizontal: road centerline */
+  left: var(--road-center);
+  transform: translateX(-50%);
+  /* Vertical: top of each stop block — handled per-stop below */
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--exp-accent);
+  border: 3px solid var(--exp-bg);
+  box-shadow:
+    0 0 0 3px rgba(255, 106, 0, 0.25),
+    0 0 16px rgba(255, 106, 0, 0.5);
+  z-index: 10;
+}
+
+/* ─────────────────────────────────────────────
+   STOP
+   Each stop is a relatively-positioned block
+   with min-height. The dot is absolute inside
+   .exp-stops (not inside .exp-stop), so we set
+   its top via nth-child or a CSS custom property.
+
+   Instead — simpler: make .exp-stop position:relative
+   and put the dot INSIDE it as absolute. The dot's
+   left: 50% is then 50% of .exp-stop, which is
+   100% wide = same 50% as .exp-wrap. ✓
+───────────────────────────────────────────── */
+.exp-stop {
+  position: relative; /* dot is absolute child of this */
+  min-height: 280px;
+  display: flex;        /* only used to size the card area */
+  align-items: flex-start;
+}
+
+/* Dot inside stop — left:50% of stop = left:50% of wrap = road center ✓ */
+.exp-stop .exp-dot {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ─────────────────────────────────────────────
+   CARD
+   Absolutely positioned so it never affects
+   the dot's centering math.
+───────────────────────────────────────────── */
+.exp-card {
+  position: absolute;
+  top: 1.2rem;
+  width: calc(50% - 140px); /* half wrap minus half road width + gap */
+  max-width: 420px;
+  background: var(--exp-card-bg);
+  border: 1px solid var(--exp-card-border);
+  border-radius: 12px;
+  padding: 1.6rem 1.8rem;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  opacity: 0;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+  transition:
+    transform  0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity    0.7s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Left card: sits to the left of center, slides in from left */
+.exp-stop--left .exp-card {
+  right: calc(50% + 120px);
+  transform: translateX(-30px);
+}
+
+/* Right card: sits to the right of center, slides in from right */
+.exp-stop--right .exp-card {
+  left: calc(50% + 120px);
+  transform: translateX(30px);
+}
+
+/* Revealed state */
+.exp-card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.exp-card:hover {
+  box-shadow: 0 8px 48px rgba(255, 106, 0, 0.12), 0 4px 32px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 106, 0, 0.45);
+}
+
+.exp-card__year {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--exp-accent);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.exp-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.exp-card__company {
+  font-size: 0.8rem;
+  color: var(--exp-accent-lite);
+  margin-bottom: 0.9rem;
+  opacity: 0.85;
+}
+
+.exp-card__snippet {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--exp-muted);
+}
+
+.exp-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.exp-card__tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+  background: rgba(255, 106, 0, 0.08);
+  border: 1px solid rgba(255, 106, 0, 0.18);
+  color: var(--exp-accent);
+  text-transform: uppercase;
+}
+
+.exp-card__cta {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--exp-accent);
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-top: 0.8rem;
+  transition: opacity 0.2s, letter-spacing 0.2s;
+}
+.exp-card:hover .exp-card__cta {
+  opacity: 1;
+  letter-spacing: 0.18em;
+}
+
+/* ── END SIGN ── */
+.exp-end {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 3rem 1rem 4rem;
+}
+.exp-end::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(to bottom, #3a3a3a, #1a1a1a);
+  border-radius: 2px;
+}
+.exp-end__board {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: #1a1a1a;
+  border: 2px solid #ff6a00;
+  border-radius: 6px;
+  padding: 1rem 2.2rem 0.9rem;
+  box-shadow:
+    0 0 0 4px #0a0a0a,
+    0 0 0 6px rgba(255, 106, 0, 0.25),
+    0 8px 40px rgba(0, 0, 0, 0.6);
+}
+.exp-end__board::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255,106,0,0.6), rgba(255,140,0,0.8), rgba(255,106,0,0.6), transparent);
+  border-radius: 6px 6px 0 0;
+}
+.exp-end__top {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: #ff6a00;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  opacity: 0.7;
+}
+.exp-end__main {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #f0f0f0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.exp-end__sub {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: #444;
+  text-transform: uppercase;
+  margin-top: 0.35rem;
 }
 
 /* ── MODAL ── */
@@ -71,12 +416,10 @@
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
-
 .exp-modal-overlay.open {
   opacity: 1;
   pointer-events: all;
 }
-
 .exp-modal-box {
   background: #0a0a0a;
   border: 1px solid rgba(255, 106, 0, 0.22);
@@ -91,20 +434,16 @@
   max-height: 90vh;
   overflow-y: auto;
 }
-
 .exp-modal-overlay.open .exp-modal-box {
   transform: translateY(0) scale(1);
 }
-
 .exp-modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 1rem; right: 1rem;
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #666;
-  width: 30px;
-  height: 30px;
+  width: 30px; height: 30px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 0.85rem;
@@ -113,12 +452,7 @@
   justify-content: center;
   transition: all 0.2s;
 }
-
-.exp-modal-close:hover {
-  color: #fff;
-  border-color: var(--exp-accent);
-}
-
+.exp-modal-close:hover { color: #fff; border-color: var(--exp-accent); }
 .exp-m-year {
   font-size: 0.65rem;
   letter-spacing: 0.22em;
@@ -126,44 +460,38 @@
   text-transform: uppercase;
   margin-bottom: 0.4rem;
 }
-
 .exp-m-title {
   font-size: 1.65rem;
   font-weight: 800;
   color: #fff;
   margin-bottom: 0.25rem;
 }
-
 .exp-m-company {
   font-size: 0.78rem;
-  color: var(--exp-accent-light);
+  color: var(--exp-accent-lite);
   opacity: 0.8;
   margin-bottom: 1.2rem;
 }
-
 .exp-m-divider {
   height: 1px;
   background: linear-gradient(90deg, var(--exp-accent), transparent);
   opacity: 0.2;
   margin-bottom: 1.2rem;
 }
-
 .exp-m-desc {
   font-size: 0.8rem;
   line-height: 1.85;
   color: var(--exp-muted);
   margin-bottom: 1.2rem;
 }
-
 .exp-m-highlights {
   list-style: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.4rem;
-  padding: 0;
 }
-
 .exp-m-highlights li {
   font-size: 0.76rem;
   color: #ccc;
@@ -171,20 +499,13 @@
   position: relative;
   line-height: 1.6;
 }
-
 .exp-m-highlights li::before {
   content: '▸';
   position: absolute;
   left: 0;
   color: var(--exp-accent);
 }
-
-.exp-m-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
+.exp-m-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .exp-m-tag {
   font-size: 0.6rem;
   letter-spacing: 0.08em;
@@ -196,464 +517,28 @@
   text-transform: uppercase;
 }
 
-/* ── ROAD WRAP ── */
-.exp-road-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-/* no fades on the outer wrap */
-
-/* ── STICKY TRAVELER ── */
-.exp-traveler-sticky {
-  position: sticky;
-  top: 45vh;
-  height: 0;
-  z-index: 50;
-  pointer-events: none;
-  display: flex;
-  justify-content: center;
-}
-
-.exp-traveler {
-  position: relative;
-  top: -24px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.8));
-  transition: transform 0.15s ease;
-}
-
-.exp-traveler-icon {
-  font-size: 2.2rem;
-  line-height: 1;
-  animation: expTravelerBob 2s ease-in-out infinite;
-}
-
-.exp-traveler::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 28px;
-  height: 8px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  filter: blur(4px);
-  animation: expShadowPulse 2s ease-in-out infinite;
-}
-
-/* ── JOBS CONTAINER ── */
-.exp-jobs-container {
-  position: relative;
-  /* Extra road space before the first card so the top fade doesn't clip it */
-  padding-top: 160px;
-}
-
-/* Road fades — scoped to jobs-container so the end sign is unaffected */
-.exp-jobs-container::before,
-.exp-jobs-container::after {
-  content: '';
-  position: absolute;
-  /* Center the fade over the road strip (220px wide, offset -110px from 50%) */
-  left: calc(50% - 110px);
-  width: 220px;
-  height: 160px;
-  z-index: 20;
-  pointer-events: none;
-}
-
-.exp-jobs-container::before {
-  top: 0;
-  background: linear-gradient(to bottom, #0a0a0a 0%, transparent 100%);
-}
-
-.exp-jobs-container::after {
-  bottom: 0;
-  background: linear-gradient(to top, #0a0a0a 0%, transparent 100%);
-}
-
-.exp-road-strip {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  transform: translateX(-110px);
-  width: 220px;
-  background: var(--exp-road);
-  z-index: 0;
-}
-
-.exp-road-strip::before,
-.exp-road-strip::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.exp-road-strip::before { left: 0; }
-.exp-road-strip::after  { right: 0; }
-
-.exp-road-dashes {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  transform: translateX(-1px);
-  width: 3px;
-  z-index: 1;
-  opacity: 0.6;
-  background: repeating-linear-gradient(
-    to bottom,
-    var(--exp-road-line) 0px,
-    var(--exp-road-line) 28px,
-    transparent 28px,
-    transparent 80px
-  );
-  background-size: 100% 80px;
-  animation: expDashScroll 1.2s linear infinite;
-}
-
-.exp-road-edge-l,
-.exp-road-edge-r {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: rgba(255, 255, 255, 0.03);
-  z-index: 1;
-}
-
-.exp-road-edge-l { left: calc(50% - 55px); }
-.exp-road-edge-r { left: calc(50% + 55px); }
-
-/* ── JOB STOP ── */
-.exp-job-stop {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 0;
-  padding: 0;
-  min-height: 280px;
-}
-
-.exp-job-stop.left  { flex-direction: row; }
-.exp-job-stop.right { flex-direction: row-reverse; }
-
-/* Road column (center) */
-.exp-road-col {
-  flex: 0 0 220px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-/*
-  Card column — symmetrical on both sides.
-  The inner padding on the road-facing side controls distance from road.
-  Left card: pad-right pushes it away from road edge
-  Right card: pad-left pushes it away from road edge
-*/
-.exp-card-col {
-  flex: 1;
-  padding: 2rem 1.5rem 2rem 2.5rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-}
-
-/* Right row: the card col visually sits to the right of the road.
-   More padding on the left (road-facing) side pushes card away from road */
-.exp-job-stop.right .exp-card-col:first-child {
-  justify-content: flex-start;
-  padding: 2rem 1.5rem 2rem 3.5rem;
-}
-
-/* Spacer col on the empty side */
-.exp-card-col--spacer {
-  justify-content: flex-start;
-}
-
-/* Milestone dot */
-.exp-milestone-dot {
-  position: absolute;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--exp-accent);
-  border: 3px solid var(--exp-bg);
-  box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.25), 0 0 16px rgba(255, 106, 0, 0.5);
-  z-index: 5;
-}
-
-/* ── JOB CARD ── */
-.exp-job-card {
-  background: var(--exp-card-bg);
-  border: 1px solid var(--exp-card-border);
-  border-radius: 12px;
-  padding: 1.6rem 1.8rem;
-  max-width: 420px;
-  width: 100%;
-  backdrop-filter: blur(12px);
-  position: relative;
-  cursor: pointer;
-  transform: translateX(40px);
-  opacity: 0;
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.7s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
-}
-
-.exp-job-stop.right .exp-job-card {
-  transform: translateX(-40px);
-}
-
-.exp-job-card.visible {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.exp-job-card:hover {
-  box-shadow: 0 8px 48px rgba(255, 106, 0, 0.12), 0 4px 32px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 106, 0, 0.45);
-}
-
-.exp-jc-year {
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  color: var(--exp-accent);
-  text-transform: uppercase;
-  margin-bottom: 0.4rem;
-}
-
-.exp-jc-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 0.25rem;
-  line-height: 1.2;
-}
-
-.exp-jc-company {
-  font-size: 0.8rem;
-  color: var(--exp-accent-light);
-  margin-bottom: 0.9rem;
-  opacity: 0.85;
-}
-
-.exp-jc-desc {
-  font-size: 0.8rem;
-  line-height: 1.7;
-  color: var(--exp-muted);
-}
-
-.exp-jc-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 1rem;
-}
-
-.exp-jc-tag {
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  padding: 0.25rem 0.65rem;
-  border-radius: 100px;
-  background: rgba(255, 106, 0, 0.08);
-  border: 1px solid rgba(255, 106, 0, 0.18);
-  color: var(--exp-accent);
-  text-transform: uppercase;
-}
-
-.exp-jc-cta {
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  color: var(--exp-accent);
-  text-transform: uppercase;
-  opacity: 0.6;
-  margin-top: 0.8rem;
-  transition: opacity 0.2s, letter-spacing 0.2s;
-}
-
-.exp-job-card:hover .exp-jc-cta {
-  opacity: 1;
-  letter-spacing: 0.18em;
-}
-
-/* ── ROAD END SIGN ── */
-.exp-road-end {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  padding: 3rem 1rem 4rem;
-}
-
-/* Post */
-.exp-road-end::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 8px;
-  height: 100%;
-  background: linear-gradient(to bottom, #3a3a3a, #1a1a1a);
-  border-radius: 2px;
-  z-index: 0;
-}
-
-.exp-road-end-sign {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-}
-
-/* Main sign board */
-.exp-road-end-sign-board {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  background: #1a1a1a;
-  border: 2px solid #ff6a00;
-  border-radius: 6px;
-  padding: 1rem 2.2rem 0.9rem;
-  position: relative;
-  box-shadow:
-    0 0 0 4px #0a0a0a,
-    0 0 0 6px rgba(255, 106, 0, 0.25),
-    0 8px 40px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255,255,255,0.04);
-}
-
-/* Reflective top stripe like a real road sign */
-.exp-road-end-sign-board::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgba(255,106,0,0.6), rgba(255,140,0,0.8), rgba(255,106,0,0.6), transparent);
-  border-radius: 6px 6px 0 0;
-}
-
-.exp-road-end-sign-top {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  color: #ff6a00;
-  text-transform: uppercase;
-  margin-bottom: 0.35rem;
-  opacity: 0.7;
-}
-
-.exp-road-end-sign-main {
-  font-family: 'Oxanium', cursive;
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  color: #f0f0f0;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.exp-road-end-sign-star {
-  color: #ff6a00;
-  margin-left: 0.4em;
-}
-
-.exp-road-end-sign-bottom {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 0.2em;
-  color: #444;
-  text-transform: uppercase;
-  margin-top: 0.35rem;
-}
-
-/* Bolt details on corners */
-.exp-road-end-sign-board::after {
-  content: '• •';
-  position: absolute;
-  bottom: 6px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 0.4rem;
-  color: rgba(255,106,0,0.3);
-  letter-spacing: 2.8em;
-  padding-left: 2.8em;
-}
-
-/* ── ANIMATIONS ── */
-@keyframes expTravelerBob {
-  0%, 100% { transform: translateY(0) rotate(-3deg); }
-  50%       { transform: translateY(-5px) rotate(3deg); }
-}
-
-@keyframes expShadowPulse {
-  0%, 100% { transform: translateX(-50%) scaleX(1);   opacity: 0.5; }
-  50%       { transform: translateX(-50%) scaleX(0.7); opacity: 0.3; }
-}
-
-@keyframes expDashScroll {
-  from { background-position: 0 0; }
-  to   { background-position: 0 80px; }
-}
-
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .exp-job-stop.left,
-  .exp-job-stop.right {
-    flex-direction: column;
-    align-items: center;
+  .exp-stop {
+    min-height: 0;
+    padding-bottom: 2rem;
   }
 
-  .exp-card-col {
-    padding: 1rem 1.2rem;
-    justify-content: center;
-  }
-
-  .exp-card-col--spacer {
-    display: none;
-  }
-
-  .exp-road-col {
-    flex: 0 0 60px;
-    width: 60px;
-  }
-
-  .exp-road-strip {
-    width: 60px;
-    transform: translateX(-30px);
-  }
-
-  .exp-road-edge-l { left: calc(50% - 15px); }
-  .exp-road-edge-r { left: calc(50% + 15px); }
-
-  .exp-job-card {
-    transform: translateY(30px) !important;
+  /* On mobile the card goes below the dot, full width */
+  .exp-card {
+    position: relative;
+    top: auto; left: auto; right: auto;
+    width: calc(100% - 2rem);
     max-width: 100%;
+    margin: 4rem auto 0;
+    transform: translateY(20px) !important;
   }
 
-  .exp-job-card.visible {
+  .exp-card.visible {
     transform: translateY(0) !important;
+  }
+
+  .exp-road {
+    width: 60px;
   }
 }
