@@ -51,7 +51,7 @@ export default function MelbourneMap() {
     <div className="melb-map-wrapper">
       <MapContainer
         center={[MELB.lat, MELB.lng]}
-        zoom={13}
+        zoom={11}
         zoomControl={false}
         attributionControl={false}
         className="melb-leaflet-map"

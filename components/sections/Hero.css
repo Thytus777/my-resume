@@ -2,74 +2,39 @@
 .hero {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 7rem 4rem 4rem;
+  padding: 7rem 2rem 3rem;
   background: transparent;
 }
 
-/* ─── Two-column row ──────────────────────────────────────── */
-.hero-layout {
-  display: flex;
-  align-items: stretch;
-  gap: 2rem;
-  width: 100%;
-  max-width: 1300px;
-}
-
 /* ─── Animation utilities ─────────────────────────────────── */
-.seq-hidden {
-  opacity: 0;
-}
+.seq-hidden { opacity: 0; }
 
 .seq-fade {
   opacity: 0;
   animation: fadeUp 0.65s ease forwards;
 }
 
-/* ─── Left column ─────────────────────────────────────────── */
-.hero-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  justify-content: center;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Right column ────────────────────────────────────────── */
-.hero-right {
-  flex: 1;
-  min-height: 400px;
-  border-radius: 0.875rem;
-  overflow: visible;
-  border: 1px solid rgba(255, 106, 0, 0.15);
-  background: rgba(14, 14, 14, 0.644);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  position: relative;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+/* ─── Intro ───────────────────────────────────────────────── */
+.hero-intro {
+  width: 100%;
+  margin-bottom: 1.25rem;
 }
 
-.hero-right:hover {
-  border-color: rgba(255, 106, 0, 0.45);
-  box-shadow: 0 8px 32px rgba(255, 106, 0, 0.12);
-}
-
-.hero-right > div,
-.hero-right canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
-/* ─── Intro text ──────────────────────────────────────────── */
 .hero-intro h1 {
   font-family: 'Oxanium', cursive;
   font-size: clamp(2rem, 3.5vw, 3.2rem);
   font-weight: 700;
   line-height: 1.2;
   color: #f0f0f0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .hero-name {
@@ -80,121 +45,436 @@
 
 .hero-role {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: #999;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 500;
 }
 
-/* ─── Grid ────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   UNIFIED BENTO GRID — full viewport width
+   12 columns, lanyard right 3 cols × all 4 rows
+   ═══════════════════════════════════════════════════════════ */
+
 .hero-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.875rem;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(3, min-content);
+  gap: 0.65rem;
+  width: 100%;
 }
 
-/* ─── Cards ───────────────────────────────────────────────── */
+/* ─── Base card ───────────────────────────────────────────── */
 .hero-card {
   background: rgba(14, 14, 14, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 106, 0, 0.15);
   border-radius: 0.875rem;
-  padding: 1.25rem 1.5rem;
+  padding: 1.2rem 1.4rem;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-card--large {
-  grid-column: 1 / -1;
-  padding: 1.5rem 2rem;
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.03) 0%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.hero-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 106, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(255, 106, 0, 0.1);
+}
+
+/* ─── Corner accent ───────────────────────────────────────── */
+.hero-card-corner {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+.hero-card-corner::before,
+.hero-card-corner::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 106, 0, 0.22);
+  border-radius: 1px;
+}
+.hero-card-corner::before { width: 2px; height: 100%; right: 0; top: 0; }
+.hero-card-corner::after  { width: 100%; height: 2px; right: 0; top: 0; }
+
+/* ─── Card typography ─────────────────────────────────────── */
+.hero-card-icon {
+  font-size: 1.15rem;
+  color: #ff6a00;
+  margin-bottom: 0.5rem;
+}
+
+.hero-card-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.67rem;
+  color: #555;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-card-value {
+  font-family: 'Oxanium', cursive;
+  font-size: 0.88rem;
+  color: #ccc;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CELL PLACEMENT
+   ═══════════════════════════════════════════════════════════
+
+   col:  1  2  3  4  5  6  7  8  9  10  11  12
+   row1: [———— About ————————————————] [—— Lanyard ——]
+   row2: [——— Education ——] [ Avail  ] [—— Lanyard ——]
+   row3: [——— Activity ———————————————] [—— Lanyard ——]
+         ^—————— left 9 cols ——————————^  ^ right 3 ^
+
+   Map spans rows 2–3 inside the left 9, beside education+avail
+   actual:
+   row2: [—— Education ——] [ Avail ] [ Map ] [— Lanyard —]
+   row3: [———————— Activity ————————] [ Map ] [— Lanyard —]
+*/
+
+.hero-card--about {
+  grid-column: 1 / 10;
+  grid-row: 1;
   display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.hero-card--large .hero-card-icon {
-  font-size: 1.5rem;
-  margin-bottom: 0;
-  flex-shrink: 0;
-  margin-top: 2px;
+/* Placeholder — holds grid area without inflating row heights */
+.hero-card--lanyard-anchor {
+  grid-column: 10 / 13;
+  grid-row: 1 / 4;
+  position: relative;
+  background: transparent;
+  border: none;
+  padding: 0;
+  pointer-events: none;
 }
 
-.hero-card--large .hero-card-content {
+.hero-card--lanyard {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  overflow: visible;
+  pointer-events: all;
+}
+.hero-card--lanyard:hover { transform: none; }
+.hero-card--lanyard > div,
+.hero-card--lanyard canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  border-radius: 0.875rem;
+}
+
+/* Row 2: Education 5 cols | Availability 2 cols | Map 2 cols (spans rows 2–3) */
+.hero-card--education {
+  grid-column: 1 / 6;
+  grid-row: 2;
+}
+
+.hero-card--availability {
+  grid-column: 6 / 8;
+  grid-row: 2;
+}
+
+.hero-card--map {
+  grid-column: 8 / 10;
+  grid-row: 2 / 4;
+  padding: 0;
+  overflow: hidden;
+  cursor: default;
+}
+
+/* Row 3: Activity 1–6 | Explore button 6–8 | Map spans rows 2–3 at 8–10 */
+.hero-card--activity {
+  grid-column: 1 / 6;
+  grid-row: 3;
   display: flex;
   flex-direction: column;
 }
 
-.hero-card--large .hero-card-title { font-size: 1rem; }
-.hero-card--large .hero-card-text  { font-size: 0.95rem; line-height: 1.65; }
-
-.hero-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 106, 0, 0.45);
-  box-shadow: 0 8px 32px rgba(255, 106, 0, 0.12);
+.hero-card--explore {
+  grid-column: 6 / 8;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  background: rgba(255, 106, 0, 0.06);
+  text-decoration: none;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
-.hero-card-icon {
-  font-size: 1.35rem;
+.hero-card--explore:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 106, 0, 0.7);
+  background: rgba(255, 106, 0, 0.12);
+  box-shadow: 0 8px 32px rgba(255, 106, 0, 0.18);
+}
+
+.explore-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.explore-arrow {
+  font-size: 1.4rem;
   color: #ff6a00;
-  margin-bottom: 0.6rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
 }
 
-.hero-card-title {
+.hero-card--explore:hover .explore-arrow {
+  transform: translateY(4px);
+}
+
+.explore-label {
   font-family: 'Oxanium', cursive;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #f0f0f0;
-  margin-bottom: 0.4rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
 }
 
-.hero-card-text {
+.explore-sub {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.85rem;
-  color: #999;
-  line-height: 1.5;
-  margin: 0;
+  font-size: 0.65rem;
+  color: #ff6a00;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
 }
 
-/* ─── Keyframes ───────────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ═══════════════════════════════════════════════════════════
+   ABOUT CARD
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-card--about .hero-card-content { display: flex; flex-direction: column; }
+
+.about-text {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.865rem;
+  color: #aaa;
+  line-height: 1.7;
+  margin: 0;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAME CARD
+   ═══════════════════════════════════════════════════════════ */
+
+.name-card-text {
+  font-family: 'Oxanium', cursive;
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6a00, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.name-card-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  color: #444;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ═══════════════════════════════════════════════════════════ */
+
+.avail-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.32rem 0.75rem;
+  background: rgba(255, 106, 0, 0.08);
+  border: 1px solid rgba(255, 106, 0, 0.25);
+  border-radius: 2rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.76rem;
+  color: #ff6a00;
+  letter-spacing: 0.06em;
+  width: fit-content;
+  margin-bottom: 0.5rem;
+}
+
+.avail-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff6a00;
+  flex-shrink: 0;
+  animation: availPulse 2s ease-in-out infinite;
+}
+
+@keyframes availPulse {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 0 0   rgba(255,106,0,0.5); }
+  50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(255,106,0,0);   }
+}
+
+.avail-types {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.avail-type {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.67rem;
+  color: #555;
+  padding: 0.14rem 0.48rem;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLOCK CARD
+   ═══════════════════════════════════════════════════════════ */
+
+.clock-time {
+  font-family: 'Oxanium', cursive;
+  font-size: 1.95rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 0.28rem;
+}
+
+.clock-time .clock-colon {
+  color: #ff6a00;
+  animation: colonBlink 1s step-end infinite;
+}
+
+@keyframes colonBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.15; }
+}
+
+.clock-date {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  color: #444;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ACTIVITY HEATMAP
+   ═══════════════════════════════════════════════════════════ */
+
+.activity-grid {
+  display: flex;
+  gap: 3px;
+  margin-top: 0.45rem;
+}
+
+.activity-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.activity-cell {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: rgba(255, 106, 0, 0.07);
+  flex-shrink: 0;
+}
+
+.activity-cell[data-level="1"] { background: rgba(255, 106, 0, 0.2);  }
+.activity-cell[data-level="2"] { background: rgba(255, 106, 0, 0.42); }
+.activity-cell[data-level="3"] { background: rgba(255, 106, 0, 0.65); }
+.activity-cell[data-level="4"] { background: rgba(255, 106, 0, 0.9);  }
+
+.activity-cell:hover {
+  outline: 1.5px solid rgba(255, 106, 0, 0.7);
+  outline-offset: 1px;
+}
+
+.activity-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.activity-count {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+
+.activity-legend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.activity-legend-cell {
+  width: 8px;
+  height: 8px;
+  border-radius: 1.5px;
 }
 
 /* ═══════════════════════════════════════════════════════════
    MAP CARD
    ═══════════════════════════════════════════════════════════ */
 
-/* Strip padding so the map fills the card edge-to-edge */
-.hero-card--map {
-  padding: 0;
-  overflow: hidden;
-  cursor: default;
-  /* keep the card hover but don't shift the map */
-}
-
-/* Wrapper is the positioning context */
 .melb-map-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 140px;
+  min-height: 160px;
   border-radius: 0.875rem;
   overflow: hidden;
 }
 
-/* Leaflet container fills the wrapper */
 .melb-leaflet-map {
   width: 100% !important;
   height: 100% !important;
-  min-height: 140px;
+  min-height: 160px;
   border-radius: 0.875rem;
   z-index: 0;
 }
 
-/* Orange tint overlay — tints the dark tiles to match theme */
 .melb-map-overlay {
   position: absolute;
   inset: 0;
@@ -204,7 +484,6 @@
   border-radius: 0.875rem;
 }
 
-/* ─── Pulse marker (injected via DivIcon HTML) ────────────── */
 .melb-marker {
   position: relative;
   width: 48px;
@@ -214,7 +493,6 @@
   justify-content: center;
 }
 
-/* Solid core dot */
 .melb-pin-core {
   width: 10px;
   height: 10px;
@@ -225,7 +503,6 @@
   z-index: 2;
 }
 
-/* Shared ring styles */
 .melb-pulse-ring {
   position: absolute;
   inset: 0;
@@ -237,16 +514,15 @@
   height: 10px;
 }
 
-.melb-pulse-ring--1 { animation-delay: 0s; }
+.melb-pulse-ring--1 { animation-delay: 0s;   }
 .melb-pulse-ring--2 { animation-delay: 0.7s; }
 .melb-pulse-ring--3 { animation-delay: 1.4s; }
 
 @keyframes melbRingPulse {
-  0%   { width: 10px;  height: 10px;  opacity: 0.9; border-color: rgba(255,106,0,0.8); }
-  100% { width: 52px;  height: 52px;  opacity: 0;   border-color: rgba(255,106,0,0); }
+  0%   { width: 10px; height: 10px; opacity: 0.9; border-color: rgba(255,106,0,0.8); }
+  100% { width: 52px; height: 52px; opacity: 0;   border-color: rgba(255,106,0,0);   }
 }
 
-/* ─── Location label ──────────────────────────────────────── */
 .melb-map-label {
   position: absolute;
   bottom: 0.6rem;
@@ -270,34 +546,26 @@
   white-space: nowrap;
 }
 
-/* ─── Mobile ──────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .hero {
-    padding: 5rem 1.5rem 3rem;
-  }
+/* ═══════════════════════════════════════════════════════════
+   MOBILE  ≤ 900px
+   ═══════════════════════════════════════════════════════════ */
 
-  .hero-layout {
-    flex-direction: column;
-  }
-
-  .hero-right {
-    min-height: 420px;
-  }
+@media (max-width: 900px) {
+  .hero { padding: 5rem 1rem 2.5rem; }
 
   .hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
   }
 
-  .hero-card--large {
-    grid-column: auto;
-  }
+  .hero-card--lanyard      { grid-column: 1 / -1; grid-row: auto; min-height: 420px; }
+  .hero-card--about        { grid-column: 1 / -1; grid-row: auto; }
+  .hero-card--education    { grid-column: 1 / -1; grid-row: auto; }
+  .hero-card--availability { grid-column: 1 / -1; grid-row: auto; }
+  .hero-card--map          { grid-column: 1 / -1; grid-row: auto; }
+  .hero-card--activity     { grid-column: 1 / -1; grid-row: auto; }
 
-  .hero-intro h1 {
-    font-size: 2rem;
-  }
-
-  .melb-map-wrapper,
-  .melb-leaflet-map {
-    min-height: 160px;
-  }
+  .hero-intro h1 { font-size: 2rem; }
+  .clock-time    { font-size: 1.6rem; }
+  .melb-map-wrapper, .melb-leaflet-map { min-height: 180px; }
 }
