@@ -168,7 +168,7 @@ export default function Experience() {
         {/* Traveler sticks to viewport center as you scroll */}
         <div className="exp-traveler-rail">
           <div className="exp-traveler" ref={travelerRef}>
-            <span>🧑‍💻</span>
+            <img src="/roller_skating.png" alt="" className="exp-traveler__img" />
           </div>
         </div>
 

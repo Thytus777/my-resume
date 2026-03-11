@@ -156,7 +156,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.8));
+  /* filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.8)); */
   animation: travelerBob 2s ease-in-out infinite;
 }
 @keyframes travelerBob {
@@ -541,4 +541,10 @@
   .exp-road {
     width: 60px;
   }
+}
+
+.exp-traveler__img {
+  width: 170px;   /* adjust to taste */
+  height: auto;
+  object-fit: contain;
 }
