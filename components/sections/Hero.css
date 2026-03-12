@@ -26,6 +26,7 @@
 .hero-intro {
   width: 100%;
   margin-bottom: 1.25rem;
+  text-align: center;
 }
 
 .hero-intro h1 {
@@ -35,6 +36,7 @@
   line-height: 1.2;
   color: #f0f0f0;
   margin-bottom: 0.4rem;
+  text-align: center;
 }
 
 .hero-name {
@@ -49,6 +51,7 @@
   color: #999;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -554,18 +557,40 @@
   .hero { padding: 5rem 1rem 2.5rem; }
 
   .hero-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
   }
 
-  .hero-card--lanyard      { grid-column: 1 / -1; grid-row: auto; min-height: 420px; }
+  .hero-card--lanyard-anchor {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    min-height: 380px;
+  }
+
   .hero-card--about        { grid-column: 1 / -1; grid-row: auto; }
   .hero-card--education    { grid-column: 1 / -1; grid-row: auto; }
   .hero-card--availability { grid-column: 1 / -1; grid-row: auto; }
-  .hero-card--map          { grid-column: 1 / -1; grid-row: auto; }
+  .hero-card--map          { grid-column: 1 / -1; grid-row: auto; min-height: 200px; }
   .hero-card--activity     { grid-column: 1 / -1; grid-row: auto; }
+  .hero-card--explore      { grid-column: 1 / -1; grid-row: auto; min-height: 80px; }
 
-  .hero-intro h1 { font-size: 2rem; }
+  .hero-intro h1 { font-size: 2rem; text-align: center; }
+  .hero-role { text-align: center; }
+
   .clock-time    { font-size: 1.6rem; }
   .melb-map-wrapper, .melb-leaflet-map { min-height: 180px; }
+
+  .activity-grid { overflow-x: auto; }
+  
+  .about-text { font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 4rem 0.75rem 2rem; }
+  .hero-intro h1 { font-size: 1.6rem; }
+  .hero-role { font-size: 0.85rem; }
+  .hero-card { padding: 1rem 1rem; }
+  .about-text { font-size: 0.75rem; }
+  .hero-card-value { font-size: 0.8rem; }
+  .hero-card--lanyard-anchor { min-height: 320px; }
 }

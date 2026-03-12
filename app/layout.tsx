@@ -1,10 +1,14 @@
 import './globals.css';
 import Navbar from '../components/Navbar';
+import AppLoader from '../components/AppLoader';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Thytus Ben | Portfolio',
   description: 'My professional portfolio website',
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -20,8 +24,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+
       <body>
-        <main>{children}</main>
+        <AppLoader>
+          <Navbar />
+          <main>{children}</main>
+        </AppLoader>
       </body>
     </html>
   );

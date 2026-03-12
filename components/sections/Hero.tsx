@@ -146,6 +146,7 @@ export default function Hero({ ready = false }: HeroProps) {
             <span className="avail-type">Internship</span>
             <span className="avail-type">Grad Role</span>
             <span className="avail-type">Part-time</span>
+            <span className="avail-type">Full-time</span>
           </div>
         </div>
 

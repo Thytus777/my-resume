@@ -135,6 +135,19 @@ export default function Experience() {
           cardsRef.current[i]?.classList.add('visible');
         }
       });
+
+      // Mobile only: fade traveler when overlapping a card
+      if (window.innerWidth <= 768) {
+        const tRect = traveler.getBoundingClientRect();
+        const overlaps = cardsRef.current.some((card) => {
+          if (!card) return false;
+          const cRect = card.getBoundingClientRect();
+          return tRect.bottom > cRect.top && tRect.top < cRect.bottom;
+        });
+        traveler.style.opacity = overlaps ? '0.15' : '1';
+        traveler.style.transition = 'opacity 0.3s ease';
+      }
+
       rafId = requestAnimationFrame(animFrame);
     };
 

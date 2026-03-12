@@ -519,19 +519,30 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
+  .exp-section {
+    padding: 3rem 0 1rem;
+  }
+
+  .exp-wrap {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
   .exp-stop {
     min-height: 0;
     padding-bottom: 2rem;
   }
 
-  /* On mobile the card goes below the dot, full width */
   .exp-card {
     position: relative;
-    top: auto; left: auto; right: auto;
+    top: auto;
+    left: auto !important;
+    right: auto !important;
     width: calc(100% - 2rem);
     max-width: 100%;
     margin: 4rem auto 0;
     transform: translateY(20px) !important;
+    padding: 1.2rem 1.4rem;
   }
 
   .exp-card.visible {
@@ -540,6 +551,68 @@
 
   .exp-road {
     width: 60px;
+  }
+
+  .exp-traveler__img {
+    width: 100px;
+  }
+
+  .exp-sec-title {
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+  }
+
+  .exp-stops {
+    padding-top: 100px;
+  }
+
+  .exp-stops__spacer {
+    height: 60px;
+  }
+
+  .exp-end__board {
+    padding: 0.8rem 1.5rem 0.7rem;
+  }
+
+  .exp-end__main {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  .exp-modal-box {
+    padding: 1.8rem 1.4rem;
+    max-width: 95vw;
+  }
+
+  .exp-m-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .exp-card {
+    width: calc(100% - 1rem);
+    padding: 1rem 1.1rem;
+  }
+
+  .exp-card__title {
+    font-size: 1.05rem;
+  }
+
+  .exp-card__snippet {
+    font-size: 0.72rem;
+  }
+
+  .exp-card__tag {
+    font-size: 0.58rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .exp-road {
+    width: 40px;
+  }
+
+  .exp-traveler__img {
+    width: 80px;
   }
 }
 
