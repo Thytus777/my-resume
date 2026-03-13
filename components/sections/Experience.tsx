@@ -15,7 +15,7 @@ interface Job {
 
 const JOBS: Job[] = [
   {
-    year: '2024 – Present',
+    year: '2021 – Present',
     title: 'Tutor',
     company: '📚 Senkou Academy',
     snippet: 'Teaching students with diverse backgrounds and learning styles.',

@@ -226,9 +226,9 @@ export default function Projects() {
       </h2>
 
       <div className="prj-showcase">
-        {/* LEFT: project info */}
+        {/* TOP: title + description (full width) */}
         <div
-          className={reveal('prj-project-info', '0.3s')}
+          className={reveal('prj-project-header', '0.3s')}
           style={{ animationDelay: '0.3s' }}
         >
           <p className="prj-project-number">Project {projectNumber}</p>
@@ -239,9 +239,17 @@ export default function Projects() {
               </h3>
             ))}
           </div>
-
-          <div className={`prj-project-details ${isFading ? 'fading' : ''}`}>
+          <div className={`prj-project-desc-wrap ${isFading ? 'fading' : ''}`}>
             <p className="prj-project-desc">{p.desc}</p>
+          </div>
+        </div>
+
+        {/* BOTTOM LEFT: bullets, tech, links */}
+        <div
+          className={reveal('prj-project-info', '0.4s')}
+          style={{ animationDelay: '0.4s' }}
+        >
+          <div className={`prj-project-details ${isFading ? 'fading' : ''}`}>
             <ul className="prj-project-bullets">
               {p.bullets.map((b, i) => (
                 <li key={i}>{b}</li>
@@ -283,7 +291,7 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* RIGHT: image card */}
+        {/* BOTTOM RIGHT: image card */}
         <div
           className={reveal('prj-carousel-wrap', '0.5s')}
           style={{ animationDelay: '0.5s' }}

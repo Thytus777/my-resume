@@ -280,7 +280,7 @@
 .exp-card__year {
   font-size: 0.68rem;
   letter-spacing: 0.2em;
-  color: var(--exp-accent);
+  color: #999;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
 }
@@ -288,16 +288,15 @@
 .exp-card__title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #fff;
+  color: #ff6a00;
   margin-bottom: 0.25rem;
   line-height: 1.2;
 }
 
 .exp-card__company {
   font-size: 0.8rem;
-  color: var(--exp-accent-lite);
+  color: #999;
   margin-bottom: 0.9rem;
-  opacity: 0.85;
 }
 
 .exp-card__snippet {
@@ -456,20 +455,19 @@
 .exp-m-year {
   font-size: 0.65rem;
   letter-spacing: 0.22em;
-  color: var(--exp-accent);
+  color: #999;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
 }
 .exp-m-title {
   font-size: 1.65rem;
   font-weight: 800;
-  color: #fff;
+  color: #ff6a00;
   margin-bottom: 0.25rem;
 }
 .exp-m-company {
   font-size: 0.78rem;
-  color: var(--exp-accent-lite);
-  opacity: 0.8;
+  color: #999;
   margin-bottom: 1.2rem;
 }
 .exp-m-divider {
