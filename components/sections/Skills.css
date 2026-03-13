@@ -46,7 +46,7 @@
 .skills-divider-line {
   height: 1px;
   flex: 1;
-  background: rgba(255, 106, 0, 0.15);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .skills-divider-text {
@@ -261,7 +261,7 @@
 /* Footer */
 .skills-footer {
   margin-top: 32px;
-  border-top: 1px solid rgba(255, 106, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding-top: 14px;
   display: flex;
   justify-content: space-between;

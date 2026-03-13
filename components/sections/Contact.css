@@ -18,14 +18,14 @@
   /* New styles for better appearance */
   background: linear-gradient(
     145deg,
-    rgba(30, 22, 14, 0.9),
-    rgba(20, 14, 8, 0.9)
+    rgba(24, 24, 24, 0.9),
+    rgba(16, 16, 16, 0.9)
   );
   border-radius: 2rem;
   padding: 3rem 4rem;
-  border: 1px solid rgba(255, 106, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6),
-              0 0 60px rgba(255, 106, 0, 0.08);
+              0 0 60px rgba(255, 255, 255, 0.03);
   position: relative;
 }
 

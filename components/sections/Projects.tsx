@@ -226,52 +226,10 @@ export default function Projects() {
       </h2>
 
       <div className="prj-showcase">
-        {/* LEFT: image card — slides up slightly later */}
+        {/* LEFT: project info */}
         <div
-          className={reveal('prj-carousel-wrap', '0.3s')}
+          className={reveal('prj-project-info', '0.3s')}
           style={{ animationDelay: '0.3s' }}
-          ref={cardWrapRef}
-        >
-          <div className="prj-notch-card">
-            {PROJECTS.map((proj, i) => (
-              <div key={i} className={`prj-card-slide ${i === current ? 'active' : ''}`}>
-                <img src={proj.cover} alt={proj.title} loading="lazy" />
-              </div>
-            ))}
-            <div className={`prj-notch prj-notch--${p.status}`}>
-              <span className="prj-notch-pulse" />
-              {p.statusLabel}
-            </div>
-          </div>
-
-          {/* Controls */}
-          <div className="prj-carousel-controls">
-            <button className="prj-ctrl-btn" onClick={() => goTo(current - 1)} aria-label="Previous">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <div className="prj-dot-track">
-              {PROJECTS.map((_, i) => (
-                <div key={i} className={`prj-dot ${i === current ? 'active' : ''}`} onClick={() => goTo(i)} />
-              ))}
-            </div>
-            <button className="prj-ctrl-btn" onClick={() => goTo(current + 1)} aria-label="Next">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-          </div>
-
-          <p className="prj-slide-counter">
-            <span>{projectNumber}</span> / {String(total).padStart(2, '0')}
-          </p>
-        </div>
-
-        {/* RIGHT: project info — staggered after card */}
-        <div
-          className={reveal('prj-project-info', '0.5s')}
-          style={{ animationDelay: '0.5s' }}
         >
           <p className="prj-project-number">Project {projectNumber}</p>
           <div className="prj-title-stack">
@@ -323,6 +281,47 @@ export default function Projects() {
               </svg>
             </button>
           </div>
+        </div>
+
+        {/* RIGHT: image card */}
+        <div
+          className={reveal('prj-carousel-wrap', '0.5s')}
+          style={{ animationDelay: '0.5s' }}
+          ref={cardWrapRef}
+        >
+          <div className="prj-notch-card">
+            {PROJECTS.map((proj, i) => (
+              <div key={i} className={`prj-card-slide ${i === current ? 'active' : ''}`}>
+                <img src={proj.cover} alt={proj.title} loading="lazy" />
+              </div>
+            ))}
+            <div className={`prj-notch prj-notch--${p.status}`}>
+              <span className="prj-notch-pulse" />
+              {p.statusLabel}
+            </div>
+          </div>
+
+          <div className="prj-carousel-controls">
+            <button className="prj-ctrl-btn" onClick={() => goTo(current - 1)} aria-label="Previous">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <div className="prj-dot-track">
+              {PROJECTS.map((_, i) => (
+                <div key={i} className={`prj-dot ${i === current ? 'active' : ''}`} onClick={() => goTo(i)} />
+              ))}
+            </div>
+            <button className="prj-ctrl-btn" onClick={() => goTo(current + 1)} aria-label="Next">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <p className="prj-slide-counter">
+            <span>{projectNumber}</span> / {String(total).padStart(2, '0')}
+          </p>
         </div>
       </div>
 

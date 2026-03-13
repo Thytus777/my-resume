@@ -41,11 +41,11 @@ function ActivityHeatmap() {
   const total = grid.flat().filter(Boolean).length * 3;
 
   const legendColors = [
-    'rgba(255,106,0,0.07)',
-    'rgba(255,106,0,0.2)',
-    'rgba(255,106,0,0.42)',
-    'rgba(255,106,0,0.65)',
-    'rgba(255,106,0,0.9)',
+    'rgba(255,255,255,0.05)',
+    'rgba(255,255,255,0.15)',
+    'rgba(255,255,255,0.3)',
+    'rgba(255,255,255,0.5)',
+    'rgba(255,255,255,0.7)',
   ];
 
   return (
@@ -91,8 +91,8 @@ export default function Hero({ ready = false }: HeroProps) {
       <div className={`hero-intro ${anim}`} style={{ animationDelay: '0.05s' }}>
         <h1>
           Hi, I&apos;m <span className="hero-name">Thytus Benjamin</span>
+          <span className="hero-role">Software Developer</span>
         </h1>
-        <p className="hero-role">Software Developer</p>
       </div>
 
       {/* Unified full-width bento grid */}
