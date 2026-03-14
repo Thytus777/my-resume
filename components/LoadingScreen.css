@@ -35,6 +35,10 @@
 .ls-laptop--still {
   animation: none;
 }
+.ls-laptop--fading {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 
 @keyframes ls-levitate {
   0%, 100% { transform: translateY(0);     }
@@ -298,4 +302,28 @@
   letter-spacing: 4px;
   color: #ff6a00;
   text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE STRIP EXIT (vertical columns)
+───────────────────────────────────────── */
+.ls-strips {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: row;
+  pointer-events: none;
+}
+.ls-strip {
+  height: 100%;
+  background: #ff6a00;
+  flex-shrink: 0;
+}
+.ls-strip--exit {
+  animation: ls-strip-up 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+@keyframes ls-strip-up {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 0; }
 }

@@ -231,17 +231,19 @@ export default function Skills() {
         </div>
 
         {/* Grid — pass sectionInView down to each element */}
-        <div className="skills-grid">
-          {SKILLS.map(skill => (
-            <Element
-              key={skill.num}
-              skill={skill}
-              isActive={selected?.num === skill.num || filterCat === skill.cat}
-              isFiltered={filterCat !== null && filterCat !== skill.cat}
-              onClick={handleClick}
-              sectionInView={inView}
-            />
-          ))}
+        <div className="skills-grid-scroll">
+          <div className="skills-grid">
+            {SKILLS.map(skill => (
+              <Element
+                key={skill.num}
+                skill={skill}
+                isActive={selected?.num === skill.num || filterCat === skill.cat}
+                isFiltered={filterCat !== null && filterCat !== skill.cat}
+                onClick={handleClick}
+                sectionInView={inView}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Detail Panel — unchanged */}

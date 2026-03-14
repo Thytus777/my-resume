@@ -115,10 +115,10 @@
 
 @media (max-width: 768px) {
   .navbar {
-    left: 1rem;
+    left: 3rem;
     transform: none;
     top: 1rem;
-    padding: 0.5rem;
+    padding: 0.55rem 0.75rem;
     border-radius: 1rem;
   }
 

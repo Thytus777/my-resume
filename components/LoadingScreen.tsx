@@ -59,6 +59,15 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
   const [bgFading, setBgFading]          = useState(false);
   const [sceneFading, setSceneFading]   = useState(false);
   const [done, setDone]                 = useState(false);
+  const [isMobile, setIsMobile]         = useState(false);
+  const [stripExit, setStripExit]       = useState(false);
+
+  const STRIP_COUNT = 5;
+
+  /* ── Detect mobile on mount ── */
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   /* ── 1. Print boot lines ── */
   useEffect(() => {
@@ -97,12 +106,18 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
     }, 32);
   }
 
-  /* ── 3. After mini shows, wait then zoom ── */
+  /* ── 3. After mini shows, wait then zoom (desktop) or strip exit (mobile) ── */
   useEffect(() => {
     if (!showMini) return;
-    const t = setTimeout(doZoom, 1900);
+    const t = setTimeout(() => {
+      if (isMobile) {
+        doStripExit();
+      } else {
+        doZoom();
+      }
+    }, 1900);
     return () => clearTimeout(t);
-  }, [showMini]);
+  }, [showMini, isMobile]);
 
   /* ── 4. Zoom into screen ── */
   function doZoom() {
@@ -127,6 +142,23 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
     setTimeout(fadeOut, 1260);
   }
 
+  /* ── 4b. Mobile: fade laptop then strips slide up ── */
+  const [laptopFading, setLaptopFading] = useState(false);
+
+  function doStripExit() {
+    setLaptopStill(true);
+    setLaptopFading(true);
+    // Wait for laptop fade (500ms), then start strips
+    setTimeout(() => {
+      onDone?.();
+      setStripExit(true);
+      const totalMs = (STRIP_COUNT - 1) * 120 + 600 + 100;
+      setTimeout(() => {
+        setDone(true);
+      }, totalMs);
+    }, 500);
+  }
+
   /* ── 5. Fade bg to site color, then fade scene out ── */
   function fadeOut() {
     setBgFading(true);
@@ -141,6 +173,24 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
 
   if (done) return null;
 
+  /* ── Mobile strip exit overlay ── */
+  if (stripExit) {
+    return (
+      <div className="ls-strips">
+        {Array.from({ length: STRIP_COUNT }).map((_, i) => (
+          <div
+            key={i}
+            className="ls-strip ls-strip--exit"
+            style={{
+              width: `${100 / STRIP_COUNT}vw`,
+              animationDelay: `${i * 120}ms`,
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div
       ref={sceneRef}
@@ -148,7 +198,7 @@ export default function LoadingScreen({ onDone }: { onDone?: () => void }) {
     >
       <div
         ref={laptopRef}
-        className={`ls-laptop${laptopStill ? ' ls-laptop--still' : ''}`}
+        className={`ls-laptop${laptopStill ? ' ls-laptop--still' : ''}${laptopFading ? ' ls-laptop--fading' : ''}`}
       >
         {/* ── Lid + Screen ── */}
         <div className="ls-lid">
