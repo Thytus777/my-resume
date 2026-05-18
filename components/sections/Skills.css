@@ -97,8 +97,8 @@
 }
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(9, 96px);
-  grid-template-rows: repeat(6, 100px);
+  grid-template-columns: repeat(10, 96px);
+  grid-template-rows: repeat(5, 100px);
   gap: 4px;
   width: max-content;
 }
@@ -286,11 +286,10 @@
     padding-bottom: 8px;
   }
   .skills-grid {
-    grid-template-columns: repeat(9, 72px);
-    grid-template-rows: repeat(6, 76px);
+    grid-template-columns: repeat(10, 72px);
+    grid-template-rows: repeat(5, 76px);
     gap: 3px;
   }
-
   .periodic-element {
     width: 72px;
     height: 76px;

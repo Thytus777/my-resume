@@ -13,65 +13,63 @@ const CATEGORIES: Record<string, { label: string; color: string; bg: string }> =
 };
 
 const SKILLS = [
-  // Row 1
-  { sym: "Py",  name: "Python",      num: 1,  pro: 95, cat: "lang",  row: 1, col: 1 },
-  { sym: "JS",  name: "JavaScript",  num: 2,  pro: 92, cat: "lang",  row: 1, col: 2 },
-  { sym: "Ts",  name: "TypeScript",  num: 3,  pro: 88, cat: "lang",  row: 1, col: 3 },
-  { sym: "Go",  name: "Go",          num: 4,  pro: 78, cat: "lang",  row: 1, col: 4 },
-  { sym: "Rx",  name: "React",       num: 5,  pro: 94, cat: "frame", row: 1, col: 6 },
-  { sym: "Nx",  name: "Next.js",     num: 6,  pro: 90, cat: "frame", row: 1, col: 7 },
-  { sym: "Nd",  name: "Node.js",     num: 7,  pro: 88, cat: "frame", row: 1, col: 8 },
-  { sym: "Gq",  name: "GraphQL",     num: 8,  pro: 78, cat: "frame", row: 1, col: 9 },
+  // ── s-block left: Languages (cols 1–2) ──
+  { sym: "JS",  name: "JavaScript",    num: 1,  pro: 90, cat: "lang",  row: 1, col: 1  },
+  { sym: "Ts",  name: "TypeScript",    num: 2,  pro: 85, cat: "lang",  row: 1, col: 2  },
+  { sym: "Py",  name: "Python",        num: 3,  pro: 88, cat: "lang",  row: 2, col: 1  },
+  { sym: "Jv",  name: "Java",          num: 4,  pro: 83, cat: "lang",  row: 2, col: 2  },
+  { sym: "Sq",  name: "SQL",           num: 5,  pro: 82, cat: "lang",  row: 3, col: 1  },
+  { sym: "Sw",  name: "Swift",         num: 6,  pro: 58, cat: "lang",  row: 3, col: 2  },
 
-  // Row 2
-  { sym: "Rs",  name: "Rust",        num: 9,  pro: 72, cat: "lang",  row: 2, col: 1 },
-  { sym: "C+",  name: "C++",         num: 10, pro: 80, cat: "lang",  row: 2, col: 2 },
-  { sym: "Jv",  name: "Java",        num: 11, pro: 85, cat: "lang",  row: 2, col: 3 },
-  { sym: "Rb",  name: "Ruby",        num: 12, pro: 70, cat: "lang",  row: 2, col: 4 },
-  { sym: "Dj",  name: "Django",      num: 13, pro: 82, cat: "frame", row: 2, col: 6 },
-  { sym: "Fa",  name: "FastAPI",     num: 14, pro: 85, cat: "frame", row: 2, col: 7 },
-  { sym: "Vj",  name: "Vue.js",      num: 15, pro: 74, cat: "frame", row: 2, col: 8 },
-  { sym: "Ex",  name: "Express",     num: 16, pro: 86, cat: "frame", row: 2, col: 9 },
+  // ── d-block centre: Frontend frameworks (row 1, cols 3–8) ──
+  { sym: "Rx",  name: "React",         num: 7,  pro: 90, cat: "frame", row: 1, col: 3  },
+  { sym: "Nx",  name: "Next.js",       num: 8,  pro: 82, cat: "frame", row: 1, col: 4  },
+  { sym: "Rr",  name: "React Router",  num: 9,  pro: 84, cat: "frame", row: 1, col: 5  },
+  { sym: "Tw",  name: "Tailwind",      num: 10, pro: 85, cat: "frame", row: 1, col: 6  },
+  { sym: "Mu",  name: "Material UI",   num: 11, pro: 78, cat: "frame", row: 1, col: 7  },
+  { sym: "Ht",  name: "HTML/CSS",      num: 12, pro: 88, cat: "frame", row: 1, col: 8  },
 
-  // Row 3
-  { sym: "Sw",  name: "Swift",       num: 17, pro: 65, cat: "lang",  row: 3, col: 1 },
-  { sym: "Kt",  name: "Kotlin",      num: 18, pro: 68, cat: "lang",  row: 3, col: 2 },
-  { sym: "Sc",  name: "Scala",       num: 19, pro: 60, cat: "lang",  row: 3, col: 3 },
-  { sym: "Hs",  name: "Haskell",     num: 20, pro: 55, cat: "lang",  row: 3, col: 4 },
-  { sym: "Aw",  name: "AWS",         num: 21, pro: 88, cat: "infra", row: 3, col: 6 },
-  { sym: "Dk",  name: "Docker",      num: 22, pro: 90, cat: "infra", row: 3, col: 7 },
-  { sym: "K8",  name: "Kubernetes",  num: 23, pro: 80, cat: "infra", row: 3, col: 8 },
-  { sym: "Tf",  name: "Terraform",   num: 24, pro: 75, cat: "infra", row: 3, col: 9 },
+  // ── d-block centre: Backend frameworks (row 2, cols 3–8) ──
+  { sym: "Nd",  name: "Node.js",       num: 13, pro: 85, cat: "frame", row: 2, col: 3  },
+  { sym: "Ex",  name: "Express.js",    num: 14, pro: 84, cat: "frame", row: 2, col: 4  },
+  { sym: "Sb",  name: "Spring Boot",   num: 15, pro: 82, cat: "frame", row: 2, col: 5  },
+  { sym: "Ss",  name: "Spring Sec.",   num: 16, pro: 76, cat: "frame", row: 2, col: 6  },
+  { sym: "Fa",  name: "FastAPI",       num: 17, pro: 78, cat: "frame", row: 2, col: 7  },
+  { sym: "Me",  name: "Meteor.js",     num: 18, pro: 65, cat: "frame", row: 2, col: 8  },
 
-  // Row 4
-  { sym: "Pt",  name: "PyTorch",     num: 25, pro: 85, cat: "data",  row: 4, col: 1 },
-  { sym: "Tf",  name: "TensorFlow",  num: 26, pro: 80, cat: "data",  row: 4, col: 2 },
-  { sym: "Lc",  name: "LangChain",   num: 27, pro: 78, cat: "data",  row: 4, col: 3 },
-  { sym: "Sp",  name: "Spark",       num: 28, pro: 72, cat: "data",  row: 4, col: 4 },
-  { sym: "Lx",  name: "Linux",       num: 29, pro: 92, cat: "infra", row: 4, col: 6 },
-  { sym: "Ci",  name: "CI/CD",       num: 30, pro: 85, cat: "infra", row: 4, col: 7 },
-  { sym: "Gc",  name: "GCP",         num: 31, pro: 72, cat: "infra", row: 4, col: 8 },
-  { sym: "Ng",  name: "Nginx",       num: 32, pro: 78, cat: "infra", row: 4, col: 9 },
+  // ── d-block centre: Secondary frameworks + Infra (row 3, cols 3–8) ──
+  { sym: "Vu",  name: "Vue.js",        num: 19, pro: 65, cat: "frame", row: 3, col: 3  },
+  { sym: "St",  name: "Streamlit",     num: 20, pro: 70, cat: "frame", row: 3, col: 4  },
+  { sym: "Dk",  name: "Docker",        num: 21, pro: 82, cat: "infra", row: 3, col: 5  },
+  { sym: "Aw",  name: "AWS",           num: 22, pro: 68, cat: "infra", row: 3, col: 6  },
+  { sym: "Rl",  name: "Render",        num: 23, pro: 78, cat: "infra", row: 3, col: 7  },
+  { sym: "Nl",  name: "Netlify",       num: 24, pro: 80, cat: "infra", row: 3, col: 8  },
 
-  // Row 5
-  { sym: "Pd",  name: "Pandas",      num: 33, pro: 92, cat: "data",  row: 5, col: 1 },
-  { sym: "Db",  name: "dbt",         num: 34, pro: 70, cat: "data",  row: 5, col: 2 },
-  { sym: "Af",  name: "Airflow",     num: 35, pro: 68, cat: "data",  row: 5, col: 3 },
-  { sym: "Gt",  name: "Git",         num: 36, pro: 96, cat: "tools", row: 5, col: 5 },
-  { sym: "Fg",  name: "Figma",       num: 37, pro: 75, cat: "tools", row: 5, col: 6 },
-  { sym: "Vm",  name: "Vim",         num: 38, pro: 82, cat: "tools", row: 5, col: 7 },
-  { sym: "Re",  name: "REST",        num: 39, pro: 94, cat: "tools", row: 5, col: 8 },
-  { sym: "Ws",  name: "WebSockets",  num: 40, pro: 80, cat: "tools", row: 5, col: 9 },
+  // ── d-block centre: Databases + Data & AI (row 4, cols 3–8) ──
+  { sym: "Pg",  name: "PostgreSQL",    num: 25, pro: 85, cat: "db",    row: 4, col: 3  },
+  { sym: "Mg",  name: "MongoDB",       num: 26, pro: 75, cat: "db",    row: 4, col: 4  },
+  { sym: "Or",  name: "Oracle",        num: 27, pro: 62, cat: "db",    row: 4, col: 5  },
+  { sym: "Oa",  name: "OpenAI API",    num: 28, pro: 82, cat: "data",  row: 4, col: 6  },
+  { sym: "Gm",  name: "Gemini API",    num: 29, pro: 78, cat: "data",  row: 4, col: 7  },
+  { sym: "Cv",  name: "OpenCV",        num: 30, pro: 68, cat: "data",  row: 4, col: 8  },
 
-  // Row 6
-  { sym: "Pg",  name: "PostgreSQL",  num: 41, pro: 88, cat: "db",    row: 6, col: 1 },
-  { sym: "My",  name: "MySQL",       num: 42, pro: 82, cat: "db",    row: 6, col: 2 },
-  { sym: "Mg",  name: "MongoDB",     num: 43, pro: 78, cat: "db",    row: 6, col: 3 },
-  { sym: "Rd",  name: "Redis",       num: 44, pro: 78, cat: "db",    row: 6, col: 4 },
-  { sym: "Sq",  name: "SQLite",      num: 45, pro: 85, cat: "db",    row: 6, col: 5 },
-  { sym: "El",  name: "Elastic",     num: 46, pro: 70, cat: "db",    row: 6, col: 6 },
-  { sym: "Gr",  name: "gRPC",        num: 47, pro: 72, cat: "tools", row: 6, col: 8 },
-  { sym: "Sb",  name: "Spring Boot", num: 48, pro: 70, cat: "frame", row: 6, col: 9 },
+  // ── d-block centre: Data & AI overflow (row 5, cols 3–6) ──
+  { sym: "Mp",  name: "MediaPipe",     num: 31, pro: 65, cat: "data",  row: 5, col: 3  },
+  { sym: "Sk",  name: "Sklearn",       num: 32, pro: 67, cat: "data",  row: 5, col: 4  },
+  { sym: "Pl",  name: "Pillow",        num: 33, pro: 72, cat: "data",  row: 5, col: 5  },
+  { sym: "Pt",  name: "PyTorch",       num: 34, pro: 62, cat: "data",  row: 5, col: 6  },
+
+  // ── p-block right: Tools & Testing (cols 9–10, rows 1–5) ──
+  { sym: "Gt",  name: "Git",           num: 35, pro: 90, cat: "tools", row: 1, col: 9  },
+  { sym: "Np",  name: "npm",           num: 36, pro: 85, cat: "tools", row: 1, col: 10 },
+  { sym: "Mv",  name: "Maven",         num: 37, pro: 75, cat: "tools", row: 2, col: 9  },
+  { sym: "Fw",  name: "Flyway",        num: 38, pro: 72, cat: "tools", row: 2, col: 10 },
+  { sym: "Ju",  name: "JUnit 5",       num: 39, pro: 76, cat: "tools", row: 3, col: 9  },
+  { sym: "Je",  name: "Jest",          num: 40, pro: 74, cat: "tools", row: 3, col: 10 },
+  { sym: "Mo",  name: "Mocha",         num: 41, pro: 68, cat: "tools", row: 4, col: 9  },
+  { sym: "Rt",  name: "React TL",      num: 42, pro: 70, cat: "tools", row: 4, col: 10 },
+  { sym: "Pyt", name: "PyTest",        num: 43, pro: 72, cat: "tools", row: 5, col: 9  },
+  { sym: "Tc",  name: "Testcontainer", num: 44, pro: 68, cat: "tools", row: 5, col: 10 },
 ];
 
 interface Skill {
