@@ -6,6 +6,9 @@ import './Projects.css';
 export interface Project {
   id: number;
   number: string;
+
+
+  
   title: string;
   subtitle: string;
   image: string;
