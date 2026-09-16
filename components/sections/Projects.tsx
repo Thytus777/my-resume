@@ -3,21 +3,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import './Projects.css';
 
-export interface Project {
-  id: number;
-  number: string;
-
-
-  
-  title: string;
-  subtitle: string;
-  image: string;
-  description: string[];
-  skills: string[];
-  github?: string;
-  live?: string;
-}
-
 interface CarouselProject {
   title: string;
   desc: string;
@@ -160,21 +145,13 @@ const PROJECTS: CarouselProject[] = [
 ];
 
 export default function Projects() {
-  const [current, setCurrent] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isFading, setIsFading] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
 
   // ── Scroll-reveal state ──
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const scrollAccRef = useRef(0);
-  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const cardWrapRef = useRef<HTMLDivElement>(null);
-  const total = PROJECTS.length;
-
-  // ── IntersectionObserver: fires once when section enters viewport ──
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -183,213 +160,177 @@ export default function Projects() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          observer.disconnect(); // only trigger once
+          observer.disconnect();
         }
       },
-      { threshold: 0.15 } // 15% of section visible before firing
+      { threshold: 0.1 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  const goTo = useCallback((idx: number) => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setIsFading(true);
+  const closeModal = useCallback(() => {
+    setSelected(null);
+    setGalleryIndex(null);
+  }, []);
 
-    const next = ((idx % total) + total) % total;
-    setCurrent(next);
-
-    setTimeout(() => setIsFading(false), 220);
-    setTimeout(() => setIsTransitioning(false), 600);
-  }, [isTransitioning, total]);
-
-  // Wheel handler on card
+  // Keyboard nav for modal
   useEffect(() => {
-    const el = cardWrapRef.current;
-    if (!el) return;
+    if (selected === null) return;
 
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      scrollAccRef.current += e.deltaY;
-
-      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
-      scrollTimerRef.current = setTimeout(() => {
-        if (Math.abs(scrollAccRef.current) > 30) {
-          goTo(scrollAccRef.current > 0 ? current + 1 : current - 1);
-        }
-        scrollAccRef.current = 0;
-      }, 60);
-    };
-
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, [goTo, current]);
-
-  // Keyboard nav
-  useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (modalOpen) {
-        if (e.key === 'Escape') setModalOpen(false);
-        return;
+      if (e.key === 'Escape') {
+        if (galleryIndex !== null) setGalleryIndex(null);
+        else closeModal();
       }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
     };
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [goTo, current, modalOpen]);
+  }, [selected, galleryIndex, closeModal]);
 
-  const p = PROJECTS[current];
-  const projectNumber = String(current + 1).padStart(2, '0');
-
-  // Helper: build class string, adding prj-reveal only once inView is true
-  const reveal = (base: string, delay: string) =>
-    `${base} prj-reveal${inView ? ' prj-reveal--visible' : ''}`;
+  const active = selected !== null ? PROJECTS[selected] : null;
 
   return (
-    <section id="projects" className="prj-circular-section" ref={sectionRef}>
-
-      {/* Header — animates in first */}
-      <p
-        className={reveal('prj-section-label', '0s')}
-        style={{ animationDelay: '0s' }}
-      >
+    <section id="projects" className="prj-section" ref={sectionRef}>
+      <p className={`prj-section-label prj-reveal${inView ? ' prj-reveal--visible' : ''}`} style={{ animationDelay: '0s' }}>
         // selected work
       </p>
-      <h2
-        className={reveal('prj-section-title', '0.15s')}
-        style={{ animationDelay: '0.15s' }}
-      >
+      <h2 className={`prj-section-title prj-reveal${inView ? ' prj-reveal--visible' : ''}`} style={{ animationDelay: '0.1s' }}>
         Projects
       </h2>
 
-      <div className="prj-showcase">
-        {/* TOP: title + description (full width) */}
-        <div
-          className={reveal('prj-project-header', '0.3s')}
-          style={{ animationDelay: '0.3s' }}
-        >
-          <p className="prj-project-number">Project {projectNumber}</p>
-          <div className="prj-title-stack">
-            {PROJECTS.map((proj, i) => (
-              <h3 key={i} className={`prj-project-title ${i === current ? 'active' : ''}`}>
-                {proj.title}
-              </h3>
-            ))}
-          </div>
-          <div className={`prj-project-desc-wrap ${isFading ? 'fading' : ''}`}>
-            <p className="prj-project-desc">{p.desc}</p>
-          </div>
-        </div>
+      <div className="prj-log">
+        {PROJECTS.map((proj, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`prj-row prj-reveal${inView ? ' prj-reveal--visible' : ''}`}
+            style={{ animationDelay: `${0.08 + i * 0.09}s` }}
+            onClick={() => setSelected(i)}
+          >
+            <span className="prj-row-index">{String(i + 1).padStart(2, '0')}</span>
 
-        {/* BOTTOM LEFT: bullets, tech, links */}
-        <div
-          className={reveal('prj-project-info', '0.4s')}
-          style={{ animationDelay: '0.4s' }}
-        >
-          <div className={`prj-project-details ${isFading ? 'fading' : ''}`}>
-            <ul className="prj-project-bullets">
-              {p.bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-            <div className="prj-info-divider" />
-            <div>
-              <p className="prj-tech-label">Tech Stack</p>
-              <div className="prj-tech-tags">
-                {p.tech.map((t, i) => (
-                  <span key={i} className="prj-tech-tag">{t}</span>
-                ))}
+            <div className="prj-row-media">
+              <img src={proj.cover} alt={proj.title} loading="lazy" />
+              <div className={`prj-notch prj-notch--${proj.status}`}>
+                <span className="prj-notch-pulse" />
+                {proj.statusLabel}
               </div>
             </div>
-            <div className="prj-project-links">
-              {p.live && (
-                <a href={p.live} target="_blank" rel="noopener noreferrer" className="prj-view-btn">
-                  Live Demo
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-              )}
-              {p.github && (
-                <a href={p.github} target="_blank" rel="noopener noreferrer" className="prj-view-btn ghost">
-                  GitHub
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-              )}
+
+            <div className="prj-row-body">
+              <h3 className="prj-row-title">{proj.title}</h3>
+              <p className="prj-row-desc">{proj.desc}</p>
+              <div className="prj-tech-tags">
+                {proj.tech.slice(0, 5).map((t, ti) => (
+                  <span key={ti} className="prj-tech-tag">{t}</span>
+                ))}
+                {proj.tech.length > 5 && (
+                  <span className="prj-tech-tag prj-tech-tag--more">+{proj.tech.length - 5}</span>
+                )}
+              </div>
             </div>
-            <button className="prj-view-btn" onClick={() => setModalOpen(true)}>
-              View Gallery
+
+            <span className="prj-row-cta">
+              View Details
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* BOTTOM RIGHT: image card */}
-        <div
-          className={reveal('prj-carousel-wrap', '0.5s')}
-          style={{ animationDelay: '0.5s' }}
-          ref={cardWrapRef}
-        >
-          <div className="prj-notch-card">
-            {PROJECTS.map((proj, i) => (
-              <div key={i} className={`prj-card-slide ${i === current ? 'active' : ''}`}>
-                <img src={proj.cover} alt={proj.title} loading="lazy" />
-              </div>
-            ))}
-            <div className={`prj-notch prj-notch--${p.status}`}>
-              <span className="prj-notch-pulse" />
-              {p.statusLabel}
-            </div>
-          </div>
-
-          <div className="prj-carousel-controls">
-            <button className="prj-ctrl-btn" onClick={() => goTo(current - 1)} aria-label="Previous">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <div className="prj-dot-track">
-              {PROJECTS.map((_, i) => (
-                <div key={i} className={`prj-dot ${i === current ? 'active' : ''}`} onClick={() => goTo(i)} />
-              ))}
-            </div>
-            <button className="prj-ctrl-btn" onClick={() => goTo(current + 1)} aria-label="Next">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-          </div>
-
-          <p className="prj-slide-counter">
-            <span>{projectNumber}</span> / {String(total).padStart(2, '0')}
-          </p>
-        </div>
+            </span>
+          </button>
+        ))}
       </div>
 
-      {/* Gallery Modal */}
+      {/* Detail Modal */}
       <div
-        className={`prj-modal-overlay ${modalOpen ? 'open' : ''}`}
-        onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}
+        className={`prj-modal-overlay ${active ? 'open' : ''}`}
+        onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
       >
-        <div className="prj-modal-box">
-          <div className="prj-modal-header">
-            <h3>{p.title} — Gallery</h3>
-            <button className="prj-modal-close" onClick={() => setModalOpen(false)}>✕</button>
+        {active && (
+          <div className="prj-modal-box">
+            <div className="prj-modal-header">
+              <div>
+                <h3>{active.title}</h3>
+                <div className={`prj-notch prj-notch--${active.status} prj-notch--inline`}>
+                  <span className="prj-notch-pulse" />
+                  {active.statusLabel}
+                </div>
+              </div>
+              <button className="prj-modal-close" onClick={closeModal} aria-label="Close">✕</button>
+            </div>
+
+            <div className="prj-modal-scroll">
+              <img className="prj-modal-cover" src={active.cover} alt={active.title} />
+
+              <p className="prj-modal-desc">{active.desc}</p>
+
+              <ul className="prj-project-bullets">
+                {active.bullets.map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+
+              <div className="prj-info-divider" />
+
+              <div>
+                <p className="prj-tech-label">Tech Stack</p>
+                <div className="prj-tech-tags">
+                  {active.tech.map((t, i) => (
+                    <span key={i} className="prj-tech-tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+
+              {active.gallery.length > 0 && (
+                <div>
+                  <p className="prj-tech-label">Gallery</p>
+                  <div className="prj-modal-gallery">
+                    {active.gallery.map((src, i) => (
+                      <img
+                        key={i}
+                        src={src}
+                        alt={`${active.title} screenshot ${i + 1}`}
+                        loading="lazy"
+                        onClick={() => setGalleryIndex(i)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="prj-project-links">
+                {active.live && (
+                  <a href={active.live} target="_blank" rel="noopener noreferrer" className="prj-view-btn">
+                    Live Demo
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </a>
+                )}
+                {active.github && (
+                  <a href={active.github} target="_blank" rel="noopener noreferrer" className="prj-view-btn ghost">
+                    GitHub
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
-          <div className="prj-modal-gallery">
-            {p.gallery.map((src, i) => (
-              <img key={i} src={src} alt="screenshot" loading="lazy" />
-            ))}
-          </div>
-        </div>
+        )}
+      </div>
+
+      {/* Lightbox for gallery images */}
+      <div
+        className={`prj-lightbox-overlay ${galleryIndex !== null ? 'open' : ''}`}
+        onClick={() => setGalleryIndex(null)}
+      >
+        {active && galleryIndex !== null && (
+          <img src={active.gallery[galleryIndex]} alt="expanded screenshot" />
+        )}
       </div>
     </section>
   );

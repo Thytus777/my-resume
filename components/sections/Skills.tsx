@@ -58,6 +58,8 @@ const SKILLS = [
   { sym: "Sk",  name: "Sklearn",       num: 32, pro: 67, cat: "data",  row: 5, col: 4  },
   { sym: "Pl",  name: "Pillow",        num: 33, pro: 72, cat: "data",  row: 5, col: 5  },
   { sym: "Pt",  name: "PyTorch",       num: 34, pro: 62, cat: "data",  row: 5, col: 6  },
+  { sym: "Tf",  name: "TensorFlow",    num: 45, pro: 60, cat: "data",  row: 5, col: 7  },
+  { sym: "Vc",  name: "Vercel",        num: 46, pro: 78, cat: "infra", row: 5, col: 8  },
 
   // ── p-block right: Tools & Testing (cols 9–10, rows 1–5) ──
   { sym: "Gt",  name: "Git",           num: 35, pro: 90, cat: "tools", row: 1, col: 9  },
