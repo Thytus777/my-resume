@@ -104,10 +104,11 @@ export default function Hero({ ready = false }: HeroProps) {
           <div className="hero-card-icon"><FaUser /></div>
           <p className="hero-card-label">About Me</p>
           <p className="about-text">
-            Motivated final-year Software Engineering student with hands-on experience in
-            full-stack web development. Skilled in building user-friendly interfaces and
-            reliable backend systems — seeking an internship or entry-level role to contribute
-            to real-world projects and grow as a full-stack &amp; AI engineer.
+            Final-year Software Engineering (Honours) student building full-stack and AI-powered
+            systems — from Spring Boot APIs to vision-LLM pipelines. Specialising in Java, React,
+            and cloud deployment, with production experience across internships and independent
+            projects — seeking a graduate role in full-stack engineering, AI/ML, or fintech,
+            available February 2027.
           </p>
         </div>
 

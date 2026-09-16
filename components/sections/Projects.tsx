@@ -98,6 +98,44 @@ const PROJECTS: CarouselProject[] = [
     statusLabel: 'In Progress',
   },
   {
+    title: 'Fashion Transparency Platform',
+    desc: 'A multi-tenant B2B SaaS platform that lets fashion brands obtain Digital Product Passport (DPP) certifications and expose them to shoppers through an embeddable sustainability widget. Brand teams, artisans, and third-party auditors each get isolated, role-appropriate dashboards for managing product, provenance, and certification data — built to scale across many concurrent tenants without data leaking between brands.',
+    bullets: [
+      'Built a multi-tenant B2B SaaS platform enabling fashion brands to obtain Digital Product Passport certifications via an embeddable sustainability widget',
+      'Designed a normalised PostgreSQL schema supporting concurrent brand dashboards for product, artisan, and certification data across isolated tenants',
+      'Implemented a subscription and credentialing system with role-based access control for brand admins and third-party auditors',
+      'Built responsive brand dashboards with React, Next.js, and Tailwind CSS for managing certification workflows',
+      'Deployed on AWS with environment-secured RDS and S3 storage, backed by a Node.js API layer',
+    ],
+    tech: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'AWS (S3, EC2, RDS)'],
+    cover: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80',
+      'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80',
+    ],
+    status: 'wip',
+    statusLabel: 'Completed',
+  },
+  {
+    title: 'Gait Detection & Biometric Identification',
+    desc: 'A biometric identification system built in collaboration with the Australian Federal Police that uses human gait as a unique identifier. Per-subject temporal gait signatures are extracted from raw video via pose estimation, then used to re-identify individuals across footage captured under different camera angles, clothing, and terrain — engineered against forensic-grade reliability standards rather than typical consumer-app tolerances.',
+    bullets: [
+      'Developed a biometric identification system using human gait as a unique identifier, in collaboration with the Australian Federal Police',
+      'Built per-subject temporal gait signatures from raw video input using MediaPipe pose estimation',
+      'Engineered a feature extraction and classification pipeline with OpenCV, PyTorch, and scikit-learn to re-identify subjects across sessions',
+      'Designed the pipeline to remain robust across variable conditions including camera angle, clothing, and terrain',
+      'Optimised model robustness with a focus on minimising false positives to meet forensic-grade reliability standards for federal law enforcement use',
+    ],
+    tech: ['Python', 'OpenCV', 'MediaPipe', 'PyTorch', 'scikit-learn'],
+    cover: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80',
+      'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=600&q=80',
+    ],
+    status: 'wip',
+    statusLabel: 'Research Collaboration',
+  },
+  {
     title: 'All-In-One Property Management',
     desc: 'A real-time property management platform that enables landlords, tenants, and property managers to coordinate rental operations within a single system. The platform supports rental applications, maintenance ticket workflows, messaging between users, inspection scheduling, and document/media management. By leveraging Meteor\'s reactive data architecture, the system provides real-time updates across dashboards, ensuring users see live changes to property information, tickets, and communications.',
     bullets: [

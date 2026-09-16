@@ -30,17 +30,18 @@ const JOBS: Job[] = [
   },
   {
     year: '2025',
-    title: 'Full Stack Developer (Intern)',
+    title: 'Software Engineering Intern',
     company: '💻 1Lynx Solutions',
-    snippet: 'Agile development, client communication & building internal tools.',
-    desc: 'Worked as part of an agile development team, contributing to sprint planning, stand-ups, and iterative development of internal tools. Communicated directly with clients to gather requirements and ensure solutions aligned with business needs.',
+    snippet: 'Built a full-stack insurance platform with React, Spring Boot & secure REST APIs.',
+    desc: 'Built a full-stack insurance platform using React and Spring Boot, delivering secure REST APIs with PostgreSQL integration. Collaborated directly with clients to translate business requirements into scalable backend solutions, contributing to Agile sprints, code reviews, and production deployments.',
     highlights: [
-      'Contributed to sprint planning, stand-ups, and iterative development',
-      'Communicated directly with clients to gather requirements',
-      'Gained experience with JWT authentication and application security',
-      'Learned through mentorship and code reviews from senior developers',
+      'Implemented JWT-based authentication and role-based access control (RBAC), improving system security',
+      'Designed database migration pipelines using Flyway for zero-downtime schema updates',
+      'Delivered secure REST APIs with PostgreSQL integration across the platform',
+      'Collaborated with clients to translate business requirements into scalable backend solutions',
+      'Contributed to Agile sprints, code reviews, and production deployments',
     ],
-    tags: ['JavaScript', 'HTML/CSS', 'Git', 'Agile', 'JWT', 'PostgreSQL', 'Postman'],
+    tags: ['React', 'Spring Boot', 'PostgreSQL', 'JWT', 'Flyway', 'Agile', 'Git'],
   },
 ];
 
