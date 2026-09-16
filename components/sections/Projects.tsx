@@ -34,17 +34,17 @@ interface CarouselProject {
 const PROJECTS: CarouselProject[] = [
   {
     title: 'Car Crash AI',
-    desc: 'An AI-powered system that analyzes vehicle crash images to automatically identify damaged components and estimate repair costs. Users upload crash photos, and the system uses vision-enabled language models to detect the vehicle model and damaged parts before estimating replacement costs using external pricing data and search results. The platform demonstrates how AI models can be integrated with traditional software pipelines to automate complex real-world assessments.',
+    desc: 'An AI-powered system that analyzes vehicle crash photos to identify damage, estimate repair costs, and generate downloadable reports. What began as a Streamlit prototype has grown into a full-stack Next.js/FastAPI application with persistent history, PDF reporting, and VIN-based vehicle identification, alongside a standalone native iOS client that runs the same AI pipeline independently on-device.',
     bullets: [
-      'Built an asynchronous FastAPI backend exposing REST endpoints for image uploads, AI damage analysis, and repair cost estimation workflows',
-      'Integrated vision-capable LLMs (Gemini/OpenAI) to identify vehicle models and detect damaged components from uploaded crash images',
-      'Implemented structured parsing pipelines to convert model outputs into machine-readable JSON damage reports used for downstream cost estimation',
-      'Developed a multi-stage pricing pipeline combining live Google search (SerpAPI), structured CSV price datasets, and AI-based price estimation to determine replacement part costs',
-      'Implemented image preprocessing and concurrent external API orchestration using Pillow, AsyncIO, and httpx',
-      'Built a Streamlit interface to visualize uploaded images, detected damage areas, and generated repair cost reports',
-      'Applied a structured AI engineering workflow using project-level Agents.md, Skills.md, Learning.md, and Setup.md files to guide AI-assisted research, experimentation, and system design',
+      'Rebuilt the original Streamlit MVP into a production Next.js 15 + FastAPI application with a typed API client, PostgreSQL persistence (SQLAlchemy async + Alembic migrations), and Dockerized deployment via docker-compose',
+      'Designed a zone-based damage detection pipeline running three focused LLM passes (front/rear/side) merged by worst-severity-per-component, plus an optional consensus mode that runs Gemini and OpenAI in parallel and flags disagreement above a divergence threshold',
+      'Integrated the NHTSA vPIC API for authoritative VIN-based vehicle identification, falling back to vision-LLM identification when no VIN is provided',
+      'Built a price estimation cascade — live Google search via SerpAPI, a static CSV fallback, and AI-based estimation as a last resort — combined with labor costs into a full repair estimate',
+      'Added a second-pass LLM sanity check reviewing each report for cost/severity coherence before returning it to the user',
+      'Implemented Jinja2/WeasyPrint PDF report generation with an HTML fallback, plus a PostgreSQL-backed estimate history endpoint',
+      'Built a standalone native iOS app (SwiftUI) running the same damage-assessment pipeline independently on-device, with its own Gemini/OpenAI abstraction layer and automatic provider fallback on rate limits',
     ],
-    tech: ['Python', 'FastAPI', 'Streamlit', 'Gemini', 'OpenAI', 'SerpAPI', 'AsyncIO', 'Pillow'],
+    tech: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Swift', 'SwiftUI', 'Gemini', 'OpenAI', 'Docker', 'SerpAPI'],
     cover: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=600&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=600&q=80',
