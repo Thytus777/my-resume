@@ -94,8 +94,8 @@ const PROJECTS: CarouselProject[] = [
       'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80',
       'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80',
     ],
-    status: 'wip',
-    statusLabel: 'In Progress',
+    status: 'live',
+    statusLabel: 'Live',
   },
   {
     title: 'Fashion Transparency Platform',
