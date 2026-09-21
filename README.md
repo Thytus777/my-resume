@@ -1,5 +1,8 @@
 # my-resume
 
+[![CI](https://github.com/Thytus777/my-resume/actions/workflows/ci.yml/badge.svg)](https://github.com/Thytus777/my-resume/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Personal portfolio / resume site, built with Next.js and a bit of WebGL.
 
 **Live:** https://thytusbenjamin.netlify.app
