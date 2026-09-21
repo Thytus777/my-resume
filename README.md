@@ -1,48 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# my-resume
 
-## Getting Started
+Personal portfolio / resume site, built with Next.js and a bit of WebGL.
 
-First, run the development server:
+**Live:** https://thytusbenjamin.netlify.app
+
+## Highlights
+
+- 3D interactive elements (React Three Fiber / drei / Rapier physics) — including
+  a physically-simulated lanyard badge
+- Animated hero and section transitions (Framer Motion, GSAP)
+- Interactive Melbourne map (React Leaflet)
+- Sections: Hero, Experience, Projects, Skills, Contact
+
+## Tech stack
+
+- [Next.js](https://nextjs.org) 16 (App Router) + React 19 + TypeScript
+- Tailwind CSS 4
+- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber) / drei / Rapier for 3D/physics
+- Framer Motion + GSAP for animation
+- React Leaflet for the map
+- Deployed on [Netlify](https://app.netlify.com/projects/thytusbenjamin/deploys)
+
+## Getting started
 
 ```bash
+git clone https://github.com/Thytus777/my-resume.git
+cd my-resume
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view it locally.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-
-https://thytusbenjamin.netlify.app 
-
-deployed on netlify
-https://app.netlify.com/projects/thytusbenjamin/deploys 
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-https://app.netlify.com/projects/thytusbenjamin/deploys
-
-https://thytusbenjamin.netlify.app
-
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm run dev`   | Start the dev server     |
+| `npm run build` | Production build         |
+| `npm run start` | Serve the production build |
+| `npm run lint`  | Run ESLint                |
